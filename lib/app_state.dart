@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '/backend/schema/structs/index.dart';
+import 'backend/api_requests/api_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -22,7 +26,7 @@ class FFAppState extends ChangeNotifier {
 
   String _accesstoken = '';
   String get accesstoken => _accesstoken;
-  set accesstoken(String value) {
-    _accesstoken = value;
+  set accesstoken(String _value) {
+    _accesstoken = _value;
   }
 }
