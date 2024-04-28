@@ -74,7 +74,7 @@ jobs:
            credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
       - name: Build docker Image
         id: docker-build
-        run: 'docker build -t ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest --file=Dockerfile-gcp_pre'
+        run: 'docker build -t ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest --file=Dockerfile-gcp_pre .'
 
       - name: Docker push to GCP
         id: docker-push
