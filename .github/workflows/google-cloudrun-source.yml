@@ -72,15 +72,31 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
            credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: Build docker Image
+        id: docker-build
+        run: 'docker build -t ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest --file=Dockerfile-gcp_pre'
 
+      - name: Docker push to GCP
+        id: docker-push
+        run: 'docker push ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest'
+
+      # - name: GCP select project
+      #   id: gcp-select-project
+      #   run: 'gcloud config set project ${{ env.PROJECT_ID }}'
+
+      # - name: GCP deploy Cloud Run App
+      #   id: gcp-deploy-cloud-run
+      #   run: 'gcloud run deploy luncher-admin-v3 --image us-east1-docker.pkg.dev/luncher-ristretto/luncher-v3/luncher_admin_v3:latest --region us-east1 --allow-unauthenticated --port=80'
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
+          image: '${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest'
+          flags: '--allow-unauthenticated --port=80'
           # NOTE: If required, update to the appropriate source folder
-          source: ./web/
+          # source: ./web/
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
