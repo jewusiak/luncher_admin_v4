@@ -31,10 +31,12 @@ COPY . /app/
 WORKDIR /app/
  
 # CONFIG ENV VARS
-ARG LUNCHER_CORE_BASE_URI="https://core.api.pre.luncher.pl/"
-ARG BYPASS_AUTH="false"
+#ARG LUNCHER_CORE_BASE_URI="https://core.api.pre.luncher.pl/"
+#ARG BYPASS_AUTH="false"
 
-RUN flutter build web --dart-define=LUNCHER_CORE_BASE_URI=${LUNCHER_CORE_BASE_URI} --dart-define=BYPASS_AUTH=${BYPASS_AUTH}
+RUN flutter build web
+
+# --dart-define=LUNCHER_CORE_BASE_URI=${LUNCHER_CORE_BASE_URI} --dart-define=BYPASS_AUTH=${BYPASS_AUTH}
 
 # Stage 2
 FROM nginx:1.21.1-alpine
