@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import '../schema/structs/index.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -24,8 +26,8 @@ class LoginCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "email": "$login",
-  "password": "$password"
+  "email": "${login}",
+  "password": "${password}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login',
@@ -58,7 +60,7 @@ class GetProfileCall {
       apiUrl: '${LuncherCoreAPIGroup.baseUrl}/profile',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -96,7 +98,7 @@ class LogoutCall {
       apiUrl: '${LuncherCoreAPIGroup.baseUrl}/auth/logout',
       callType: ApiCallType.DELETE,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
