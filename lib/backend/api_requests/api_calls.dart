@@ -12,7 +12,7 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 /// Start Luncher Core API Group Code
 
 class LuncherCoreAPIGroup {
-  static String baseUrl = 'https://core.api.pre.luncher.pl';
+  static String baseUrl = 'https://core.api.pre1.luncher.pl';
   static Map<String, String> headers = {};
   static LoginCall loginCall = LoginCall();
   static GetProfileCall getProfileCall = GetProfileCall();
