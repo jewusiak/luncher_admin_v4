@@ -1,11 +1,10 @@
 import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -57,13 +56,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Text(
                           'Witaj,',
                           style:
@@ -75,9 +74,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
-                          '${currentUserData?.firstname} ${currentUserData?.surname}',
+                          '${currentUserData?.firstName} ${currentUserData?.surname}',
                           style:
                               FlutterFlowTheme.of(context).bodyLarge.override(
                                     fontFamily: 'Readex Pro',
@@ -87,7 +86,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           '${currentUserData?.email}',
                           style:
@@ -99,7 +98,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           '(${currentUserData?.role})',
                           style:
@@ -114,6 +113,102 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ),
               ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed('UsersListPage');
+                },
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.person,
+                  ),
+                  title: Text(
+                    'Użytkownicy',
+                    style: FlutterFlowTheme.of(context).titleLarge.override(
+                          fontFamily: 'Outfit',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 20.0,
+                  ),
+                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  dense: false,
+                ),
+              ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed('PlacesListPage');
+                },
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.home,
+                  ),
+                  title: Text(
+                    'Lokale',
+                    style: FlutterFlowTheme.of(context).titleLarge.override(
+                          fontFamily: 'Outfit',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 20.0,
+                  ),
+                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  dense: false,
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  unawaited(
+                    () async {
+                      await LuncherCoreAPIGroup.logoutCall.call(
+                        authorization: currentAuthenticationToken,
+                      );
+                    }(),
+                  );
+                  GoRouter.of(context).prepareAuthEvent();
+                  await authManager.signOut();
+                  GoRouter.of(context).clearRedirectLocation();
+
+                  context.goNamedAuth('LoginPage', context.mounted);
+                },
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.logout,
+                  ),
+                  title: Text(
+                    'Wyloguj się',
+                    style: FlutterFlowTheme.of(context).titleLarge.override(
+                          fontFamily: 'Outfit',
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 20.0,
+                  ),
+                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                  dense: false,
+                ),
+              ),
             ],
           ),
         ),
@@ -121,11 +216,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
-            borderColor: Color(0x00F1F4F8),
+            borderColor: const Color(0x00F1F4F8),
             borderRadius: 20.0,
             borderWidth: 1.0,
             buttonSize: 40.0,
-            fillColor: Color(0x00F1F4F8),
+            fillColor: const Color(0x00F1F4F8),
             icon: Icon(
               Icons.menu,
               color: FlutterFlowTheme.of(context).primaryBackground,
@@ -144,7 +239,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -155,7 +250,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             children: [
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Text(
                     'Wybierz z menu podstronę',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(

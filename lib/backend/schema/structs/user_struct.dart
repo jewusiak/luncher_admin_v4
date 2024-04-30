@@ -8,11 +8,11 @@ import '/flutter_flow/flutter_flow_util.dart';
 class UserStruct extends BaseStruct {
   UserStruct({
     String? email,
-    String? firstname,
+    String? firstName,
     String? surname,
     String? role,
   })  : _email = email,
-        _firstname = firstname,
+        _firstName = firstName,
         _surname = surname,
         _role = role;
 
@@ -22,11 +22,11 @@ class UserStruct extends BaseStruct {
   set email(String? val) => _email = val;
   bool hasEmail() => _email != null;
 
-  // "firstname" field.
-  String? _firstname;
-  String get firstname => _firstname ?? '';
-  set firstname(String? val) => _firstname = val;
-  bool hasFirstname() => _firstname != null;
+  // "firstName" field.
+  String? _firstName;
+  String get firstName => _firstName ?? '';
+  set firstName(String? val) => _firstName = val;
+  bool hasFirstName() => _firstName != null;
 
   // "surname" field.
   String? _surname;
@@ -42,7 +42,7 @@ class UserStruct extends BaseStruct {
 
   static UserStruct fromMap(Map<String, dynamic> data) => UserStruct(
         email: data['email'] as String?,
-        firstname: data['firstname'] as String?,
+        firstName: data['firstName'] as String?,
         surname: data['surname'] as String?,
         role: data['role'] as String?,
       );
@@ -52,7 +52,7 @@ class UserStruct extends BaseStruct {
 
   Map<String, dynamic> toMap() => {
         'email': _email,
-        'firstname': _firstname,
+        'firstName': _firstName,
         'surname': _surname,
         'role': _role,
       }.withoutNulls;
@@ -63,8 +63,8 @@ class UserStruct extends BaseStruct {
           _email,
           ParamType.String,
         ),
-        'firstname': serializeParam(
-          _firstname,
+        'firstName': serializeParam(
+          _firstName,
           ParamType.String,
         ),
         'surname': serializeParam(
@@ -84,8 +84,8 @@ class UserStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
-        firstname: deserializeParam(
-          data['firstname'],
+        firstName: deserializeParam(
+          data['firstName'],
           ParamType.String,
           false,
         ),
@@ -108,25 +108,25 @@ class UserStruct extends BaseStruct {
   bool operator ==(Object other) {
     return other is UserStruct &&
         email == other.email &&
-        firstname == other.firstname &&
+        firstName == other.firstName &&
         surname == other.surname &&
         role == other.role;
   }
 
   @override
   int get hashCode =>
-      const ListEquality().hash([email, firstname, surname, role]);
+      const ListEquality().hash([email, firstName, surname, role]);
 }
 
 UserStruct createUserStruct({
   String? email,
-  String? firstname,
+  String? firstName,
   String? surname,
   String? role,
 }) =>
     UserStruct(
       email: email,
-      firstname: firstname,
+      firstName: firstName,
       surname: surname,
       role: role,
     );

@@ -1,1 +1,1 @@
-export 'new_custom_widget.dart' show NewCustomWidget;
+export 'dummy_dependecies_widget.dart' show DummyDependeciesWidget;
