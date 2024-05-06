@@ -3,6 +3,7 @@ import '../schema/structs/index.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
+import 'interceptors.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
@@ -199,14 +200,21 @@ class GetUsersPagedCall {
 class AdminCreateUserCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? email = '',
+    String? firstName = '',
+    String? surname = '',
+    String? password = '',
+    String? role = 'USER',
+    bool? enabled = true,
   }) async {
-    const ffApiRequestBody = '''
+    final ffApiRequestBody = '''
 {
-  "email": "",
-  "firstName": "",
-  "surname": "",
-  "password": "",
-  "role": "SYS_ROOT"
+  "email": "$email",
+  "firstName": "$firstName",
+  "surname": "$surname",
+  "password": "$password",
+  "role": "$role",
+  "enabled": $enabled
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'adminCreateUser',
@@ -231,32 +239,46 @@ class AdminUpdateUserCall {
   Future<ApiCallResponse> call({
     String? userId = '',
     String? authorization = '',
+    String? email = '',
+    String? firstName = '',
+    String? surname = '',
+    String? password = '',
+    String? role = '',
+    bool? enabled = true,
   }) async {
-    const ffApiRequestBody = '''
+    final ffApiRequestBody = '''
 {
-  "email": "",
-  "firstName": "",
-  "surname": "",
-  "password": "",
-  "role": "SYS_ROOT"
+  "email": "$email",
+  "firstName": "$firstName",
+  "surname": "$surname",
+  "password": "$password",
+  "role": "$role",
+  "enabled": $enabled
 }''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'adminUpdateUser',
-      apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users/$userId',
-      callType: ApiCallType.PATCH,
-      headers: {
-        'Authorization': 'Bearer $authorization',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'adminUpdateUser',
+        apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users/$userId',
+        callType: ApiCallType.PATCH,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
 }
 
 class GetUserByUuidCall {
@@ -362,6 +384,16 @@ class GetAvailableRolesCall {
       alwaysAllowBody: false,
     );
   }
+
+  List<String>? roles(dynamic response) => (getJsonField(
+        response,
+        r'''$.roles''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 /// End Luncher Core API (users) Group Code
