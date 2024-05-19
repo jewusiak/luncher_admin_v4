@@ -177,9 +177,9 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                       ),
                       FlutterFlowIconButton(
                         borderColor: FlutterFlowTheme.of(context).primary,
-                        borderRadius: 20.0,
+                        borderRadius: 45.0,
                         borderWidth: 1.0,
-                        buttonSize: 40.0,
+                        buttonSize: 45.0,
                         fillColor: FlutterFlowTheme.of(context).accent1,
                         icon: Icon(
                           Icons.search,
@@ -197,17 +197,17 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                             const EdgeInsetsDirectional.fromSTEB(50.0, 0.0, 0.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor: FlutterFlowTheme.of(context).primary,
-                          borderRadius: 20.0,
+                          borderRadius: 45.0,
                           borderWidth: 1.0,
-                          buttonSize: 40.0,
+                          buttonSize: 45.0,
                           fillColor: FlutterFlowTheme.of(context).accent1,
                           icon: Icon(
                             Icons.add,
                             color: FlutterFlowTheme.of(context).primaryText,
                             size: 24.0,
                           ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
+                          onPressed: () async {
+                            context.pushNamed('CreateUserPage');
                           },
                         ),
                       ),
@@ -264,33 +264,50 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                         final usersListItem = _model
                             .usersListViewPagingController!
                             .itemList![usersListIndex];
-                        return ListTile(
-                          title: Text(
-                            '${usersListItem.firstName} ${usersListItem.surname}',
-                            style: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
+                        return InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            context.pushNamed(
+                              'UserDetailsPage',
+                              queryParameters: {
+                                'userId': serializeParam(
+                                  usersListItem.uuid,
+                                  ParamType.String,
                                 ),
+                              }.withoutNulls,
+                            );
+                          },
+                          child: ListTile(
+                            title: Text(
+                              '${usersListItem.firstName} ${usersListItem.surname}',
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                            subtitle: Text(
+                              '${usersListItem.email} (${usersListItem.role})',
+                              style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 20.0,
+                            ),
+                            tileColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            dense: false,
                           ),
-                          subtitle: Text(
-                            '${usersListItem.email} (${usersListItem.role})',
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 20.0,
-                          ),
-                          tileColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          dense: false,
                         );
                       },
                     ),

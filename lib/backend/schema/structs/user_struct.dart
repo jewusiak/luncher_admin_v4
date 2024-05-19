@@ -11,10 +11,14 @@ class UserStruct extends BaseStruct {
     String? firstName,
     String? surname,
     String? role,
+    String? uuid,
+    bool? enabled,
   })  : _email = email,
         _firstName = firstName,
         _surname = surname,
-        _role = role;
+        _role = role,
+        _uuid = uuid,
+        _enabled = enabled;
 
   // "email" field.
   String? _email;
@@ -40,11 +44,25 @@ class UserStruct extends BaseStruct {
   set role(String? val) => _role = val;
   bool hasRole() => _role != null;
 
+  // "uuid" field.
+  String? _uuid;
+  String get uuid => _uuid ?? '';
+  set uuid(String? val) => _uuid = val;
+  bool hasUuid() => _uuid != null;
+
+  // "enabled" field.
+  bool? _enabled;
+  bool get enabled => _enabled ?? true;
+  set enabled(bool? val) => _enabled = val;
+  bool hasEnabled() => _enabled != null;
+
   static UserStruct fromMap(Map<String, dynamic> data) => UserStruct(
         email: data['email'] as String?,
         firstName: data['firstName'] as String?,
         surname: data['surname'] as String?,
         role: data['role'] as String?,
+        uuid: data['uuid'] as String?,
+        enabled: data['enabled'] as bool?,
       );
 
   static UserStruct? maybeFromMap(dynamic data) =>
@@ -55,6 +73,8 @@ class UserStruct extends BaseStruct {
         'firstName': _firstName,
         'surname': _surname,
         'role': _role,
+        'uuid': _uuid,
+        'enabled': _enabled,
       }.withoutNulls;
 
   @override
@@ -74,6 +94,14 @@ class UserStruct extends BaseStruct {
         'role': serializeParam(
           _role,
           ParamType.String,
+        ),
+        'uuid': serializeParam(
+          _uuid,
+          ParamType.String,
+        ),
+        'enabled': serializeParam(
+          _enabled,
+          ParamType.bool,
         ),
       }.withoutNulls;
 
@@ -99,6 +127,16 @@ class UserStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        uuid: deserializeParam(
+          data['uuid'],
+          ParamType.String,
+          false,
+        ),
+        enabled: deserializeParam(
+          data['enabled'],
+          ParamType.bool,
+          false,
+        ),
       );
 
   @override
@@ -110,12 +148,14 @@ class UserStruct extends BaseStruct {
         email == other.email &&
         firstName == other.firstName &&
         surname == other.surname &&
-        role == other.role;
+        role == other.role &&
+        uuid == other.uuid &&
+        enabled == other.enabled;
   }
 
   @override
-  int get hashCode =>
-      const ListEquality().hash([email, firstName, surname, role]);
+  int get hashCode => const ListEquality()
+      .hash([email, firstName, surname, role, uuid, enabled]);
 }
 
 UserStruct createUserStruct({
@@ -123,10 +163,14 @@ UserStruct createUserStruct({
   String? firstName,
   String? surname,
   String? role,
+  String? uuid,
+  bool? enabled,
 }) =>
     UserStruct(
       email: email,
       firstName: firstName,
       surname: surname,
       role: role,
+      uuid: uuid,
+      enabled: enabled,
     );
