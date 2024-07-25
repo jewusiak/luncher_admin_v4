@@ -6,9 +6,10 @@ on:
     branches: [ "master" ]
 
 env:
-  PROJECT_ID: "omega-granite-421322"
+  PROJECT_ID: "luncher-corp"
   SERVICE: "luncher-admin-v4-pre"
   REGION: "us-central1"
+  ARTIFACTS_SUBDIR: "artifacts-luncher-corp"
 
 jobs:      
   build:
@@ -23,10 +24,10 @@ jobs:
         
       - name: Build docker Image
         id: docker-build
-        run: 'docker build -t ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest --file=Dockerfile-gcp_pre .'
+        run: 'docker build -t ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACTS_SUBDIR }}/${{ env.SERVICE }}:latest --file=Dockerfile-gcp_pre .'
 
       - name: Save Docker image
-        run: 'docker save --output /tmp/${{ env.SERVICE }}_image.tar ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest'
+        run: 'docker save --output /tmp/${{ env.SERVICE }}_image.tar ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACTS_SUBDIR }}/${{ env.SERVICE }}:latest'
 
       - name: Upload Docker image
         uses: actions/upload-artifact@v4
@@ -67,7 +68,7 @@ jobs:
       
       - name: Docker push to GCP
         id: docker-push
-        run: 'docker push ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest'
+        run: 'docker push ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACTS_SUBDIR }}/${{ env.SERVICE }}:latest'
 
   deploy:
     needs: [push]
@@ -93,13 +94,14 @@ jobs:
 
       - name: GCP deploy Cloud Run App
         id: gcp-deploy-cloud-run
-        run: 'gcloud run deploy ${{ env.SERVICE }} --image ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/${{ env.SERVICE }}:latest --region ${{env.REGION}} --allow-unauthenticated --port=80'
+        run: 'gcloud run deploy ${{ env.SERVICE }} --image ${{env.REGION}}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACTS_SUBDIR }}/${{ env.SERVICE }}:latest --region ${{env.REGION}} --allow-unauthenticated --port=80'
      
       - name: GCP App Url
         run: echo ${{ steps.deploy.outputs.url }}
         
   cleanup:
     needs: [ push ]
+    if: ${{ always() }}
 
     runs-on: ubuntu-latest
     steps:
