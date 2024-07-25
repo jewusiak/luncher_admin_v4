@@ -221,6 +221,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           login: _model.emailTextController.text,
                           password: _model.passwordTextController.text,
                         );
+
                         shouldSetState = true;
                         if ((_model.apiResultq86?.succeeded ?? true)) {
                           // Pobranie user info
@@ -231,6 +232,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               (_model.apiResultq86?.jsonBody ?? ''),
                             ),
                           );
+
                           shouldSetState = true;
                           if ((_model.profileOutput?.succeeded ?? true)) {
                             GoRouter.of(context).prepareAuthEvent();

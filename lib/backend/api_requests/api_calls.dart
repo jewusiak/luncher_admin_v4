@@ -1,6 +1,8 @@
 import 'dart:convert';
 import '../schema/structs/index.dart';
 
+import 'package:flutter/foundation.dart';
+
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 import 'interceptors.dart';
@@ -12,7 +14,7 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 /// Start Luncher Core API Group Code
 
 class LuncherCoreAPIGroup {
-  static String baseUrl = 'https://core.api.pre1.luncher.pl';
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
   static LoginCall loginCall = LoginCall();
   static GetProfileCall getProfileCall = GetProfileCall();
@@ -24,6 +26,8 @@ class LoginCall {
     String? login = '',
     String? password = '',
   }) async {
+    final baseUrl = LuncherCoreAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "email": "$login",
@@ -31,7 +35,7 @@ class LoginCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login',
-      apiUrl: '${LuncherCoreAPIGroup.baseUrl}/auth/login',
+      apiUrl: '$baseUrl/auth/login',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -41,6 +45,7 @@ class LoginCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -59,9 +64,11 @@ class GetProfileCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
   }) async {
+    final baseUrl = LuncherCoreAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'getProfile',
-      apiUrl: '${LuncherCoreAPIGroup.baseUrl}/profile',
+      apiUrl: '$baseUrl/profile',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -71,6 +78,7 @@ class GetProfileCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -97,9 +105,11 @@ class LogoutCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
   }) async {
+    final baseUrl = LuncherCoreAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'logout',
-      apiUrl: '${LuncherCoreAPIGroup.baseUrl}/auth/logout',
+      apiUrl: '$baseUrl/auth/logout',
       callType: ApiCallType.DELETE,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -109,6 +119,7 @@ class LogoutCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -119,7 +130,7 @@ class LogoutCall {
 /// Start Luncher Core API (users) Group Code
 
 class LuncherCoreAPIusersGroup {
-  static String baseUrl = 'https://core.api.pre1.luncher.pl';
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
   static GetUsersPagedCall getUsersPagedCall = GetUsersPagedCall();
   static AdminCreateUserCall adminCreateUserCall = AdminCreateUserCall();
@@ -135,9 +146,11 @@ class GetUsersPagedCall {
     int? page,
     String? authorization = '',
   }) async {
+    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'getUsersPaged',
-      apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users',
+      apiUrl: '$baseUrl/admin/users',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -150,6 +163,7 @@ class GetUsersPagedCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -207,6 +221,8 @@ class AdminCreateUserCall {
     String? role = 'USER',
     bool? enabled = true,
   }) async {
+    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "email": "$email",
@@ -218,7 +234,7 @@ class AdminCreateUserCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'adminCreateUser',
-      apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users',
+      apiUrl: '$baseUrl/admin/users',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -230,6 +246,7 @@ class AdminCreateUserCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -246,6 +263,8 @@ class AdminUpdateUserCall {
     String? role = '',
     bool? enabled = true,
   }) async {
+    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "email": "$email",
@@ -258,7 +277,7 @@ class AdminUpdateUserCall {
     return FFApiInterceptor.makeApiCall(
       ApiCallOptions(
         callName: 'adminUpdateUser',
-        apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users/$userId',
+        apiUrl: '$baseUrl/admin/users/$userId',
         callType: ApiCallType.PATCH,
         headers: {
           'Authorization': 'Bearer $authorization',
@@ -270,6 +289,7 @@ class AdminUpdateUserCall {
         encodeBodyUtf8: false,
         decodeUtf8: false,
         cache: false,
+        isStreamingApi: false,
         alwaysAllowBody: false,
       ),
       interceptors,
@@ -286,9 +306,11 @@ class GetUserByUuidCall {
     String? uuid = '',
     String? authorization = '',
   }) async {
+    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'getUserByUuid',
-      apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users/$uuid',
+      apiUrl: '$baseUrl/admin/users/$uuid',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -298,6 +320,7 @@ class GetUserByUuidCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -310,9 +333,11 @@ class AdminSearchUsersCall {
     int? page,
     String? authorization = '',
   }) async {
+    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'adminSearchUsers',
-      apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users/search',
+      apiUrl: '$baseUrl/admin/users/search',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -326,6 +351,7 @@ class AdminSearchUsersCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -369,9 +395,11 @@ class GetAvailableRolesCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
   }) async {
+    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'getAvailableRoles',
-      apiUrl: '${LuncherCoreAPIusersGroup.baseUrl}/admin/users/available_roles',
+      apiUrl: '$baseUrl/admin/users/available_roles',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -381,6 +409,7 @@ class GetAvailableRolesCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -414,11 +443,18 @@ class ApiPagingParams {
       'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
 }
 
+String _toEncodable(dynamic item) {
+  return item;
+}
+
 String _serializeList(List? list) {
   list ??= <String>[];
   try {
-    return json.encode(list);
+    return json.encode(list, toEncodable: _toEncodable);
   } catch (_) {
+    if (kDebugMode) {
+      print("List serialization failed. Returning empty list.");
+    }
     return '[]';
   }
 }
@@ -426,8 +462,11 @@ String _serializeList(List? list) {
 String _serializeJson(dynamic jsonVar, [bool isList = false]) {
   jsonVar ??= (isList ? [] : {});
   try {
-    return json.encode(jsonVar);
+    return json.encode(jsonVar, toEncodable: _toEncodable);
   } catch (_) {
+    if (kDebugMode) {
+      print("Json serialization failed. Returning empty json.");
+    }
     return isList ? '[]' : '{}';
   }
 }

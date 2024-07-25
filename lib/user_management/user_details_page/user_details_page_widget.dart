@@ -81,6 +81,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
           );
         }
         final userDetailsPageGetUserByUuidResponse = snapshot.data!;
+
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
               ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -432,6 +433,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                   }
                                   final userRoleSelectorGetAvailableRolesResponse =
                                       snapshot.data!;
+
                                   return FlutterFlowDropDown<String>(
                                     controller: _model
                                             .userRoleSelectorValueController ??=
@@ -669,6 +671,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                         .newPasswordInputTextController.text,
                                 enabled: _model.userEnabledCheckboxValue,
                               );
+
                               shouldSetState = true;
                               if ((_model.updateCallResult?.succeeded ??
                                   true)) {
