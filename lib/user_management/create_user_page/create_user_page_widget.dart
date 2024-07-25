@@ -361,6 +361,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                               }
                               final userRoleSelectorGetAvailableRolesResponse =
                                   snapshot.data!;
+
                               return FlutterFlowDropDown<String>(
                                 controller:
                                     _model.userRoleSelectorValueController ??=
@@ -521,6 +522,13 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                   true,
                                   true,
                                 );
+                                _model.newPasswordInputTextController
+                                        ?.selection =
+                                    TextSelection.collapsed(
+                                        offset: _model
+                                            .newPasswordInputTextController!
+                                            .text
+                                            .length);
                               });
                             },
                             text: 'Wygeneruj hasło',
@@ -613,6 +621,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             role: _model.userRoleSelectorValue,
                             enabled: _model.userEnabledCheckboxValue,
                           );
+
                           shouldSetState = true;
                           if ((_model.createCallResult?.succeeded ?? true)) {
                             if (Navigator.of(context).canPop()) {

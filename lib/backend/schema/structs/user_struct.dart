@@ -24,36 +24,42 @@ class UserStruct extends BaseStruct {
   String? _email;
   String get email => _email ?? '';
   set email(String? val) => _email = val;
+
   bool hasEmail() => _email != null;
 
   // "firstName" field.
   String? _firstName;
   String get firstName => _firstName ?? '';
   set firstName(String? val) => _firstName = val;
+
   bool hasFirstName() => _firstName != null;
 
   // "surname" field.
   String? _surname;
   String get surname => _surname ?? '';
   set surname(String? val) => _surname = val;
+
   bool hasSurname() => _surname != null;
 
   // "role" field.
   String? _role;
   String get role => _role ?? '';
   set role(String? val) => _role = val;
+
   bool hasRole() => _role != null;
 
   // "uuid" field.
   String? _uuid;
   String get uuid => _uuid ?? '';
   set uuid(String? val) => _uuid = val;
+
   bool hasUuid() => _uuid != null;
 
   // "enabled" field.
   bool? _enabled;
   bool get enabled => _enabled ?? true;
   set enabled(bool? val) => _enabled = val;
+
   bool hasEnabled() => _enabled != null;
 
   static UserStruct fromMap(Map<String, dynamic> data) => UserStruct(
