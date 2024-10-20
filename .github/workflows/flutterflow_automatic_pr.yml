@@ -1,5 +1,5 @@
 name: Automatic PR to master
- 
+
 on:
   workflow_dispatch:
   push:
@@ -20,8 +20,10 @@ jobs:
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: master
-          target_branch: flutterflow
+          source_branch: flutterflow
+          target_branch: master
           title: Automatic PR (merge flutterflow to master)
           body: "**Automated pull request**"
-          
+          get_diff: true
+          ignore_users: "dependabot"
+          allow_no_diff: true
