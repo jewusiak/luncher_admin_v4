@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class CreateUserPageModel extends FlutterFlowModel<CreateUserPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for firstnameInput widget.
   FocusNode? firstnameInputFocusNode;
   TextEditingController? firstnameInputTextController;
@@ -32,7 +31,7 @@ class CreateUserPageModel extends FlutterFlowModel<CreateUserPageWidget> {
       newPasswordInputTextControllerValidator;
   // State field(s) for userEnabledCheckbox widget.
   bool? userEnabledCheckboxValue;
-  // Stores action output result for [Backend Call - API (adminCreateUser)] action in Button widget.
+  // Stores action output result for [Backend Call - API (createUser)] action in Button widget.
   ApiCallResponse? createCallResult;
 
   @override
@@ -42,7 +41,6 @@ class CreateUserPageModel extends FlutterFlowModel<CreateUserPageWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     firstnameInputFocusNode?.dispose();
     firstnameInputTextController?.dispose();
 

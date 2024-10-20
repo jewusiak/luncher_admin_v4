@@ -43,7 +43,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
     _model.newPasswordInputTextController ??= TextEditingController();
     _model.newPasswordInputFocusNode ??= FocusNode();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -57,7 +57,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
   Widget build(BuildContext context) {
     return FutureBuilder<ApiCallResponse>(
       future: (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
-            ..complete(LuncherCoreAPIusersGroup.getUserByUuidCall.call(
+            ..complete(LuncherCoreAPIGETUsersUuidGroup.getUserByUuidCall.call(
               authorization: currentAuthenticationToken,
               uuid: widget.userId,
             )))
@@ -83,9 +83,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
         final userDetailsPageGetUserByUuidResponse = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => _model.unfocusNode.canRequestFocus
-              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-              : FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -409,9 +407,10 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                 ),
                               ),
                               FutureBuilder<ApiCallResponse>(
-                                future: LuncherCoreAPIusersGroup
-                                    .getAvailableRolesCall
-                                    .call(
+                                future:
+                                    LuncherCoreAPIGETUsersAvailableRolesGroup
+                                        .getAvailableRolesCall
+                                        .call(
                                   authorization: currentAuthenticationToken,
                                 ),
                                 builder: (context, snapshot) {
@@ -444,13 +443,14 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                                       .jsonBody)
                                               ?.role,
                                     ),
-                                    options: LuncherCoreAPIusersGroup
-                                        .getAvailableRolesCall
-                                        .roles(
+                                    options:
+                                        LuncherCoreAPIGETUsersAvailableRolesGroup
+                                            .getAvailableRolesCall
+                                            .roles(
                                       userRoleSelectorGetAvailableRolesResponse
                                           .jsonBody,
                                     )!,
-                                    onChanged: (val) => setState(() =>
+                                    onChanged: (val) => safeSetState(() =>
                                         _model.userRoleSelectorValue = val),
                                     width: 300.0,
                                     height: 56.0,
@@ -562,7 +562,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                             BorderRadius.circular(8.0),
                                       ),
                                       suffixIcon: InkWell(
-                                        onTap: () => setState(
+                                        onTap: () => safeSetState(
                                           () => _model
                                                   .newPasswordInputVisibility =
                                               !_model
@@ -621,7 +621,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                                   .jsonBody)!
                                           .enabled,
                                   onChanged: (newValue) async {
-                                    setState(() => _model
+                                    safeSetState(() => _model
                                         .userEnabledCheckboxValue = newValue!);
                                   },
                                   side: BorderSide(
@@ -653,8 +653,8 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                             onPressed: () async {
                               var shouldSetState = false;
                               _model.updateCallResult =
-                                  await LuncherCoreAPIusersGroup
-                                      .adminUpdateUserCall
+                                  await LuncherCoreAPIPUTUsersUserIdGroup
+                                      .updateUserCall
                                       .call(
                                 authorization: currentAuthenticationToken,
                                 userId: widget.userId,
@@ -662,20 +662,16 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                 firstName:
                                     _model.firstnameInputTextController.text,
                                 surname: _model.surnameInputTextController.text,
+                                password:
+                                    _model.newPasswordInputTextController.text,
                                 role: _model.userRoleSelectorValue,
-                                password: _model.newPasswordInputTextController
-                                            .text ==
-                                        ''
-                                    ? FFAppConstants.nullvalue
-                                    : _model
-                                        .newPasswordInputTextController.text,
                                 enabled: _model.userEnabledCheckboxValue,
                               );
 
                               shouldSetState = true;
                               if ((_model.updateCallResult?.succeeded ??
                                   true)) {
-                                setState(
+                                safeSetState(
                                     () => _model.apiRequestCompleter = null);
                                 await _model.waitForApiRequestCompleted();
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -692,7 +688,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
                                 );
-                                if (shouldSetState) setState(() {});
+                                if (shouldSetState) safeSetState(() {});
                                 return;
                               } else {
                                 if ((_model.updateCallResult?.statusCode ??
@@ -731,11 +727,11 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                   );
                                 }
 
-                                if (shouldSetState) setState(() {});
+                                if (shouldSetState) safeSetState(() {});
                                 return;
                               }
 
-                              if (shouldSetState) setState(() {});
+                              if (shouldSetState) safeSetState(() {});
                             },
                             text: 'Zapisz zmiany',
                             options: FFButtonOptions(

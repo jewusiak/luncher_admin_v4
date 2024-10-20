@@ -31,7 +31,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -44,9 +44,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -190,7 +188,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           suffixIcon: InkWell(
-                            onTap: () => setState(
+                            onTap: () => safeSetState(
                               () => _model.passwordVisibility =
                                   !_model.passwordVisibility,
                             ),
@@ -217,8 +215,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         Function() navigate = () {};
                         // login call
                         _model.apiResultq86 =
-                            await LuncherCoreAPIGroup.loginCall.call(
-                          login: _model.emailTextController.text,
+                            await LuncherCoreAPIPOSTAuthLoginGroup.loginCall
+                                .call(
+                          email: _model.emailTextController.text,
                           password: _model.passwordTextController.text,
                         );
 
@@ -226,9 +225,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         if ((_model.apiResultq86?.succeeded ?? true)) {
                           // Pobranie user info
                           _model.profileOutput =
-                              await LuncherCoreAPIGroup.getProfileCall.call(
-                            authorization:
-                                LuncherCoreAPIGroup.loginCall.accesstoken(
+                              await LuncherCoreAPIGETProfileGroup.getProfileCall
+                                  .call(
+                            authorization: LuncherCoreAPIPOSTAuthLoginGroup
+                                .loginCall
+                                .accessToken(
                               (_model.apiResultq86?.jsonBody ?? ''),
                             ),
                           );
@@ -238,19 +239,21 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             GoRouter.of(context).prepareAuthEvent();
                             await authManager.signIn(
                               authenticationToken:
-                                  LuncherCoreAPIGroup.loginCall.accesstoken(
+                                  LuncherCoreAPIPOSTAuthLoginGroup.loginCall
+                                      .accessToken(
                                 (_model.apiResultq86?.jsonBody ?? ''),
                               ),
                               tokenExpiration: dateTimeFromSecondsSinceEpoch(
                                   valueOrDefault<int>(
-                                LuncherCoreAPIGroup.loginCall.tokenLifetime(
+                                LuncherCoreAPIPOSTAuthLoginGroup.loginCall
+                                    .tokenLifetime(
                                   (_model.apiResultq86?.jsonBody ?? ''),
                                 ),
                                 0,
                               )),
-                              authUid: LuncherCoreAPIGroup.getProfileCall.email(
-                                (_model.profileOutput?.jsonBody ?? ''),
-                              ),
+                              authUid: UserStruct.maybeFromMap(
+                                      (_model.profileOutput?.jsonBody ?? ''))
+                                  ?.uuid,
                               userData: UserStruct.maybeFromMap(
                                   (_model.profileOutput?.jsonBody ?? '')),
                             );
@@ -258,7 +261,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 'HomePage', context.mounted);
 
                             navigate();
-                            if (shouldSetState) setState(() {});
+                            if (shouldSetState) safeSetState(() {});
                             return;
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -275,7 +278,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     FlutterFlowTheme.of(context).secondary,
                               ),
                             );
-                            if (shouldSetState) setState(() {});
+                            if (shouldSetState) safeSetState(() {});
                             return;
                           }
                         } else {
@@ -293,12 +296,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   FlutterFlowTheme.of(context).secondary,
                             ),
                           );
-                          if (shouldSetState) setState(() {});
+                          if (shouldSetState) safeSetState(() {});
                           return;
                         }
 
                         navigate();
-                        if (shouldSetState) setState(() {});
+                        if (shouldSetState) safeSetState(() {});
                       },
                       text: 'Zaloguj się',
                       options: FFButtonOptions(

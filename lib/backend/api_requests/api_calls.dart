@@ -1,36 +1,33 @@
 import 'dart:convert';
-import '../schema/structs/index.dart';
 
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
-import 'interceptors.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-/// Start Luncher Core API Group Code
+/// Start Luncher Core API (POST___auth_login) Group Code
 
-class LuncherCoreAPIGroup {
+class LuncherCoreAPIPOSTAuthLoginGroup {
   static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
   static LoginCall loginCall = LoginCall();
-  static GetProfileCall getProfileCall = GetProfileCall();
-  static LogoutCall logoutCall = LogoutCall();
 }
 
 class LoginCall {
   Future<ApiCallResponse> call({
-    String? login = '',
+    String? authorization = '',
+    String? email = '',
     String? password = '',
   }) async {
-    final baseUrl = LuncherCoreAPIGroup.getBaseUrl();
+    final baseUrl = LuncherCoreAPIPOSTAuthLoginGroup.getBaseUrl();
 
     final ffApiRequestBody = '''
 {
-  "email": "$login",
+  "email": "$email",
   "password": "$password"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -50,7 +47,7 @@ class LoginCall {
     );
   }
 
-  String? accesstoken(dynamic response) => castToType<String>(getJsonField(
+  String? accessToken(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.accessToken''',
       ));
@@ -60,11 +57,21 @@ class LoginCall {
       ));
 }
 
+/// End Luncher Core API (POST___auth_login) Group Code
+
+/// Start Luncher Core API (GET___profile) Group Code
+
+class LuncherCoreAPIGETProfileGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetProfileCall getProfileCall = GetProfileCall();
+}
+
 class GetProfileCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
   }) async {
-    final baseUrl = LuncherCoreAPIGroup.getBaseUrl();
+    final baseUrl = LuncherCoreAPIGETProfileGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
       callName: 'getProfile',
@@ -82,30 +89,23 @@ class GetProfileCall {
       alwaysAllowBody: false,
     );
   }
+}
 
-  String? email(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.email''',
-      ));
-  String? role(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.role''',
-      ));
-  String? firstname(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.firstName''',
-      ));
-  String? surname(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.surname''',
-      ));
+/// End Luncher Core API (GET___profile) Group Code
+
+/// Start Luncher Core API (DELETE___auth_logout) Group Code
+
+class LuncherCoreAPIDELETEAuthLogoutGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static LogoutCall logoutCall = LogoutCall();
 }
 
 class LogoutCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
   }) async {
-    final baseUrl = LuncherCoreAPIGroup.getBaseUrl();
+    final baseUrl = LuncherCoreAPIDELETEAuthLogoutGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
       callName: 'logout',
@@ -125,103 +125,27 @@ class LogoutCall {
   }
 }
 
-/// End Luncher Core API Group Code
+/// End Luncher Core API (DELETE___auth_logout) Group Code
 
-/// Start Luncher Core API (users) Group Code
+/// Start Luncher Core API (POST___users) Group Code
 
-class LuncherCoreAPIusersGroup {
+class LuncherCoreAPIPOSTUsersGroup {
   static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
-  static GetUsersPagedCall getUsersPagedCall = GetUsersPagedCall();
-  static AdminCreateUserCall adminCreateUserCall = AdminCreateUserCall();
-  static AdminUpdateUserCall adminUpdateUserCall = AdminUpdateUserCall();
-  static GetUserByUuidCall getUserByUuidCall = GetUserByUuidCall();
-  static AdminSearchUsersCall adminSearchUsersCall = AdminSearchUsersCall();
-  static GetAvailableRolesCall getAvailableRolesCall = GetAvailableRolesCall();
+  static CreateUserCall createUserCall = CreateUserCall();
 }
 
-class GetUsersPagedCall {
-  Future<ApiCallResponse> call({
-    int? size,
-    int? page,
-    String? authorization = '',
-  }) async {
-    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'getUsersPaged',
-      apiUrl: '$baseUrl/admin/users',
-      callType: ApiCallType.GET,
-      headers: {
-        'Authorization': 'Bearer $authorization',
-      },
-      params: {
-        'size': size,
-        'page': page,
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-
-  List<UserStruct>? users(dynamic response) => (getJsonField(
-        response,
-        r'''$.content''',
-        true,
-      ) as List?)
-          ?.withoutNulls
-          .map((x) => UserStruct.maybeFromMap(x))
-          .withoutNulls
-          .toList();
-  int? pageNumber(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.pageable.pageNumber''',
-      ));
-  int? pageSize(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.pageable.pageSize''',
-      ));
-  int? totalPages(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.totalPages''',
-      ));
-  int? totalElements(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.totalElements''',
-      ));
-  bool? isLastPage(dynamic response) => castToType<bool>(getJsonField(
-        response,
-        r'''$.last''',
-      ));
-  bool? isFirstPage(dynamic response) => castToType<bool>(getJsonField(
-        response,
-        r'''$.first''',
-      ));
-  bool? isEmpty(dynamic response) => castToType<bool>(getJsonField(
-        response,
-        r'''$.empty''',
-      ));
-  int? contentSize(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.size''',
-      ));
-}
-
-class AdminCreateUserCall {
+class CreateUserCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
     String? email = '',
     String? firstName = '',
     String? surname = '',
     String? password = '',
-    String? role = 'USER',
+    String? role = '',
     bool? enabled = true,
   }) async {
-    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+    final baseUrl = LuncherCoreAPIPOSTUsersGroup.getBaseUrl();
 
     final ffApiRequestBody = '''
 {
@@ -233,8 +157,8 @@ class AdminCreateUserCall {
   "enabled": $enabled
 }''';
     return ApiManager.instance.makeApiCall(
-      callName: 'adminCreateUser',
-      apiUrl: '$baseUrl/admin/users',
+      callName: 'createUser',
+      apiUrl: '$baseUrl/users',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -252,154 +176,25 @@ class AdminCreateUserCall {
   }
 }
 
-class AdminUpdateUserCall {
-  Future<ApiCallResponse> call({
-    String? userId = '',
-    String? authorization = '',
-    String? email = '',
-    String? firstName = '',
-    String? surname = '',
-    String? password = '',
-    String? role = '',
-    bool? enabled = true,
-  }) async {
-    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+/// End Luncher Core API (POST___users) Group Code
 
-    final ffApiRequestBody = '''
-{
-  "email": "$email",
-  "firstName": "$firstName",
-  "surname": "$surname",
-  "password": "$password",
-  "role": "$role",
-  "enabled": $enabled
-}''';
-    return FFApiInterceptor.makeApiCall(
-      ApiCallOptions(
-        callName: 'adminUpdateUser',
-        apiUrl: '$baseUrl/admin/users/$userId',
-        callType: ApiCallType.PATCH,
-        headers: {
-          'Authorization': 'Bearer $authorization',
-        },
-        params: const {},
-        body: ffApiRequestBody,
-        bodyType: BodyType.JSON,
-        returnBody: true,
-        encodeBodyUtf8: false,
-        decodeUtf8: false,
-        cache: false,
-        isStreamingApi: false,
-        alwaysAllowBody: false,
-      ),
-      interceptors,
-    );
-  }
+/// Start Luncher Core API (GET___users_available_roles) Group Code
 
-  static final interceptors = [
-    RemoveNullOrEmptyValues(),
-  ];
-}
-
-class GetUserByUuidCall {
-  Future<ApiCallResponse> call({
-    String? uuid = '',
-    String? authorization = '',
-  }) async {
-    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'getUserByUuid',
-      apiUrl: '$baseUrl/admin/users/$uuid',
-      callType: ApiCallType.GET,
-      headers: {
-        'Authorization': 'Bearer $authorization',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class AdminSearchUsersCall {
-  Future<ApiCallResponse> call({
-    String? query = '',
-    int? size,
-    int? page,
-    String? authorization = '',
-  }) async {
-    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'adminSearchUsers',
-      apiUrl: '$baseUrl/admin/users/search',
-      callType: ApiCallType.GET,
-      headers: {
-        'Authorization': 'Bearer $authorization',
-      },
-      params: {
-        'query': query,
-        'size': size,
-        'page': page,
-      },
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-
-  List<UserStruct>? users(dynamic response) => (getJsonField(
-        response,
-        r'''$.content''',
-        true,
-      ) as List?)
-          ?.withoutNulls
-          .map((x) => UserStruct.maybeFromMap(x))
-          .withoutNulls
-          .toList();
-  int? pageNumber(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.pageable.pageNumber''',
-      ));
-  int? pageSize(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.pageable.pageSize''',
-      ));
-  int? totalPages(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.totalPages''',
-      ));
-  int? totalElements(dynamic response) => castToType<int>(getJsonField(
-        response,
-        r'''$.totalElements''',
-      ));
-  bool? isFirst(dynamic response) => castToType<bool>(getJsonField(
-        response,
-        r'''$.first''',
-      ));
-  bool? isLast(dynamic response) => castToType<bool>(getJsonField(
-        response,
-        r'''$.last''',
-      ));
+class LuncherCoreAPIGETUsersAvailableRolesGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetAvailableRolesCall getAvailableRolesCall = GetAvailableRolesCall();
 }
 
 class GetAvailableRolesCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
   }) async {
-    final baseUrl = LuncherCoreAPIusersGroup.getBaseUrl();
+    final baseUrl = LuncherCoreAPIGETUsersAvailableRolesGroup.getBaseUrl();
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAvailableRoles',
-      apiUrl: '$baseUrl/admin/users/available_roles',
+      apiUrl: '$baseUrl/users/available_roles',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $authorization',
@@ -425,7 +220,135 @@ class GetAvailableRolesCall {
           .toList();
 }
 
-/// End Luncher Core API (users) Group Code
+/// End Luncher Core API (GET___users_available_roles) Group Code
+
+/// Start Luncher Core API (PUT___users_userId) Group Code
+
+class LuncherCoreAPIPUTUsersUserIdGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static UpdateUserCall updateUserCall = UpdateUserCall();
+}
+
+class UpdateUserCall {
+  Future<ApiCallResponse> call({
+    String? userId = '',
+    String? authorization = '',
+    String? email = '',
+    String? firstName = '',
+    String? surname = '',
+    String? password = '',
+    String? role = '',
+    bool? enabled,
+  }) async {
+    final baseUrl = LuncherCoreAPIPUTUsersUserIdGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "email": "$email",
+  "firstName": "$firstName",
+  "surname": "$surname",
+  "password": "$password",
+  "role": "$role",
+  "enabled": $enabled
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'updateUser',
+      apiUrl: '$baseUrl/users/$userId',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (PUT___users_userId) Group Code
+
+/// Start Luncher Core API (GET___users_search) Group Code
+
+class LuncherCoreAPIGETUsersSearchGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static AdminSearchUsersCall adminSearchUsersCall = AdminSearchUsersCall();
+}
+
+class AdminSearchUsersCall {
+  Future<ApiCallResponse> call({
+    String? query = '',
+    int? size,
+    int? page,
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIGETUsersSearchGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'adminSearchUsers',
+      apiUrl: '$baseUrl/users/search',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {
+        'query': query,
+        'size': size,
+        'page': page,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___users_search) Group Code
+
+/// Start Luncher Core API (GET___users_uuid) Group Code
+
+class LuncherCoreAPIGETUsersUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetUserByUuidCall getUserByUuidCall = GetUserByUuidCall();
+}
+
+class GetUserByUuidCall {
+  Future<ApiCallResponse> call({
+    String? uuid = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIGETUsersUuidGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getUserByUuid',
+      apiUrl: '$baseUrl/users/$uuid',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___users_uuid) Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

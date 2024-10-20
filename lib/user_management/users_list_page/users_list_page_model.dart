@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'users_list_page_widget.dart' show UsersListPageWidget;
@@ -8,7 +9,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 class UsersListPageModel extends FlutterFlowModel<UsersListPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for searchField widget.
   FocusNode? searchFieldFocusNode;
   TextEditingController? searchFieldTextController;
@@ -23,7 +23,6 @@ class UsersListPageModel extends FlutterFlowModel<UsersListPageWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     searchFieldFocusNode?.dispose();
     searchFieldTextController?.dispose();
 
@@ -72,9 +71,11 @@ class UsersListPageModel extends FlutterFlowModel<UsersListPageWidget> {
   void usersListViewAdminSearchUsersPage(ApiPagingParams nextPageMarker) =>
       usersListViewApiCall!(nextPageMarker)
           .then((usersListViewAdminSearchUsersResponse) {
-        final pageItems = (LuncherCoreAPIusersGroup.adminSearchUsersCall.users(
-                  usersListViewAdminSearchUsersResponse.jsonBody,
-                )! ??
+        final pageItems = ((usersListViewAdminSearchUsersResponse.jsonBody
+                        .toList()
+                        .map<UserStruct?>(UserStruct.maybeFromMap)
+                        .toList() as Iterable<UserStruct?>)
+                    .withoutNulls ??
                 [])
             .toList() as List;
         final newNumItems = nextPageMarker.numItems + pageItems.length;
