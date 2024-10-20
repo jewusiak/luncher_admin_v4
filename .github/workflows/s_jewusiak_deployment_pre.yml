@@ -124,7 +124,7 @@ jobs:
       - name: Replace placeholders in proxy config
         run: |
           sed -i -e 's!SRVNAME1!${{ env.BASE_DOMAIN }}!g' ./.deployment/admin_pre_s.subdomain.conf
-          sed -i -e 's!PRXYPASS1!http://${{ env.APP_NAME }}${{ env.ENV_SUFFIX }}:8080!g' ./.deployment/admin_pre_s.subdomain.conf
+          sed -i -e 's!PRXYPASS1!http://${{ env.APP_NAME }}${{ env.ENV_SUFFIX }}:80!g' ./.deployment/admin_pre_s.subdomain.conf
 
       - name: Insert proxy config
         run: |
