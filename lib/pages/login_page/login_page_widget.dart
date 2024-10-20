@@ -52,7 +52,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'Zaloguj się do panelu (luncher-admin)',
+            'Zaloguj się do panelu (Luncher - Admin)',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
