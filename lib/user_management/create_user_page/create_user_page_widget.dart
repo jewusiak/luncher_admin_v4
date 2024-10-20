@@ -41,7 +41,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
     _model.newPasswordInputTextController ??= TextEditingController();
     _model.newPasswordInputFocusNode ??= FocusNode();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -54,9 +54,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -339,7 +337,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             ),
                           ),
                           FutureBuilder<ApiCallResponse>(
-                            future: LuncherCoreAPIusersGroup
+                            future: LuncherCoreAPIGETUsersAvailableRolesGroup
                                 .getAvailableRolesCall
                                 .call(
                               authorization: currentAuthenticationToken,
@@ -367,7 +365,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                     _model.userRoleSelectorValueController ??=
                                         FormFieldController<String>(
                                   _model.userRoleSelectorValue ??=
-                                      LuncherCoreAPIusersGroup
+                                      LuncherCoreAPIGETUsersAvailableRolesGroup
                                           .getAvailableRolesCall
                                           .roles(
                                             userRoleSelectorGetAvailableRolesResponse
@@ -375,13 +373,14 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                           )
                                           ?.last,
                                 ),
-                                options: LuncherCoreAPIusersGroup
-                                    .getAvailableRolesCall
-                                    .roles(
+                                options:
+                                    LuncherCoreAPIGETUsersAvailableRolesGroup
+                                        .getAvailableRolesCall
+                                        .roles(
                                   userRoleSelectorGetAvailableRolesResponse
                                       .jsonBody,
                                 )!,
-                                onChanged: (val) => setState(
+                                onChanged: (val) => safeSetState(
                                     () => _model.userRoleSelectorValue = val),
                                 width: 300.0,
                                 height: 56.0,
@@ -486,7 +485,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   suffixIcon: InkWell(
-                                    onTap: () => setState(
+                                    onTap: () => safeSetState(
                                       () => _model.newPasswordInputVisibility =
                                           !_model.newPasswordInputVisibility,
                                     ),
@@ -513,7 +512,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                           ),
                           FFButtonWidget(
                             onPressed: () async {
-                              setState(() {
+                              safeSetState(() {
                                 _model.newPasswordInputTextController?.text =
                                     random_data.randomString(
                                   16,
@@ -580,8 +579,8 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             child: Checkbox(
                               value: _model.userEnabledCheckboxValue ??= true,
                               onChanged: (newValue) async {
-                                setState(() => _model.userEnabledCheckboxValue =
-                                    newValue!);
+                                safeSetState(() => _model
+                                    .userEnabledCheckboxValue = newValue!);
                               },
                               side: BorderSide(
                                 width: 2,
@@ -610,7 +609,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                         onPressed: () async {
                           var shouldSetState = false;
                           _model.createCallResult =
-                              await LuncherCoreAPIusersGroup.adminCreateUserCall
+                              await LuncherCoreAPIPOSTUsersGroup.createUserCall
                                   .call(
                             authorization: currentAuthenticationToken,
                             email: _model.emailInputTextController.text,
@@ -654,7 +653,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                     FlutterFlowTheme.of(context).secondary,
                               ),
                             );
-                            if (shouldSetState) setState(() {});
+                            if (shouldSetState) safeSetState(() {});
                             return;
                           } else {
                             if ((_model.createCallResult?.statusCode ?? 200) ==
@@ -690,11 +689,11 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                               );
                             }
 
-                            if (shouldSetState) setState(() {});
+                            if (shouldSetState) safeSetState(() {});
                             return;
                           }
 
-                          if (shouldSetState) setState(() {});
+                          if (shouldSetState) safeSetState(() {});
                         },
                         text: 'Stwórz użytkownika',
                         options: FFButtonOptions(

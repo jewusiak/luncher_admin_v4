@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 class UserDetailsPageModel extends FlutterFlowModel<UserDetailsPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for firstnameInput widget.
   FocusNode? firstnameInputFocusNode;
   TextEditingController? firstnameInputTextController;
@@ -33,7 +32,7 @@ class UserDetailsPageModel extends FlutterFlowModel<UserDetailsPageWidget> {
       newPasswordInputTextControllerValidator;
   // State field(s) for userEnabledCheckbox widget.
   bool? userEnabledCheckboxValue;
-  // Stores action output result for [Backend Call - API (adminUpdateUser)] action in Button widget.
+  // Stores action output result for [Backend Call - API (updateUser)] action in Button widget.
   ApiCallResponse? updateCallResult;
   Completer<ApiCallResponse>? apiRequestCompleter;
 
@@ -44,7 +43,6 @@ class UserDetailsPageModel extends FlutterFlowModel<UserDetailsPageWidget> {
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     firstnameInputFocusNode?.dispose();
     firstnameInputTextController?.dispose();
 

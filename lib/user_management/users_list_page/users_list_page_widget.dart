@@ -29,7 +29,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
     _model.searchFieldTextController ??= TextEditingController();
     _model.searchFieldFocusNode ??= FocusNode();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -42,9 +42,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -103,7 +101,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.searchFieldTextController',
                               const Duration(milliseconds: 2000),
-                              () => setState(() {}),
+                              () => safeSetState(() {}),
                             ),
                             autofocus: true,
                             obscureText: false,
@@ -155,7 +153,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                                       onTap: () async {
                                         _model.searchFieldTextController
                                             ?.clear();
-                                        setState(() {});
+                                        safeSetState(() {});
                                       },
                                       child: const Icon(
                                         Icons.clear,
@@ -187,7 +185,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                           size: 24.0,
                         ),
                         onPressed: () async {
-                          setState(() =>
+                          safeSetState(() =>
                               _model.usersListViewPagingController?.refresh());
                           await _model.waitForOnePageForUsersListView();
                         },
@@ -216,18 +214,19 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                 ),
                 RefreshIndicator(
                   onRefresh: () async {
-                    setState(
+                    safeSetState(
                         () => _model.usersListViewPagingController?.refresh());
                     await _model.waitForOnePageForUsersListView();
                   },
                   child: PagedListView<ApiPagingParams, dynamic>(
                     pagingController: _model.setUsersListViewController(
-                      (nextPageMarker) =>
-                          LuncherCoreAPIusersGroup.adminSearchUsersCall.call(
-                        query: _model.searchFieldTextController.text,
-                        size: 10,
-                        page: nextPageMarker.nextPageNumber,
+                      (nextPageMarker) => LuncherCoreAPIGETUsersSearchGroup
+                          .adminSearchUsersCall
+                          .call(
                         authorization: currentAuthenticationToken,
+                        query: _model.searchFieldTextController.text,
+                        size: 20,
+                        page: nextPageMarker.nextPageNumber,
                       ),
                     ),
                     padding: EdgeInsets.zero,
