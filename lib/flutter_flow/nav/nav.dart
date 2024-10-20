@@ -81,47 +81,49 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/',
           builder: (context, _) =>
               appStateNotifier.loggedIn ? const HomePageWidget() : const LoginPageWidget(),
-        ),
-        FFRoute(
-          name: 'LoginPage',
-          path: '/login',
-          builder: (context, params) => const LoginPageWidget(),
-        ),
-        FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          requireAuth: true,
-          builder: (context, params) => const HomePageWidget(),
-        ),
-        FFRoute(
-          name: 'UsersListPage',
-          path: '/usersListPage',
-          requireAuth: true,
-          builder: (context, params) => const UsersListPageWidget(),
-        ),
-        FFRoute(
-          name: 'PlacesListPage',
-          path: '/placesListPage',
-          requireAuth: true,
-          builder: (context, params) => const PlacesListPageWidget(),
-        ),
-        FFRoute(
-          name: 'UserDetailsPage',
-          path: '/userDetailsPage',
-          requireAuth: true,
-          builder: (context, params) => UserDetailsPageWidget(
-            userId: params.getParam(
-              'userId',
-              ParamType.String,
+          routes: [
+            FFRoute(
+              name: 'LoginPage',
+              path: 'login',
+              builder: (context, params) => const LoginPageWidget(),
             ),
-          ),
+            FFRoute(
+              name: 'HomePage',
+              path: 'homePage',
+              requireAuth: true,
+              builder: (context, params) => const HomePageWidget(),
+            ),
+            FFRoute(
+              name: 'UsersListPage',
+              path: 'usersListPage',
+              requireAuth: true,
+              builder: (context, params) => const UsersListPageWidget(),
+            ),
+            FFRoute(
+              name: 'PlacesListPage',
+              path: 'placesListPage',
+              requireAuth: true,
+              builder: (context, params) => const PlacesListPageWidget(),
+            ),
+            FFRoute(
+              name: 'UserDetailsPage',
+              path: 'userDetailsPage',
+              requireAuth: true,
+              builder: (context, params) => UserDetailsPageWidget(
+                userId: params.getParam(
+                  'userId',
+                  ParamType.String,
+                ),
+              ),
+            ),
+            FFRoute(
+              name: 'CreateUserPage',
+              path: 'createUser',
+              requireAuth: true,
+              builder: (context, params) => const CreateUserPageWidget(),
+            )
+          ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
-        FFRoute(
-          name: 'CreateUserPage',
-          path: '/createUser',
-          requireAuth: true,
-          builder: (context, params) => const CreateUserPageWidget(),
-        )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
