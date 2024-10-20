@@ -21,4 +21,4 @@ jobs:
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Automatic pull request
+          title: Automatic PR (merge flutterflow to master)
