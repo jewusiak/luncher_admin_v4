@@ -13,15 +13,12 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
-      
-      - name: Run the Action
+        with: 
+          fetch-depth: 1000
+      - name: Create pull request
         uses: devops-infra/action-pull-request@v0.5.5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: flutterflow
-          target_branch: master
           title: Automatic PR (merge flutterflow to master)
-          body: "**Automated pull request**"
-          

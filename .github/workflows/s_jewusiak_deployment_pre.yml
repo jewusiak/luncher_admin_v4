@@ -40,7 +40,7 @@ jobs:
 
       - name: Build docker Image
         id: docker-build
-        run: 'docker build -t ${{ env.APP_NAME }}${{ env.ENV_SUFFIX }}:${{ env.VERSION }} --file=Dockerfile-s_pre .'
+        run: 'docker build -t ${{ env.APP_NAME }}${{ env.ENV_SUFFIX }}:${{ env.VERSION }} --file=".deployment/Dockerfile-s_pre" .'
 
       - name: Save Docker image
         run: 'docker save --output /tmp/${{ env.APP_NAME }}${{ env.ENV_SUFFIX }}_image.tar ${{ env.APP_NAME }}${{ env.ENV_SUFFIX }}:${{ env.VERSION }}'
