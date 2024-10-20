@@ -20,4 +20,4 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with: 
           title: "Automatic PR (merge flutterflow to master)"
-          branch: flutterflow
+          branch: master
