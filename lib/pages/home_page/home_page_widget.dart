@@ -119,24 +119,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 onTap: () async {
                   context.pushNamed('UsersListPage');
                 },
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.person,
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.person,
+                    ),
+                    title: Text(
+                      'Użytkownicy',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: false,
                   ),
-                  title: Text(
-                    'Użytkownicy',
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Outfit',
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 20.0,
-                  ),
-                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  dense: false,
                 ),
               ),
               InkWell(
@@ -147,24 +150,58 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 onTap: () async {
                   context.pushNamed('PlacesListPage');
                 },
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.home,
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.home,
+                    ),
+                    title: Text(
+                      'Lokale',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: false,
                   ),
-                  title: Text(
-                    'Lokale',
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Outfit',
-                          letterSpacing: 0.0,
-                        ),
+                ),
+              ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed('PlaceTypesListPage');
+                },
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.style_rounded,
+                    ),
+                    title: Text(
+                      'Typy lokali',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: false,
                   ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 20.0,
-                  ),
-                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  dense: false,
                 ),
               ),
               const Spacer(),
@@ -187,24 +224,27 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                   context.goNamedAuth('LoginPage', context.mounted);
                 },
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.logout,
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.logout,
+                    ),
+                    title: Text(
+                      'Wyloguj się',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: false,
                   ),
-                  title: Text(
-                    'Wyloguj się',
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Outfit',
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 20.0,
-                  ),
-                  tileColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  dense: false,
                 ),
               ),
             ],

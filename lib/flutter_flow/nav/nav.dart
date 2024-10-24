@@ -100,12 +100,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => const UsersListPageWidget(),
             ),
             FFRoute(
-              name: 'PlacesListPage',
-              path: 'placesListPage',
-              requireAuth: true,
-              builder: (context, params) => const PlacesListPageWidget(),
-            ),
-            FFRoute(
               name: 'UserDetailsPage',
               path: 'userDetailsPage',
               requireAuth: true,
@@ -121,6 +115,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'createUser',
               requireAuth: true,
               builder: (context, params) => const CreateUserPageWidget(),
+            ),
+            FFRoute(
+              name: 'PlacesListPage',
+              path: 'placesListPage',
+              requireAuth: true,
+              builder: (context, params) => const PlacesListPageWidget(),
+            ),
+            FFRoute(
+              name: 'PlaceTypesListPage',
+              path: 'placeTypesListPage',
+              requireAuth: true,
+              builder: (context, params) => const PlaceTypesListPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

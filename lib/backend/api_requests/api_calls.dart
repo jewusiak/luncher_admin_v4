@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
+import 'interceptors.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
@@ -349,6 +350,290 @@ class GetUserByUuidCall {
 }
 
 /// End Luncher Core API (GET___users_uuid) Group Code
+
+/// Start Luncher Core API (POST___place_search) Group Code
+
+class LuncherCoreAPIPOSTPlaceSearchGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static SearchQueryCall searchQueryCall = SearchQueryCall();
+}
+
+class SearchQueryCall {
+  Future<ApiCallResponse> call({
+    String? textQuery,
+    String? placeTypeIdentifier,
+    String? openAtTime,
+    String? openAtDay,
+    double? locationLatitude,
+    double? locationLongitude,
+    double? locationRadius,
+    String? hasLunchServedAt,
+    String? owner,
+    bool? enabled,
+    int? page = 0,
+    int? size = 10,
+    String? authorization = '',
+  }) async {
+    textQuery ??= FFAppConstants.nullvalue;
+    placeTypeIdentifier ??= FFAppConstants.nullvalue;
+    openAtTime ??= FFAppConstants.nullvalue;
+    openAtDay ??= FFAppConstants.nullvalue;
+    locationLatitude ??= FFAppConstants.nullvalueDOUBLE;
+    locationLongitude ??= FFAppConstants.nullvalueDOUBLE;
+    locationRadius ??= FFAppConstants.nullvalueDOUBLE;
+    hasLunchServedAt ??= FFAppConstants.nullvalue;
+    owner ??= FFAppConstants.nullvalue;
+    final baseUrl = LuncherCoreAPIPOSTPlaceSearchGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "textQuery": "$textQuery",
+  "placeTypeIdentifier": "$placeTypeIdentifier",
+  "openAt": {
+    "time": "$openAtTime",
+    "day": "$openAtDay"
+  },
+  "location": {
+    "latitude": $locationLatitude,
+    "longitude": $locationLongitude,
+    "radius": $locationRadius
+  },
+  "hasLunchServedAt": "$hasLunchServedAt",
+  "owner": "$owner",
+  "enabled": $enabled,
+  "page": $page,
+  "size": $size
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'searchQuery',
+        apiUrl: '$baseUrl/place/search',
+        callType: ApiCallType.POST,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (POST___place_search) Group Code
+
+/// Start Luncher Core API (GET___placetype) Group Code
+
+class LuncherCoreAPIGETPlacetypeGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetAllPlaceTypesCall getAllPlaceTypesCall = GetAllPlaceTypesCall();
+}
+
+class GetAllPlaceTypesCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIGETPlacetypeGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getAllPlaceTypes',
+      apiUrl: '$baseUrl/placetype',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___placetype) Group Code
+
+/// Start Luncher Core API (DELETE___placetype_identifier) Group Code
+
+class LuncherCoreAPIDELETEPlacetypeIdentifierGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static DeletePlaceTypeCall deletePlaceTypeCall = DeletePlaceTypeCall();
+}
+
+class DeletePlaceTypeCall {
+  Future<ApiCallResponse> call({
+    String? identifier = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIDELETEPlacetypeIdentifierGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'deletePlaceType',
+      apiUrl: '$baseUrl/placetype/$identifier',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (DELETE___placetype_identifier) Group Code
+
+/// Start Luncher Core API (POST___placetype) Group Code
+
+class LuncherCoreAPIPOSTPlacetypeGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static CreatePlaceTypeCall createPlaceTypeCall = CreatePlaceTypeCall();
+}
+
+class CreatePlaceTypeCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+    String? idenitifier = '',
+    String? iconName = '',
+    String? name = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIPOSTPlacetypeGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "identifier": "$idenitifier",
+  "iconName": "$iconName",
+  "name": "$name"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'createPlaceType',
+      apiUrl: '$baseUrl/placetype',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (POST___placetype) Group Code
+
+/// Start Luncher Core API (PUT___placetype_identifier) Group Code
+
+class LuncherCoreAPIPUTPlacetypeIdentifierGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static UpdatePlaceTypeCall updatePlaceTypeCall = UpdatePlaceTypeCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class UpdatePlaceTypeCall {
+  Future<ApiCallResponse> call({
+    String? identifier = '',
+    String? authorization = '',
+    String? iconName = '',
+    String? name = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIPUTPlacetypeIdentifierGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "identifier": "$identifier",
+  "iconName": "$iconName",
+  "name": "$name"
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'updatePlaceType',
+        apiUrl: '$baseUrl/placetype/$identifier',
+        callType: ApiCallType.PUT,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: false,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      LuncherCoreAPIPUTPlacetypeIdentifierGroup.interceptors,
+    );
+  }
+}
+
+/// End Luncher Core API (PUT___placetype_identifier) Group Code
+
+/// Start Luncher Core API (GET___placetype_identifier) Group Code
+
+class LuncherCoreAPIGETPlacetypeIdentifierGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetByIdentifierCall getByIdentifierCall = GetByIdentifierCall();
+}
+
+class GetByIdentifierCall {
+  Future<ApiCallResponse> call({
+    String? identifier = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIGETPlacetypeIdentifierGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getByIdentifier',
+      apiUrl: '$baseUrl/placetype/$identifier',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___placetype_identifier) Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;
