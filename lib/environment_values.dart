@@ -21,6 +21,7 @@ class FFDevEnvironmentValues {
           await rootBundle.loadString(environmentValuesPath);
       final data = await json.decode(response);
       _backendurl = data['backendurl'];
+      _mapsPlacesKey = data['mapsPlacesKey'];
     } catch (e) {
       print('Error loading environment values: $e');
     }
@@ -28,4 +29,7 @@ class FFDevEnvironmentValues {
 
   String _backendurl = '';
   String get backendurl => _backendurl;
+
+  String _mapsPlacesKey = '';
+  String get mapsPlacesKey => _mapsPlacesKey;
 }

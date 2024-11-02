@@ -21,12 +21,12 @@ class PlaceTypeDetailsDialogModel
   FocusNode? iconNameInputFocusNode;
   TextEditingController? iconNameInputTextController;
   String? Function(BuildContext, String?)? iconNameInputTextControllerValidator;
+  // Stores action output result for [Backend Call - API (deletePlaceType)] action in Button widget.
+  ApiCallResponse? deleteResult;
   // Stores action output result for [Backend Call - API (createPlaceType)] action in Button widget.
   ApiCallResponse? createResult;
   // Stores action output result for [Backend Call - API (updatePlaceType)] action in Button widget.
   ApiCallResponse? updateResult;
-  // Stores action output result for [Backend Call - API (deletePlaceType)] action in Button widget.
-  ApiCallResponse? deleteResult;
 
   @override
   void initState(BuildContext context) {}

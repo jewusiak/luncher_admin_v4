@@ -11,3 +11,5 @@ export '/places_management/places_list_page/places_list_page_widget.dart'
     show PlacesListPageWidget;
 export '/place_types/place_types_list_page/place_types_list_page_widget.dart'
     show PlaceTypesListPageWidget;
+export '/places_management/place_details_page/place_details_page_widget.dart'
+    show PlaceDetailsPageWidget;

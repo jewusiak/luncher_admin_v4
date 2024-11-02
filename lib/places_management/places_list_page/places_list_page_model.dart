@@ -8,6 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
+  ///  Local state fields for this page.
+
+  List<UserStruct> owners = [];
+  void addToOwners(UserStruct item) => owners.add(item);
+  void removeFromOwners(UserStruct item) => owners.remove(item);
+  void removeAtIndexFromOwners(int index) => owners.removeAt(index);
+  void insertAtIndexInOwners(int index, UserStruct item) =>
+      owners.insert(index, item);
+  void updateOwnersAtIndex(int index, Function(UserStruct) updateFn) =>
+      owners[index] = updateFn(owners[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for searchField widget.
@@ -17,6 +28,18 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
   // State field(s) for PlaceTypeSelector widget.
   String? placeTypeSelectorValue;
   FormFieldController<String>? placeTypeSelectorValueController;
+  // State field(s) for PlaceEnabledSelector widget.
+  String? placeEnabledSelectorValue;
+  FormFieldController<String>? placeEnabledSelectorValueController;
+  // State field(s) for OwnerTextField widget.
+  final ownerTextFieldKey = GlobalKey();
+  FocusNode? ownerTextFieldFocusNode;
+  TextEditingController? ownerTextFieldTextController;
+  String? ownerTextFieldSelectedOption;
+  String? Function(BuildContext, String?)?
+      ownerTextFieldTextControllerValidator;
+  // Stores action output result for [Backend Call - API (adminSearchUsers)] action in OwnerTextField widget.
+  ApiCallResponse? ownersSearchResult;
   // State field(s) for PlacesListView widget.
 
   PagingController<ApiPagingParams, dynamic>? placesListViewPagingController;
@@ -29,6 +52,8 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
   void dispose() {
     searchFieldFocusNode?.dispose();
     searchFieldTextController?.dispose();
+
+    ownerTextFieldFocusNode?.dispose();
 
     placesListViewPagingController?.dispose();
   }
@@ -77,9 +102,8 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
           .then((placesListViewSearchQueryResponse) {
         final pageItems = ((placesListViewSearchQueryResponse.jsonBody
                         .toList()
-                        .map<PlaceFullResponseStruct?>(
-                            PlaceFullResponseStruct.maybeFromMap)
-                        .toList() as Iterable<PlaceFullResponseStruct?>)
+                        .map<PlaceDtoStruct?>(PlaceDtoStruct.maybeFromMap)
+                        .toList() as Iterable<PlaceDtoStruct?>)
                     .withoutNulls ??
                 [])
             .toList() as List;

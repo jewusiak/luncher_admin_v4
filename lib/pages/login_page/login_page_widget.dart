@@ -214,7 +214,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         var shouldSetState = false;
                         Function() navigate = () {};
                         // login call
-                        _model.apiResultq86 =
+                        _model.authResult =
                             await LuncherCoreAPIPOSTAuthLoginGroup.loginCall
                                 .call(
                           email: _model.emailTextController.text,
@@ -222,7 +222,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         );
 
                         shouldSetState = true;
-                        if ((_model.apiResultq86?.succeeded ?? true)) {
+                        if ((_model.authResult?.succeeded ?? true)) {
                           // Pobranie user info
                           _model.profileOutput =
                               await LuncherCoreAPIGETProfileGroup.getProfileCall
@@ -230,7 +230,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             authorization: LuncherCoreAPIPOSTAuthLoginGroup
                                 .loginCall
                                 .accessToken(
-                              (_model.apiResultq86?.jsonBody ?? ''),
+                              (_model.authResult?.jsonBody ?? ''),
                             ),
                           );
 
@@ -241,13 +241,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               authenticationToken:
                                   LuncherCoreAPIPOSTAuthLoginGroup.loginCall
                                       .accessToken(
-                                (_model.apiResultq86?.jsonBody ?? ''),
+                                (_model.authResult?.jsonBody ?? ''),
                               ),
                               tokenExpiration: dateTimeFromSecondsSinceEpoch(
                                   valueOrDefault<int>(
                                 LuncherCoreAPIPOSTAuthLoginGroup.loginCall
                                     .tokenLifetime(
-                                  (_model.apiResultq86?.jsonBody ?? ''),
+                                  (_model.authResult?.jsonBody ?? ''),
                                 ),
                                 0,
                               )),

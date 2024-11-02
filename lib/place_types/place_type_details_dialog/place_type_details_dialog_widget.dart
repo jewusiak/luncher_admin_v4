@@ -196,7 +196,7 @@ class _PlaceTypeDetailsDialogWidgetState
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: Text(
-                              'Identifier',
+                              'Identyfikator',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -284,7 +284,7 @@ class _PlaceTypeDetailsDialogWidgetState
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: Text(
-                              'Icon Name',
+                              'Nazwa ikony (Material UI)',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -370,67 +370,9 @@ class _PlaceTypeDetailsDialogWidgetState
                     children: [
                       FFButtonWidget(
                         onPressed: () async {
-                          if (widget.isNew) {
-                            _model.createResult =
-                                await LuncherCoreAPIPOSTPlacetypeGroup
-                                    .createPlaceTypeCall
-                                    .call(
-                              authorization: currentAuthenticationToken,
-                              idenitifier:
-                                  _model.identifierInputTextController.text,
-                              iconName: _model.iconNameInputTextController.text,
-                              name: _model.nameInputTextController.text,
-                            );
-                          } else {
-                            _model.updateResult =
-                                await LuncherCoreAPIPUTPlacetypeIdentifierGroup
-                                    .updatePlaceTypeCall
-                                    .call(
-                              authorization: currentAuthenticationToken,
-                              identifier:
-                                  _model.identifierInputTextController.text,
-                              iconName: _model.iconNameInputTextController.text,
-                              name: _model.nameInputTextController.text,
-                            );
-                          }
-
-                          if ((_model.createResult?.succeeded ?? true) ||
-                              (_model.updateResult?.succeeded ?? true)) {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Pomyślnie zapisano!',
-                                  style: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
-                                ),
-                                duration: const Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).secondary,
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Błąd w zapisie!',
-                                  style: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
-                                ),
-                                duration: const Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).secondary,
-                              ),
-                            );
-                          }
-
-                          safeSetState(() {});
+                          Navigator.pop(context);
                         },
-                        text: 'Save',
+                        text: 'Anuluj',
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
@@ -438,16 +380,18 @@ class _PlaceTypeDetailsDialogWidgetState
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    letterSpacing: 0.0,
-                                  ),
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                fontFamily: 'Readex Pro',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                letterSpacing: 0.0,
+                              ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -508,7 +452,7 @@ class _PlaceTypeDetailsDialogWidgetState
 
                                 if (shouldSetState) safeSetState(() {});
                               },
-                        text: 'Delete',
+                        text: 'Usuń',
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
@@ -533,9 +477,67 @@ class _PlaceTypeDetailsDialogWidgetState
                       ),
                       FFButtonWidget(
                         onPressed: () async {
-                          Navigator.pop(context);
+                          if (widget.isNew) {
+                            _model.createResult =
+                                await LuncherCoreAPIPOSTPlacetypeGroup
+                                    .createPlaceTypeCall
+                                    .call(
+                              authorization: currentAuthenticationToken,
+                              idenitifier:
+                                  _model.identifierInputTextController.text,
+                              iconName: _model.iconNameInputTextController.text,
+                              name: _model.nameInputTextController.text,
+                            );
+                          } else {
+                            _model.updateResult =
+                                await LuncherCoreAPIPUTPlacetypeIdentifierGroup
+                                    .updatePlaceTypeCall
+                                    .call(
+                              authorization: currentAuthenticationToken,
+                              identifier:
+                                  _model.identifierInputTextController.text,
+                              iconName: _model.iconNameInputTextController.text,
+                              name: _model.nameInputTextController.text,
+                            );
+                          }
+
+                          if ((_model.createResult?.succeeded ?? true) ||
+                              (_model.updateResult?.succeeded ?? true)) {
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Pomyślnie zapisano!',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: const Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Błąd w zapisie!',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: const Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                          }
+
+                          safeSetState(() {});
                         },
-                        text: 'Cancel',
+                        text: 'Zapisz',
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
@@ -543,18 +545,16 @@ class _PlaceTypeDetailsDialogWidgetState
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Readex Pro',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                              ),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: FlutterFlowTheme.of(context).info,
+                                    letterSpacing: 0.0,
+                                  ),
                           elevation: 0.0,
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),

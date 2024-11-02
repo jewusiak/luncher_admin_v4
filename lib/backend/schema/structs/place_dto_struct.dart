@@ -4,8 +4,8 @@
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class PlaceFullResponseStruct extends BaseStruct {
-  PlaceFullResponseStruct({
+class PlaceDtoStruct extends BaseStruct {
+  PlaceDtoStruct({
     String? id,
     String? name,
     String? longName,
@@ -190,8 +190,7 @@ class PlaceFullResponseStruct extends BaseStruct {
 
   bool hasEnabled() => _enabled != null;
 
-  static PlaceFullResponseStruct fromMap(Map<String, dynamic> data) =>
-      PlaceFullResponseStruct(
+  static PlaceDtoStruct fromMap(Map<String, dynamic> data) => PlaceDtoStruct(
         id: data['id'] as String?,
         name: data['name'] as String?,
         longName: data['longName'] as String?,
@@ -220,9 +219,8 @@ class PlaceFullResponseStruct extends BaseStruct {
         enabled: data['enabled'] as bool?,
       );
 
-  static PlaceFullResponseStruct? maybeFromMap(dynamic data) => data is Map
-      ? PlaceFullResponseStruct.fromMap(data.cast<String, dynamic>())
-      : null;
+  static PlaceDtoStruct? maybeFromMap(dynamic data) =>
+      data is Map ? PlaceDtoStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
         'id': _id,
@@ -319,9 +317,8 @@ class PlaceFullResponseStruct extends BaseStruct {
         ),
       }.withoutNulls;
 
-  static PlaceFullResponseStruct fromSerializableMap(
-          Map<String, dynamic> data) =>
-      PlaceFullResponseStruct(
+  static PlaceDtoStruct fromSerializableMap(Map<String, dynamic> data) =>
+      PlaceDtoStruct(
         id: deserializeParam(
           data['id'],
           ParamType.String,
@@ -417,12 +414,12 @@ class PlaceFullResponseStruct extends BaseStruct {
       );
 
   @override
-  String toString() => 'PlaceFullResponseStruct(${toMap()})';
+  String toString() => 'PlaceDtoStruct(${toMap()})';
 
   @override
   bool operator ==(Object other) {
     const listEquality = ListEquality();
-    return other is PlaceFullResponseStruct &&
+    return other is PlaceDtoStruct &&
         id == other.id &&
         name == other.name &&
         longName == other.longName &&
@@ -464,7 +461,7 @@ class PlaceFullResponseStruct extends BaseStruct {
       ]);
 }
 
-PlaceFullResponseStruct createPlaceFullResponseStruct({
+PlaceDtoStruct createPlaceDtoStruct({
   String? id,
   String? name,
   String? longName,
@@ -480,7 +477,7 @@ PlaceFullResponseStruct createPlaceFullResponseStruct({
   UserIdDtoStruct? owner,
   bool? enabled,
 }) =>
-    PlaceFullResponseStruct(
+    PlaceDtoStruct(
       id: id,
       name: name,
       longName: longName,
