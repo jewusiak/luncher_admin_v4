@@ -127,6 +127,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'placeTypesListPage',
               requireAuth: true,
               builder: (context, params) => const PlaceTypesListPageWidget(),
+            ),
+            FFRoute(
+              name: 'PlaceDetailsPage',
+              path: 'placeDetails',
+              requireAuth: true,
+              builder: (context, params) => PlaceDetailsPageWidget(
+                placeId: params.getParam(
+                  'placeId',
+                  ParamType.String,
+                ),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

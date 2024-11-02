@@ -7,32 +7,32 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class LocationStruct extends BaseStruct {
   LocationStruct({
-    int? latitude,
-    int? longitude,
+    double? latitude,
+    double? longitude,
   })  : _latitude = latitude,
         _longitude = longitude;
 
   // "latitude" field.
-  int? _latitude;
-  int get latitude => _latitude ?? 0;
-  set latitude(int? val) => _latitude = val;
+  double? _latitude;
+  double get latitude => _latitude ?? 0.0;
+  set latitude(double? val) => _latitude = val;
 
-  void incrementLatitude(int amount) => latitude = latitude + amount;
+  void incrementLatitude(double amount) => latitude = latitude + amount;
 
   bool hasLatitude() => _latitude != null;
 
   // "longitude" field.
-  int? _longitude;
-  int get longitude => _longitude ?? 0;
-  set longitude(int? val) => _longitude = val;
+  double? _longitude;
+  double get longitude => _longitude ?? 0.0;
+  set longitude(double? val) => _longitude = val;
 
-  void incrementLongitude(int amount) => longitude = longitude + amount;
+  void incrementLongitude(double amount) => longitude = longitude + amount;
 
   bool hasLongitude() => _longitude != null;
 
   static LocationStruct fromMap(Map<String, dynamic> data) => LocationStruct(
-        latitude: castToType<int>(data['latitude']),
-        longitude: castToType<int>(data['longitude']),
+        latitude: castToType<double>(data['latitude']),
+        longitude: castToType<double>(data['longitude']),
       );
 
   static LocationStruct? maybeFromMap(dynamic data) =>
@@ -47,11 +47,11 @@ class LocationStruct extends BaseStruct {
   Map<String, dynamic> toSerializableMap() => {
         'latitude': serializeParam(
           _latitude,
-          ParamType.int,
+          ParamType.double,
         ),
         'longitude': serializeParam(
           _longitude,
-          ParamType.int,
+          ParamType.double,
         ),
       }.withoutNulls;
 
@@ -59,12 +59,12 @@ class LocationStruct extends BaseStruct {
       LocationStruct(
         latitude: deserializeParam(
           data['latitude'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         longitude: deserializeParam(
           data['longitude'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
       );
@@ -84,8 +84,8 @@ class LocationStruct extends BaseStruct {
 }
 
 LocationStruct createLocationStruct({
-  int? latitude,
-  int? longitude,
+  double? latitude,
+  double? longitude,
 }) =>
     LocationStruct(
       latitude: latitude,

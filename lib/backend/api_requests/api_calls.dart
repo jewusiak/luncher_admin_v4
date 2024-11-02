@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../schema/structs/index.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -40,8 +41,8 @@ class LoginCall {
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -84,7 +85,7 @@ class GetProfileCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -118,7 +119,7 @@ class LogoutCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -168,8 +169,8 @@ class CreateUserCall {
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -203,7 +204,7 @@ class GetAvailableRolesCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -253,24 +254,31 @@ class UpdateUserCall {
   "role": "$role",
   "enabled": $enabled
 }''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'updateUser',
-      apiUrl: '$baseUrl/users/$userId',
-      callType: ApiCallType.PUT,
-      headers: {
-        'Authorization': 'Bearer $authorization',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'updateUser',
+        apiUrl: '$baseUrl/users/$userId',
+        callType: ApiCallType.PUT,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
 }
 
 /// End Luncher Core API (PUT___users_userId) Group Code
@@ -306,7 +314,7 @@ class AdminSearchUsersCall {
       },
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -341,7 +349,7 @@ class GetUserByUuidCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -350,89 +358,6 @@ class GetUserByUuidCall {
 }
 
 /// End Luncher Core API (GET___users_uuid) Group Code
-
-/// Start Luncher Core API (POST___place_search) Group Code
-
-class LuncherCoreAPIPOSTPlaceSearchGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
-  static Map<String, String> headers = {};
-  static SearchQueryCall searchQueryCall = SearchQueryCall();
-}
-
-class SearchQueryCall {
-  Future<ApiCallResponse> call({
-    String? textQuery,
-    String? placeTypeIdentifier,
-    String? openAtTime,
-    String? openAtDay,
-    double? locationLatitude,
-    double? locationLongitude,
-    double? locationRadius,
-    String? hasLunchServedAt,
-    String? owner,
-    bool? enabled,
-    int? page = 0,
-    int? size = 10,
-    String? authorization = '',
-  }) async {
-    textQuery ??= FFAppConstants.nullvalue;
-    placeTypeIdentifier ??= FFAppConstants.nullvalue;
-    openAtTime ??= FFAppConstants.nullvalue;
-    openAtDay ??= FFAppConstants.nullvalue;
-    locationLatitude ??= FFAppConstants.nullvalueDOUBLE;
-    locationLongitude ??= FFAppConstants.nullvalueDOUBLE;
-    locationRadius ??= FFAppConstants.nullvalueDOUBLE;
-    hasLunchServedAt ??= FFAppConstants.nullvalue;
-    owner ??= FFAppConstants.nullvalue;
-    final baseUrl = LuncherCoreAPIPOSTPlaceSearchGroup.getBaseUrl();
-
-    final ffApiRequestBody = '''
-{
-  "textQuery": "$textQuery",
-  "placeTypeIdentifier": "$placeTypeIdentifier",
-  "openAt": {
-    "time": "$openAtTime",
-    "day": "$openAtDay"
-  },
-  "location": {
-    "latitude": $locationLatitude,
-    "longitude": $locationLongitude,
-    "radius": $locationRadius
-  },
-  "hasLunchServedAt": "$hasLunchServedAt",
-  "owner": "$owner",
-  "enabled": $enabled,
-  "page": $page,
-  "size": $size
-}''';
-    return FFApiInterceptor.makeApiCall(
-      ApiCallOptions(
-        callName: 'searchQuery',
-        apiUrl: '$baseUrl/place/search',
-        callType: ApiCallType.POST,
-        headers: {
-          'Authorization': 'Bearer $authorization',
-        },
-        params: const {},
-        body: ffApiRequestBody,
-        bodyType: BodyType.JSON,
-        returnBody: true,
-        encodeBodyUtf8: false,
-        decodeUtf8: false,
-        cache: false,
-        isStreamingApi: false,
-        alwaysAllowBody: false,
-      ),
-      interceptors,
-    );
-  }
-
-  static final interceptors = [
-    RemoveNullOrEmptyValues(),
-  ];
-}
-
-/// End Luncher Core API (POST___place_search) Group Code
 
 /// Start Luncher Core API (GET___placetype) Group Code
 
@@ -458,7 +383,7 @@ class GetAllPlaceTypesCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -493,7 +418,7 @@ class DeletePlaceTypeCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -526,24 +451,31 @@ class CreatePlaceTypeCall {
   "iconName": "$iconName",
   "name": "$name"
 }''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'createPlaceType',
-      apiUrl: '$baseUrl/placetype',
-      callType: ApiCallType.POST,
-      headers: {
-        'Authorization': 'Bearer $authorization',
-      },
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'createPlaceType',
+        apiUrl: '$baseUrl/placetype',
+        callType: ApiCallType.POST,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
 }
 
 /// End Luncher Core API (POST___placetype) Group Code
@@ -587,8 +519,8 @@ class UpdatePlaceTypeCall {
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
-        encodeBodyUtf8: false,
-        decodeUtf8: false,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
         cache: false,
         isStreamingApi: false,
         alwaysAllowBody: false,
@@ -625,7 +557,7 @@ class GetByIdentifierCall {
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
-      decodeUtf8: false,
+      decodeUtf8: true,
       cache: false,
       isStreamingApi: false,
       alwaysAllowBody: false,
@@ -634,6 +566,363 @@ class GetByIdentifierCall {
 }
 
 /// End Luncher Core API (GET___placetype_identifier) Group Code
+
+/// Start Luncher Core API (POST___place_search) Group Code
+
+class LuncherCoreAPIPOSTPlaceSearchGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static SearchQueryCall searchQueryCall = SearchQueryCall();
+}
+
+class SearchQueryCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+    String? textQuery,
+    String? placeTypeIdentifier,
+    String? hasLunchServedAt,
+    String? ownerEmail,
+    String? enabled,
+    int? size,
+    int? page,
+  }) async {
+    textQuery ??= FFAppConstants.nullvalue;
+    placeTypeIdentifier ??= FFAppConstants.nullvalue;
+    hasLunchServedAt ??= FFAppConstants.nullvalue;
+    ownerEmail ??= FFAppConstants.nullvalue;
+    enabled ??= FFAppConstants.nullvalue;
+    size ??= FFAppConstants.nullvalueINT;
+    page ??= FFAppConstants.nullvalueINT;
+    final baseUrl = LuncherCoreAPIPOSTPlaceSearchGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "textQuery": "$textQuery",
+  "placeTypeIdentifier": "$placeTypeIdentifier",
+  "hasLunchServedAt": "$hasLunchServedAt",
+  "ownerEmail": "$ownerEmail",
+  "enabled": "$enabled",
+  "page": $page,
+  "size": $size
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'searchQuery',
+        apiUrl: '$baseUrl/place/search',
+        callType: ApiCallType.POST,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (POST___place_search) Group Code
+
+/// Start Luncher Core API (GET___place_uuid) Group Code
+
+class LuncherCoreAPIGETPlaceUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetByIdCall getByIdCall = GetByIdCall();
+}
+
+class GetByIdCall {
+  Future<ApiCallResponse> call({
+    String? uuid = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIGETPlaceUuidGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getById',
+      apiUrl: '$baseUrl/place/$uuid',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___place_uuid) Group Code
+
+/// Start Luncher Core API (POST___place) Group Code
+
+class LuncherCoreAPIPOSTPlaceGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static CreatePlaceCall createPlaceCall = CreatePlaceCall();
+}
+
+class CreatePlaceCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+    String? name,
+    String? placeTypeIdentifier,
+    String? enabled,
+  }) async {
+    name ??= FFAppConstants.nullvalue;
+    placeTypeIdentifier ??= FFAppConstants.nullvalue;
+    enabled ??= FFAppConstants.nullvalue;
+    final baseUrl = LuncherCoreAPIPOSTPlaceGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "placeTypeIdentifier": "$placeTypeIdentifier",
+  "enabled": "$enabled"
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'createPlace',
+        apiUrl: '$baseUrl/place',
+        callType: ApiCallType.POST,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (POST___place) Group Code
+
+/// Start Luncher Core API (PUT___place_placeUuid) Group Code
+
+class LuncherCoreAPIPUTPlacePlaceUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static UpdatePlaceCall updatePlaceCall = UpdatePlaceCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class UpdatePlaceCall {
+  Future<ApiCallResponse> call({
+    String? placeUuid = '',
+    String? authorization = '',
+    String? name,
+    String? longName,
+    String? description,
+    String? facebookPageId,
+    String? instagramHandle,
+    String? webpageUrl,
+    String? phoneNumber,
+    String? addressFirstLine,
+    String? addressSecondLine,
+    String? addressZipCode,
+    String? addressCity,
+    String? addressDistrict,
+    String? addressDescription,
+    String? addressCountry,
+    String? googleMapsReference,
+    dynamic openingWindowsJson,
+    String? placeTypeIdentifier,
+    double? locationLatitude,
+    double? locationLongitude,
+    String? ownerEmail,
+    String? enabled,
+  }) async {
+    name ??= FFAppConstants.nullvalue;
+    longName ??= FFAppConstants.nullvalue;
+    description ??= FFAppConstants.nullvalue;
+    facebookPageId ??= FFAppConstants.nullvalue;
+    instagramHandle ??= FFAppConstants.nullvalue;
+    webpageUrl ??= FFAppConstants.nullvalue;
+    phoneNumber ??= FFAppConstants.nullvalue;
+    addressFirstLine ??= FFAppConstants.nullvalue;
+    addressSecondLine ??= FFAppConstants.nullvalue;
+    addressZipCode ??= FFAppConstants.nullvalue;
+    addressCity ??= FFAppConstants.nullvalue;
+    addressDistrict ??= FFAppConstants.nullvalue;
+    addressDescription ??= FFAppConstants.nullvalue;
+    addressCountry ??= FFAppConstants.nullvalue;
+    googleMapsReference ??= FFAppConstants.nullvalue;
+    placeTypeIdentifier ??= FFAppConstants.nullvalue;
+    locationLatitude ??= FFAppConstants.nullvalueDOUBLE;
+    locationLongitude ??= FFAppConstants.nullvalueDOUBLE;
+    ownerEmail ??= FFAppConstants.nullvalue;
+    enabled ??= FFAppConstants.nullvalue;
+    final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl();
+
+    final openingWindows = _serializeJson(openingWindowsJson, true);
+    final ffApiRequestBody = '''
+{
+  "name": "$name",
+  "longName": "$longName",
+  "description": "$description",
+  "facebookPageId": "$facebookPageId",
+  "instagramHandle": "$instagramHandle",
+  "webpageUrl": "$webpageUrl",
+  "phoneNumber": "$phoneNumber",
+  "address": {
+    "firstLine": "$addressFirstLine",
+    "secondLine": "$addressSecondLine",
+    "zipCode": "$addressZipCode",
+    "city": "$addressCity",
+    "district": "$addressDistrict",
+    "description": "$addressDescription",
+    "country": "$addressCountry"
+  },
+  "googleMapsReference": "$googleMapsReference",
+  "openingWindows": $openingWindows,
+  "placeTypeIdentifier": "$placeTypeIdentifier",
+  "location": {
+    "latitude": $locationLatitude,
+    "longitude": $locationLongitude
+  },
+  "ownerEmail": "$ownerEmail",
+  "enabled": "$enabled"
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'updatePlace',
+        apiUrl: '$baseUrl/place/$placeUuid',
+        callType: ApiCallType.PUT,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (PUT___place_placeUuid) Group Code
+
+/// Start Google Places API Group Code
+
+class GooglePlacesAPIGroup {
+  static String getBaseUrl({
+    int? apiVersion = 1,
+    String? googlePlacesApiKey,
+  }) {
+    googlePlacesApiKey ??= valueOrDefault<String>(
+      FFDevEnvironmentValues().mapsPlacesKey,
+      'AIzaSyAdi5-YDfOFki2hiMzVi96mlDzD5udx_7M',
+    );
+    return 'https://places.googleapis.com/v$apiVersion';
+  }
+
+  static Map<String, String> headers = {
+    'X-Goog-Api-Key': '[googlePlacesApiKey]',
+  };
+  static TextSearchCall textSearchCall = TextSearchCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class TextSearchCall {
+  Future<ApiCallResponse> call({
+    String? textQuery = '',
+    int? apiVersion = 1,
+    String? googlePlacesApiKey,
+  }) async {
+    googlePlacesApiKey ??= valueOrDefault<String>(
+      FFDevEnvironmentValues().mapsPlacesKey,
+      'AIzaSyAdi5-YDfOFki2hiMzVi96mlDzD5udx_7M',
+    );
+    final baseUrl = GooglePlacesAPIGroup.getBaseUrl(
+      apiVersion: apiVersion,
+      googlePlacesApiKey: googlePlacesApiKey,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "textQuery": "$textQuery"
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'TextSearch',
+        apiUrl: '$baseUrl/places:searchText',
+        callType: ApiCallType.POST,
+        headers: {
+          'X-Goog-Api-Key': googlePlacesApiKey,
+          'X-Goog-FieldMask':
+              'places.id,places.displayName,places.location,places.addressComponents,places.formattedAddress',
+          'Content-Type': 'application/json',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      GooglePlacesAPIGroup.interceptors,
+    );
+  }
+
+  List<GoogleTextSearchResponseStruct>? places(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.places''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => GoogleTextSearchResponseStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+/// End Google Places API Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

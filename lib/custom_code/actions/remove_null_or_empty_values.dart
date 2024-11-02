@@ -1,5 +1,6 @@
 // Automatic FlutterFlow imports
 import '/backend/schema/structs/index.dart';
+import '/backend/schema/enums/enums.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
@@ -11,6 +12,38 @@ import 'package:flutter/material.dart';
 import '/backend/api_requests/api_interceptor.dart';
 
 class RemoveNullOrEmptyValues extends FFApiInterceptor {
+  List<dynamic> _supportedNullValues = [
+    FFAppConstants.nullvalue,
+    FFAppConstants.nullvalueINT,
+    FFAppConstants.nullvalueDOUBLE
+  ];
+
+  bool removeNulls(Map<String, dynamic> map) {
+    map.removeWhere((k, v) {
+      if (v is Map<String, dynamic>) {
+        return removeNulls(v);
+      } else if (v is List) {
+        return removeNullsList(v);
+      } else {
+        return _supportedNullValues.any((e) => e == v);
+      }
+    });
+    return map.isEmpty;
+  }
+
+  bool removeNullsList(List<dynamic> list) {
+    list.removeWhere((v) {
+      if (v is Map<String, dynamic>) {
+        return removeNulls(v);
+      } else if (v is List) {
+        return removeNullsList(v);
+      } else {
+        return _supportedNullValues.any((e) => e == v);
+      }
+    });
+    return list.isEmpty;
+  }
+
   @override
   Future<ApiCallOptions> onRequest({
     required ApiCallOptions options,
@@ -21,9 +54,10 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
 
     Map<String, dynamic> bodyObject = jsonDecode(options.body ?? '');
 
+    print("Remove nulls called");
     print(options.body ?? '--null--');
 
-    bodyObject.removeWhere((key, value) => value == FFAppConstants.nullvalue);
+    removeNulls(bodyObject);
     String bodyString = jsonEncode(bodyObject);
 
     print(bodyString);
@@ -36,7 +70,7 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
       params: options.params,
       headers: options.headers,
       returnBody: options.returnBody,
-      body: options.body,
+      body: bodyString,
     );
 
     return newOptions;
