@@ -1,17 +1,16 @@
 import '/backend/schema/enums/enums.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'place_opening_hour_edit_model.dart';
-export 'place_opening_hour_edit_model.dart';
+import 'local_date_time_range_edit_model.dart';
+export 'local_date_time_range_edit_model.dart';
 
-class PlaceOpeningHourEditWidget extends StatefulWidget {
-  const PlaceOpeningHourEditWidget({
+class LocalDateTimeRangeEditWidget extends StatefulWidget {
+  const LocalDateTimeRangeEditWidget({
     super.key,
     bool? isNew,
   }) : isNew = isNew ?? false;
@@ -19,13 +18,13 @@ class PlaceOpeningHourEditWidget extends StatefulWidget {
   final bool isNew;
 
   @override
-  State<PlaceOpeningHourEditWidget> createState() =>
-      _PlaceOpeningHourEditWidgetState();
+  State<LocalDateTimeRangeEditWidget> createState() =>
+      _LocalDateTimeRangeEditWidgetState();
 }
 
-class _PlaceOpeningHourEditWidgetState
-    extends State<PlaceOpeningHourEditWidget> {
-  late PlaceOpeningHourEditModel _model;
+class _LocalDateTimeRangeEditWidgetState
+    extends State<LocalDateTimeRangeEditWidget> {
+  late LocalDateTimeRangeEditModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -36,7 +35,7 @@ class _PlaceOpeningHourEditWidgetState
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => PlaceOpeningHourEditModel());
+    _model = createModel(context, () => LocalDateTimeRangeEditModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -56,7 +55,7 @@ class _PlaceOpeningHourEditWidgetState
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
         constraints: const BoxConstraints(
-          maxWidth: 440.0,
+          maxWidth: 350.0,
         ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -69,7 +68,7 @@ class _PlaceOpeningHourEditWidgetState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Edycja godzin otwarcia',
+                'Edycja zakresu',
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Outfit',
                       letterSpacing: 0.0,
@@ -80,92 +79,37 @@ class _PlaceOpeningHourEditWidgetState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Otwarcie',
+                    'Start',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
                         ),
                   ),
-                  FlutterFlowDropDown<String>(
-                    controller: _model.startDayDDValueController ??=
-                        FormFieldController<String>(
-                      _model.startDayDDValue ??=
-                          FFAppState().editedWeekDayTimeRange.startTime.day,
-                    ),
-                    options: List<String>.from([
-                      'MONDAY',
-                      'TUESDAY',
-                      'WEDNESDAY',
-                      'THURSDAY',
-                      'FRIDAY',
-                      'SATURDAY',
-                      'SUNDAY'
-                    ]),
-                    optionLabels: const [
-                      'Poniedziałek',
-                      'Wtorek',
-                      'Środa',
-                      'Czwartek',
-                      'Piątek',
-                      'Sobota',
-                      'Niedziela'
-                    ],
-                    onChanged: (val) async {
-                      safeSetState(() => _model.startDayDDValue = val);
-                      FFAppState().updateEditedWeekDayTimeRangeStruct(
-                        (e) => e
-                          ..updateStartTime(
-                            (e) => e..day = _model.startDayDDValue,
-                          ),
-                      );
-                      safeSetState(() {});
-                    },
-                    width: 200.0,
-                    height: 40.0,
-                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                    hintText: 'Dzień tygodnia',
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 24.0,
-                    ),
-                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    elevation: 2.0,
-                    borderColor: Colors.transparent,
-                    borderWidth: 0.0,
-                    borderRadius: 8.0,
-                    margin:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    hidesUnderline: true,
-                    isOverButton: false,
-                    isSearchable: false,
-                    isMultiSelect: false,
-                  ),
                   FFButtonWidget(
                     onPressed: () async {
-                      _model.startTimePicker = await actions.show24hTimePicker(
+                      _model.startTimePicker =
+                          await actions.show24hLocalDateTimePicker(
                         context,
-                        FFAppState().editedWeekDayTimeRange.startTime.time,
+                        FFAppState().editedLocalDateTimeRange.startTime,
                       );
-                      FFAppState().updateEditedWeekDayTimeRangeStruct(
-                        (e) => e
-                          ..updateStartTime(
-                            (e) => e..time = _model.startTimePicker,
-                          ),
+                      FFAppState().updateEditedLocalDateTimeRangeStruct(
+                        (e) => e..startTime = _model.startTimePicker,
                       );
                       safeSetState(() {});
 
                       safeSetState(() {});
                     },
-                    text: FFAppState().editedWeekDayTimeRange.startTime.time,
+                    text: valueOrDefault<String>(
+                      functions.dateTimeStringToString(
+                          FFAppState().editedLocalDateTimeRange.startTime),
+                      '-',
+                    ),
                     icon: const Icon(
-                      Icons.access_time_outlined,
-                      size: 15.0,
+                      Icons.calendar_month,
+                      size: 18.0,
                     ),
                     options: FFButtonOptions(
+                      width: 200.0,
                       height: 40.0,
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
@@ -193,92 +137,37 @@ class _PlaceOpeningHourEditWidgetState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Zamknięcie',
+                    'Koniec',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0.0,
                         ),
                   ),
-                  FlutterFlowDropDown<String>(
-                    controller: _model.endDayDDValueController ??=
-                        FormFieldController<String>(
-                      _model.endDayDDValue ??=
-                          FFAppState().editedWeekDayTimeRange.endTime.day,
-                    ),
-                    options: List<String>.from([
-                      'MONDAY',
-                      'TUESDAY',
-                      'WEDNESDAY',
-                      'THURSDAY',
-                      'FRIDAY',
-                      'SATURDAY',
-                      'SUNDAY'
-                    ]),
-                    optionLabels: const [
-                      'Poniedziałek',
-                      'Wtorek',
-                      'Środa',
-                      'Czwartek',
-                      'Piątek',
-                      'Sobota',
-                      'Niedziela'
-                    ],
-                    onChanged: (val) async {
-                      safeSetState(() => _model.endDayDDValue = val);
-                      FFAppState().updateEditedWeekDayTimeRangeStruct(
-                        (e) => e
-                          ..updateEndTime(
-                            (e) => e..day = _model.endDayDDValue,
-                          ),
-                      );
-                      safeSetState(() {});
-                    },
-                    width: 200.0,
-                    height: 40.0,
-                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Readex Pro',
-                          letterSpacing: 0.0,
-                        ),
-                    hintText: 'Dzień tygodnia',
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 24.0,
-                    ),
-                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    elevation: 2.0,
-                    borderColor: Colors.transparent,
-                    borderWidth: 0.0,
-                    borderRadius: 8.0,
-                    margin:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    hidesUnderline: true,
-                    isOverButton: false,
-                    isSearchable: false,
-                    isMultiSelect: false,
-                  ),
                   FFButtonWidget(
                     onPressed: () async {
-                      _model.endTimePicker = await actions.show24hTimePicker(
+                      _model.endTimePicker =
+                          await actions.show24hLocalDateTimePicker(
                         context,
-                        FFAppState().editedWeekDayTimeRange.endTime.time,
+                        FFAppState().editedLocalDateTimeRange.endTime,
                       );
-                      FFAppState().updateEditedWeekDayTimeRangeStruct(
-                        (e) => e
-                          ..updateEndTime(
-                            (e) => e..time = _model.endTimePicker,
-                          ),
+                      FFAppState().updateEditedLocalDateTimeRangeStruct(
+                        (e) => e..endTime = _model.endTimePicker,
                       );
                       safeSetState(() {});
 
                       safeSetState(() {});
                     },
-                    text: FFAppState().editedWeekDayTimeRange.endTime.time,
+                    text: valueOrDefault<String>(
+                      functions.dateTimeStringToString(
+                          FFAppState().editedLocalDateTimeRange.endTime),
+                      '-',
+                    ),
                     icon: const Icon(
-                      Icons.access_time_outlined,
-                      size: 15.0,
+                      Icons.calendar_month,
+                      size: 18.0,
                     ),
                     options: FFButtonOptions(
+                      width: 200.0,
                       height: 40.0,
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
@@ -307,7 +196,7 @@ class _PlaceOpeningHourEditWidgetState
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
-                      FFAppState().editedWeekDayTimeRangeAction = null;
+                      FFAppState().editedLocalDateTimeRangeAction = null;
                       Navigator.pop(context);
                     },
                     text: 'Anuluj',
@@ -337,7 +226,7 @@ class _PlaceOpeningHourEditWidgetState
                     onPressed: widget.isNew
                         ? null
                         : () async {
-                            FFAppState().editedWeekDayTimeRangeAction =
+                            FFAppState().editedLocalDateTimeRangeAction =
                                 ActionType.DELETE;
                             Navigator.pop(context);
                           },
@@ -370,10 +259,10 @@ class _PlaceOpeningHourEditWidgetState
                   FFButtonWidget(
                     onPressed: () async {
                       if (widget.isNew) {
-                        FFAppState().editedWeekDayTimeRangeAction =
+                        FFAppState().editedLocalDateTimeRangeAction =
                             ActionType.CREATE;
                       } else {
-                        FFAppState().editedWeekDayTimeRangeAction =
+                        FFAppState().editedLocalDateTimeRangeAction =
                             ActionType.UPDATE;
                       }
 

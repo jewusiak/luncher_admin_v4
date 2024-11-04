@@ -9,15 +9,26 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future<String?> show24hTimePicker(
+Future<String?> show24hLocalDateTimePicker(
   BuildContext context,
-  String? initialTime,
+  String? initialDateTime,
 ) async {
   // Add your function code here!
-  initialTime ??= "12:00";
-  TimeOfDay? dt = await showTimePicker(
+  DateTime? initTime =
+      initialDateTime != null ? DateTime.tryParse(initialDateTime) : null;
+  initTime ??= DateTime.now();
+
+  DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: initTime,
+      firstDate: initTime.subtract(Duration(days: 365 * 1)),
+      lastDate: initTime.add(Duration(days: 365 * 5)));
+
+  if (date == null) return initialDateTime;
+
+  TimeOfDay? time = await showTimePicker(
     context: context,
-    initialTime: TimeOfDay.fromDateTime(DateFormat.Hm().parse(initialTime)),
+    initialTime: TimeOfDay.fromDateTime(initTime),
     builder: (BuildContext context, Widget? child) {
       return MediaQuery(
         data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
@@ -25,7 +36,8 @@ Future<String?> show24hTimePicker(
       );
     },
   );
-  if (dt == null) return initialTime;
+  if (time == null) return initialDateTime;
 
-  return DateFormat.Hm().format(DateTime(1970, 01, 01, dt.hour, dt.minute));
+  return DateTime(date.year, date.month, date.day, time.hour, time.minute)
+      .toIso8601String();
 }

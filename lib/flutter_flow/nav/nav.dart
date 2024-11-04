@@ -137,6 +137,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'placeId',
                   ParamType.String,
                 ),
+                selectedPage: params.getParam(
+                  'selectedPage',
+                  ParamType.int,
+                ),
               ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),

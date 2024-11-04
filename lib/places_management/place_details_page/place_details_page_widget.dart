@@ -9,8 +9,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/places_management/place_opening_hour_edit/place_opening_hour_edit_widget.dart';
+import '/places_management/place_menu_offer_edit/place_menu_offer_edit_widget.dart';
 import '/places_management/select_google_places_api_address/select_google_places_api_address_widget.dart';
+import '/places_management/week_day_time_range_edit/week_day_time_range_edit_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -24,9 +25,11 @@ class PlaceDetailsPageWidget extends StatefulWidget {
   const PlaceDetailsPageWidget({
     super.key,
     required this.placeId,
-  });
+    int? selectedPage,
+  }) : selectedPage = selectedPage ?? 0;
 
   final String? placeId;
+  final int selectedPage;
 
   @override
   State<PlaceDetailsPageWidget> createState() => _PlaceDetailsPageWidgetState();
@@ -165,7 +168,12 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
     _model.tabBarController = TabController(
       vsync: this,
       length: 6,
-      initialIndex: 0,
+      initialIndex: min(
+          valueOrDefault<int>(
+            widget.selectedPage,
+            0,
+          ),
+          5),
     )..addListener(() => safeSetState(() {}));
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
@@ -291,6 +299,9 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                         double.tryParse(_model.locationLatTextController.text),
                     locationLongitude:
                         double.tryParse(_model.locationLonTextController.text),
+                    menuOffersJson: _model.place?.menuOffers
+                        .map((e) => e.toMap())
+                        .toList(),
                   );
 
                   shouldSetState = true;
@@ -304,6 +315,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                         'placeId': serializeParam(
                           widget.placeId,
                           ParamType.String,
+                        ),
+                        'selectedPage': serializeParam(
+                          _model.tabBarCurrentIndex,
+                          ParamType.int,
                         ),
                       }.withoutNulls,
                     );
@@ -407,6 +422,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                     Expanded(
                       child: TabBarView(
                         controller: _model.tabBarController,
+                        physics: const NeverScrollableScrollPhysics(),
                         children: [
                           KeepAliveWidgetWrapper(
                             builder: (context) => Column(
@@ -934,7 +950,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                           dialogContext)
                                                                       .unfocus(),
                                                               child:
-                                                                  const PlaceOpeningHourEditWidget(),
+                                                                  const WeekDayTimeRangeEditWidget(),
                                                             ),
                                                           );
                                                         },
@@ -1092,7 +1108,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                           dialogContext)
                                                       .unfocus(),
                                                   child:
-                                                      const PlaceOpeningHourEditWidget(
+                                                      const WeekDayTimeRangeEditWidget(
                                                     isNew: true,
                                                   ),
                                                 ),
@@ -1136,9 +1152,264 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                             ),
                           ),
                           KeepAliveWidgetWrapper(
-                            builder: (context) => const Column(
+                            builder: (context) => Column(
                               mainAxisSize: MainAxisSize.max,
-                              children: [],
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 30.0, 0.0, 0.0),
+                                  child: Container(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 700.0,
+                                    ),
+                                    decoration: const BoxDecoration(),
+                                    child: Builder(
+                                      builder: (context) {
+                                        final menuOffers = _model
+                                                .place?.menuOffers
+                                                .toList() ??
+                                            [];
+
+                                        return ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: menuOffers.length,
+                                          itemBuilder:
+                                              (context, menuOffersIndex) {
+                                            final menuOffersItem =
+                                                menuOffers[menuOffersIndex];
+                                            return Builder(
+                                              builder: (context) => InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
+                                                onTap: () async {
+                                                  FFAppState().editedMenuOffer =
+                                                      functions
+                                                          .cloneMenuOfferObject(
+                                                              menuOffersItem)!;
+                                                  safeSetState(() {});
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () =>
+                                                              FocusScope.of(
+                                                                      dialogContext)
+                                                                  .unfocus(),
+                                                          child:
+                                                              const PlaceMenuOfferEditWidget(
+                                                            isNew: false,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+
+                                                  if (FFAppState()
+                                                          .editedMenuOfferAction ==
+                                                      ActionType.UPDATE) {
+                                                    // Update selected range
+                                                    _model.updatePlaceStruct(
+                                                      (e) => e
+                                                        ..updateMenuOffers(
+                                                          (e) => e[
+                                                                  menuOffersIndex] =
+                                                              FFAppState()
+                                                                  .editedMenuOffer,
+                                                        ),
+                                                    );
+                                                    safeSetState(() {});
+                                                  } else if (FFAppState()
+                                                          .editedMenuOfferAction ==
+                                                      ActionType.DELETE) {
+                                                    // Update selected range
+                                                    _model.updatePlaceStruct(
+                                                      (e) => e
+                                                        ..updateMenuOffers(
+                                                          (e) => e.removeAt(
+                                                              menuOffersIndex),
+                                                        ),
+                                                    );
+                                                    safeSetState(() {});
+                                                  } else if (FFAppState()
+                                                          .editedMenuOfferAction ==
+                                                      ActionType.CREATE) {
+                                                    // Update selected range
+                                                    _model.updatePlaceStruct(
+                                                      (e) => e
+                                                        ..updateMenuOffers(
+                                                          (e) => e.add(FFAppState()
+                                                              .editedMenuOffer),
+                                                        ),
+                                                    );
+                                                    safeSetState(() {});
+                                                  }
+
+                                                  // Clear helper vars
+                                                  FFAppState()
+                                                          .editedWeekDayTimeRange =
+                                                      WeekDayTimeRangeStruct();
+                                                  FFAppState()
+                                                          .editedWeekDayTimeRangeAction =
+                                                      null;
+                                                  FFAppState().editedMenuOffer =
+                                                      MenuOfferStruct();
+                                                  FFAppState()
+                                                          .editedMenuOfferAction =
+                                                      null;
+                                                  FFAppState()
+                                                          .editedLocalDateTimeRange =
+                                                      LocalDateTimeRangeStruct();
+                                                  FFAppState()
+                                                          .editedLocalDateTimeRangeAction =
+                                                      null;
+                                                },
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      valueOrDefault<String>(
+                                                        menuOffersItem.name,
+                                                        '-',
+                                                      ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .titleLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Outfit',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                    trailing: Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                    tileColor: FlutterFlowTheme
+                                                            .of(context)
+                                                        .secondaryBackground,
+                                                    dense: false,
+                                                    contentPadding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 0.0,
+                                                                12.0, 0.0),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Builder(
+                                  builder: (context) => Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 30.0, 0.0, 0.0),
+                                    child: FlutterFlowIconButton(
+                                      borderColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      borderRadius: 45.0,
+                                      borderWidth: 1.0,
+                                      buttonSize: 45.0,
+                                      fillColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () async {
+                                        FFAppState().editedMenuOffer =
+                                            MenuOfferStruct();
+                                        safeSetState(() {});
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  const AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () =>
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus(),
+                                                child: const PlaceMenuOfferEditWidget(
+                                                  isNew: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        if (FFAppState()
+                                                .editedMenuOfferAction ==
+                                            ActionType.CREATE) {
+                                          // Add new range
+                                          _model.updatePlaceStruct(
+                                            (e) => e
+                                              ..updateMenuOffers(
+                                                (e) => e.add(FFAppState()
+                                                    .editedMenuOffer),
+                                              ),
+                                          );
+                                          safeSetState(() {});
+                                        }
+                                        // Clear helper vars
+                                        FFAppState().editedWeekDayTimeRange =
+                                            WeekDayTimeRangeStruct();
+                                        FFAppState()
+                                                .editedWeekDayTimeRangeAction =
+                                            null;
+                                        FFAppState().editedMenuOffer =
+                                            MenuOfferStruct();
+                                        FFAppState().editedMenuOfferAction =
+                                            null;
+                                        FFAppState().editedLocalDateTimeRange =
+                                            LocalDateTimeRangeStruct();
+                                        FFAppState()
+                                                .editedLocalDateTimeRangeAction =
+                                            null;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           KeepAliveWidgetWrapper(

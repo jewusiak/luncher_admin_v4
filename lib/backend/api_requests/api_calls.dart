@@ -761,6 +761,7 @@ class UpdatePlaceCall {
     double? locationLongitude,
     String? ownerEmail,
     String? enabled,
+    dynamic menuOffersJson,
   }) async {
     name ??= FFAppConstants.nullvalue;
     longName ??= FFAppConstants.nullvalue;
@@ -785,6 +786,7 @@ class UpdatePlaceCall {
     final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl();
 
     final openingWindows = _serializeJson(openingWindowsJson, true);
+    final menuOffers = _serializeJson(menuOffersJson, true);
     final ffApiRequestBody = '''
 {
   "name": "$name",
@@ -810,6 +812,7 @@ class UpdatePlaceCall {
     "latitude": $locationLatitude,
     "longitude": $locationLongitude
   },
+  "menuOffers": $menuOffers,
   "ownerEmail": "$ownerEmail",
   "enabled": "$enabled"
 }''';

@@ -68,3 +68,16 @@ GoogleAddressComponentStruct getGoogleAddressComponent(
 
   return a;
 }
+
+MenuOfferStruct? cloneMenuOfferObject(MenuOfferStruct? menuOffer) {
+  return menuOffer == null
+      ? null
+      : MenuOfferStruct.fromMap(jsonDecode(jsonEncode(menuOffer.toMap())));
+}
+
+String? dateTimeStringToString(String? input) {
+  if (input == null) return null;
+
+  DateTime? date = DateTime.tryParse(input);
+  return date == null ? null : DateFormat('dd.MM.yyyy HH:mm').format(date);
+}

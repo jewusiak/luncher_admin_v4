@@ -1,10 +1,10 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'place_opening_hour_edit_widget.dart' show PlaceOpeningHourEditWidget;
+import 'week_day_time_range_edit_widget.dart' show WeekDayTimeRangeEditWidget;
 import 'package:flutter/material.dart';
 
-class PlaceOpeningHourEditModel
-    extends FlutterFlowModel<PlaceOpeningHourEditWidget> {
+class WeekDayTimeRangeEditModel
+    extends FlutterFlowModel<WeekDayTimeRangeEditWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for StartDayDD widget.
