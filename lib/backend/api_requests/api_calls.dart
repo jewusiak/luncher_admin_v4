@@ -573,6 +573,10 @@ class LuncherCoreAPIPOSTPlaceSearchGroup {
   static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
   static SearchQueryCall searchQueryCall = SearchQueryCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
 }
 
 class SearchQueryCall {

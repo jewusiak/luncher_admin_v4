@@ -275,7 +275,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 ),
                                 duration: const Duration(milliseconds: 4000),
                                 backgroundColor:
-                                    FlutterFlowTheme.of(context).secondary,
+                                    FlutterFlowTheme.of(context).error,
                               ),
                             );
                             if (shouldSetState) safeSetState(() {});
@@ -293,7 +293,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               ),
                               duration: const Duration(milliseconds: 4000),
                               backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
+                                  FlutterFlowTheme.of(context).error,
                             ),
                           );
                           if (shouldSetState) safeSetState(() {});
