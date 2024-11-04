@@ -7,17 +7,17 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class MonetaryAmountStruct extends BaseStruct {
   MonetaryAmountStruct({
-    int? amount,
+    double? amount,
     String? currencyCode,
   })  : _amount = amount,
         _currencyCode = currencyCode;
 
   // "amount" field.
-  int? _amount;
-  int get amount => _amount ?? 0;
-  set amount(int? val) => _amount = val;
+  double? _amount;
+  double get amount => _amount ?? 0.0;
+  set amount(double? val) => _amount = val;
 
-  void incrementAmount(int amount) => amount = amount + amount;
+  void incrementAmount(double amount) => amount = amount + amount;
 
   bool hasAmount() => _amount != null;
 
@@ -30,7 +30,7 @@ class MonetaryAmountStruct extends BaseStruct {
 
   static MonetaryAmountStruct fromMap(Map<String, dynamic> data) =>
       MonetaryAmountStruct(
-        amount: castToType<int>(data['amount']),
+        amount: castToType<double>(data['amount']),
         currencyCode: data['currencyCode'] as String?,
       );
 
@@ -47,7 +47,7 @@ class MonetaryAmountStruct extends BaseStruct {
   Map<String, dynamic> toSerializableMap() => {
         'amount': serializeParam(
           _amount,
-          ParamType.int,
+          ParamType.double,
         ),
         'currencyCode': serializeParam(
           _currencyCode,
@@ -59,7 +59,7 @@ class MonetaryAmountStruct extends BaseStruct {
       MonetaryAmountStruct(
         amount: deserializeParam(
           data['amount'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         currencyCode: deserializeParam(
@@ -84,7 +84,7 @@ class MonetaryAmountStruct extends BaseStruct {
 }
 
 MonetaryAmountStruct createMonetaryAmountStruct({
-  int? amount,
+  double? amount,
   String? currencyCode,
 }) =>
     MonetaryAmountStruct(

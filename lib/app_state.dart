@@ -44,4 +44,40 @@ class FFAppState extends ChangeNotifier {
   set selectedGoogleMapPlacesApiIndex(int value) {
     _selectedGoogleMapPlacesApiIndex = value;
   }
+
+  MenuOfferStruct _editedMenuOffer = MenuOfferStruct();
+  MenuOfferStruct get editedMenuOffer => _editedMenuOffer;
+  set editedMenuOffer(MenuOfferStruct value) {
+    _editedMenuOffer = value;
+  }
+
+  void updateEditedMenuOfferStruct(Function(MenuOfferStruct) updateFn) {
+    updateFn(_editedMenuOffer);
+  }
+
+  ActionType? _editedMenuOfferAction;
+  ActionType? get editedMenuOfferAction => _editedMenuOfferAction;
+  set editedMenuOfferAction(ActionType? value) {
+    _editedMenuOfferAction = value;
+  }
+
+  LocalDateTimeRangeStruct _editedLocalDateTimeRange =
+      LocalDateTimeRangeStruct();
+  LocalDateTimeRangeStruct get editedLocalDateTimeRange =>
+      _editedLocalDateTimeRange;
+  set editedLocalDateTimeRange(LocalDateTimeRangeStruct value) {
+    _editedLocalDateTimeRange = value;
+  }
+
+  void updateEditedLocalDateTimeRangeStruct(
+      Function(LocalDateTimeRangeStruct) updateFn) {
+    updateFn(_editedLocalDateTimeRange);
+  }
+
+  ActionType? _editedLocalDateTimeRangeAction;
+  ActionType? get editedLocalDateTimeRangeAction =>
+      _editedLocalDateTimeRangeAction;
+  set editedLocalDateTimeRangeAction(ActionType? value) {
+    _editedLocalDateTimeRangeAction = value;
+  }
 }
