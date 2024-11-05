@@ -535,10 +535,10 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                     spacing: 0.0,
                     runSpacing: 20.0,
                     alignment: WrapAlignment.spaceAround,
-                    crossAxisAlignment: WrapCrossAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     direction: Axis.horizontal,
                     runAlignment: WrapAlignment.start,
-                    verticalDirection: VerticalDirection.up,
+                    verticalDirection: VerticalDirection.down,
                     clipBehavior: Clip.none,
                     children: [
                       Container(
