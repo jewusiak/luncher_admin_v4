@@ -5,16 +5,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/places_management/local_date_time_range_edit/local_date_time_range_edit_widget.dart';
-import '/places_management/week_day_time_range_edit/week_day_time_range_edit_widget.dart';
+import '/places_management/menus/option_edit/option_edit_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'place_menu_offer_edit_model.dart';
-export 'place_menu_offer_edit_model.dart';
+import 'part_edit_model.dart';
+export 'part_edit_model.dart';
 
-class PlaceMenuOfferEditWidget extends StatefulWidget {
-  const PlaceMenuOfferEditWidget({
+class PartEditWidget extends StatefulWidget {
+  const PartEditWidget({
     super.key,
     bool? isNew,
   }) : isNew = isNew ?? false;
@@ -22,12 +22,11 @@ class PlaceMenuOfferEditWidget extends StatefulWidget {
   final bool isNew;
 
   @override
-  State<PlaceMenuOfferEditWidget> createState() =>
-      _PlaceMenuOfferEditWidgetState();
+  State<PartEditWidget> createState() => _PartEditWidgetState();
 }
 
-class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
-  late PlaceMenuOfferEditModel _model;
+class _PartEditWidgetState extends State<PartEditWidget> {
+  late PartEditModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -38,16 +37,17 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => PlaceMenuOfferEditModel());
+    _model = createModel(context, () => PartEditModel());
 
     _model.nameInputTextController ??=
-        TextEditingController(text: FFAppState().editedMenuOffer.name);
+        TextEditingController(text: FFAppState().editedOfferPart.name);
     _model.nameInputFocusNode ??= FocusNode();
 
     _model.basePriceInputTextController ??= TextEditingController(
-        text: FFAppState().editedMenuOffer.basePrice.amount.toString());
+        text: FFAppState().editedOfferPart.supplement.amount.toString());
     _model.basePriceInputFocusNode ??= FocusNode();
 
+    _model.requiredSwitchValue = FFAppState().editedOfferPart.required;
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -66,7 +66,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
         constraints: const BoxConstraints(
-          maxWidth: 1000.0,
+          maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
@@ -82,7 +82,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                   child: Text(
-                    'Edycja oferty menu',
+                    'Edycja części menu',
                     style: FlutterFlowTheme.of(context).headlineSmall.override(
                           fontFamily: 'Outfit',
                           letterSpacing: 0.0,
@@ -90,7 +90,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Wrap(
                     spacing: 20.0,
                     runSpacing: 10.0,
@@ -103,7 +103,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                     children: [
                       Container(
                         constraints: const BoxConstraints(
-                          maxWidth: 600.0,
+                          maxWidth: 375.0,
                         ),
                         decoration: const BoxDecoration(),
                         child: TextFormField(
@@ -177,7 +177,27 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                             child: TextFormField(
                               controller: _model.basePriceInputTextController,
                               focusNode: _model.basePriceInputFocusNode,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                '_model.basePriceInputTextController',
+                                const Duration(milliseconds: 100),
+                                () async {
+                                  safeSetState(() {
+                                    _model.basePriceInputTextController?.text =
+                                        functions.replaceCommaWithDot(_model
+                                            .basePriceInputTextController
+                                            .text)!;
+                                    _model.basePriceInputTextController
+                                            ?.selection =
+                                        TextSelection.collapsed(
+                                            offset: _model
+                                                .basePriceInputTextController!
+                                                .text
+                                                .length);
+                                  });
+                                },
+                              ),
                               autofocus: false,
+                              readOnly: _model.requiredSwitchValue!,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -246,14 +266,10 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                           FlutterFlowDropDown<String>(
                             controller: _model.ccyDropDownValueController ??=
                                 FormFieldController<String>(
-                              _model.ccyDropDownValue ??=
-                                  valueOrDefault<String>(
-                                FFAppState()
-                                    .editedMenuOffer
-                                    .basePrice
-                                    .currencyCode,
-                                'PLN',
-                              ),
+                              _model.ccyDropDownValue ??= FFAppState()
+                                  .editedOfferPart
+                                  .supplement
+                                  .currencyCode,
                             ),
                             options: const ['PLN', 'EUR', 'CZK', 'USD'],
                             onChanged: (val) => safeSetState(
@@ -281,6 +297,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                             margin: const EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
+                            disabled: _model.requiredSwitchValue!,
                             isOverButton: false,
                             isSearchable: false,
                             isMultiSelect: false,
@@ -291,245 +308,50 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
-                  child: Wrap(
-                    spacing: 0.0,
-                    runSpacing: 15.0,
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    direction: Axis.horizontal,
-                    runAlignment: WrapAlignment.start,
-                    verticalDirection: VerticalDirection.down,
-                    clipBehavior: Clip.none,
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Powtarzający się czas obowiązywania',
+                        'Czy wzięcie tej części jest wymagane?',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               letterSpacing: 0.0,
                             ),
                       ),
-                      Builder(
-                        builder: (context) => FFButtonWidget(
-                          onPressed: () async {
-                            FFAppState().editedWeekDayTimeRange =
-                                WeekDayTimeRangeStruct(
-                              startTime: WeekDayTimeStruct(
-                                time: '12:00',
-                                day: 'MONDAY',
-                              ),
-                              endTime: WeekDayTimeStruct(
-                                time: '15:00',
-                                day: 'MONDAY',
-                              ),
-                            );
-                            FFAppState().editedWeekDayTimeRangeAction = null;
-                            await showDialog(
-                              context: context,
-                              builder: (dialogContext) {
-                                return Dialog(
-                                  elevation: 0,
-                                  insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Colors.transparent,
-                                  alignment: const AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  child: const WeekDayTimeRangeEditWidget(
-                                    isNew: true,
-                                  ),
-                                );
-                              },
-                            );
-
-                            if (FFAppState().editedWeekDayTimeRangeAction ==
-                                ActionType.CREATE) {
-                              // Add new range
-                              FFAppState().updateEditedMenuOfferStruct(
-                                (e) => e
-                                  ..updateRecurringServingRanges(
-                                    (e) => e.add(
-                                        FFAppState().editedWeekDayTimeRange),
-                                  ),
-                              );
-                              safeSetState(() {});
-                            }
-                            // Clear helper vars
-                            FFAppState().editedWeekDayTimeRange =
-                                WeekDayTimeRangeStruct();
-                            FFAppState().editedWeekDayTimeRangeAction = null;
-                          },
-                          text: 'Dodaj nowy',
-                          icon: const Icon(
-                            Icons.add,
-                            size: 15.0,
-                          ),
-                          options: FFButtonOptions(
-                            height: 18.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            iconAlignment: IconAlignment.end,
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                ),
-                            elevation: 0.0,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          showLoadingIndicator: false,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
-                  child: Builder(
-                    builder: (context) {
-                      final openingWindows = FFAppState()
-                          .editedMenuOffer
-                          .recurringServingRanges
-                          .toList();
-
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: openingWindows.length,
-                        itemBuilder: (context, openingWindowsIndex) {
-                          final openingWindowsItem =
-                              openingWindows[openingWindowsIndex];
-                          return Visibility(
-                            visible:
-                                openingWindowsItem.startTime.time != '',
-                            child: Builder(
-                              builder: (context) => InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  FFAppState().editedWeekDayTimeRange =
-                                      WeekDayTimeRangeStruct(
-                                    startTime: WeekDayTimeStruct(
-                                      time: openingWindowsItem.startTime.time,
-                                      day: openingWindowsItem.startTime.day,
-                                    ),
-                                    endTime: WeekDayTimeStruct(
-                                      time: openingWindowsItem.endTime.time,
-                                      day: openingWindowsItem.endTime.day,
-                                    ),
-                                  );
-                                  FFAppState().editedWeekDayTimeRangeAction =
-                                      null;
-                                  await showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                        child: const WeekDayTimeRangeEditWidget(),
-                                      );
-                                    },
-                                  );
-
-                                  if (FFAppState()
-                                          .editedWeekDayTimeRangeAction ==
-                                      ActionType.UPDATE) {
-                                    // Update selected range
-                                    FFAppState().updateEditedMenuOfferStruct(
-                                      (e) => e
-                                        ..updateRecurringServingRanges(
-                                          (e) => e[openingWindowsIndex] =
-                                              FFAppState()
-                                                  .editedWeekDayTimeRange,
-                                        ),
-                                    );
-                                    safeSetState(() {});
-                                  } else if (FFAppState()
-                                          .editedWeekDayTimeRangeAction ==
-                                      ActionType.DELETE) {
-                                    // Update selected range
-                                    FFAppState().updateEditedMenuOfferStruct(
-                                      (e) => e
-                                        ..updateRecurringServingRanges(
-                                          (e) =>
-                                              e.removeAt(openingWindowsIndex),
-                                        ),
-                                    );
-                                    safeSetState(() {});
-                                  } else if (FFAppState()
-                                          .editedWeekDayTimeRangeAction ==
-                                      ActionType.CREATE) {
-                                    // Update selected range
-                                    FFAppState().updateEditedMenuOfferStruct(
-                                      (e) => e
-                                        ..updateRecurringServingRanges(
-                                          (e) => e.add(FFAppState()
-                                              .editedWeekDayTimeRange),
-                                        ),
-                                    );
-                                    safeSetState(() {});
-                                  }
-
-                                  // Clear helper vars
-                                  FFAppState().editedWeekDayTimeRange =
-                                      WeekDayTimeRangeStruct();
-                                  FFAppState().editedWeekDayTimeRangeAction =
-                                      null;
-                                },
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: ListTile(
-                                    title: Text(
-                                      '${openingWindowsItem.startTime.day}, ${openingWindowsItem.startTime.time} - ${openingWindowsItem.startTime.day == openingWindowsItem.endTime.day ? '' : '${openingWindowsItem.endTime.day}, '}${openingWindowsItem.endTime.time}',
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    tileColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    dense: false,
-                                    contentPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 0.0, 12.0, 0.0),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
+                      Switch.adaptive(
+                        value: _model.requiredSwitchValue!,
+                        onChanged: (newValue) async {
+                          safeSetState(
+                              () => _model.requiredSwitchValue = newValue);
+                          if (newValue) {
+                            safeSetState(() {
+                              _model.basePriceInputTextController?.text = '0';
+                              _model.basePriceInputTextController?.selection =
+                                  TextSelection.collapsed(
+                                      offset: _model
+                                          .basePriceInputTextController!
+                                          .text
+                                          .length);
+                            });
+                          }
                         },
-                      );
-                    },
+                        activeColor: FlutterFlowTheme.of(context).primary,
+                        activeTrackColor: FlutterFlowTheme.of(context).primary,
+                        inactiveTrackColor:
+                            FlutterFlowTheme.of(context).alternate,
+                        inactiveThumbColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                    ].divide(const SizedBox(width: 15.0)),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                   child: Wrap(
-                    spacing: 0.0,
-                    runSpacing: 15.0,
+                    spacing: 5.0,
+                    runSpacing: 2.0,
                     alignment: WrapAlignment.spaceBetween,
                     crossAxisAlignment: WrapCrossAlignment.start,
                     direction: Axis.horizontal,
@@ -538,7 +360,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                     clipBehavior: Clip.none,
                     children: [
                       Text(
-                        'Jednorazowe okresy obowiązywania',
+                        'Opcje do wyboru ',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               letterSpacing: 0.0,
@@ -547,9 +369,8 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                       Builder(
                         builder: (context) => FFButtonWidget(
                           onPressed: () async {
-                            FFAppState().editedLocalDateTimeRange =
-                                LocalDateTimeRangeStruct();
-                            FFAppState().editedLocalDateTimeRangeAction = null;
+                            FFAppState().editedOption = OptionStruct();
+                            FFAppState().editedOptionAction = null;
                             await showDialog(
                               context: context,
                               builder: (dialogContext) {
@@ -559,31 +380,28 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                                   backgroundColor: Colors.transparent,
                                   alignment: const AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
-                                  child: const LocalDateTimeRangeEditWidget(
+                                  child: const OptionEditWidget(
                                     isNew: true,
                                   ),
                                 );
                               },
                             );
 
-                            if (FFAppState().editedLocalDateTimeRangeAction ==
+                            if (FFAppState().editedOptionAction ==
                                 ActionType.CREATE) {
                               // Add new range
-                              FFAppState().updateEditedMenuOfferStruct(
+                              FFAppState().updateEditedOfferPartStruct(
                                 (e) => e
-                                  ..updateOneTimeServingRanges(
-                                    (e) => e.add(
-                                        FFAppState().editedLocalDateTimeRange),
+                                  ..updateOptions(
+                                    (e) => e.add(FFAppState().editedOption),
                                   ),
                               );
                               safeSetState(() {});
                             }
-                            // Clear helper vars
-                            FFAppState().editedLocalDateTimeRange =
-                                LocalDateTimeRangeStruct();
-                            FFAppState().editedLocalDateTimeRangeAction = null;
+                            FFAppState().editedOption = OptionStruct();
+                            FFAppState().editedOptionAction = null;
                           },
-                          text: 'Dodaj nowy',
+                          text: 'Dodaj nową',
                           icon: const Icon(
                             Icons.add,
                             size: 15.0,
@@ -614,24 +432,22 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Builder(
                     builder: (context) {
-                      final openingWindows = FFAppState()
-                          .editedMenuOffer
-                          .oneTimeServingRanges
-                          .toList();
+                      final options =
+                          FFAppState().editedOfferPart.options.toList();
 
-                      return ListView.builder(
+                      return ListView.separated(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: openingWindows.length,
-                        itemBuilder: (context, openingWindowsIndex) {
-                          final openingWindowsItem =
-                              openingWindows[openingWindowsIndex];
+                        itemCount: options.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 1.0),
+                        itemBuilder: (context, optionsIndex) {
+                          final optionsItem = options[optionsIndex];
                           return Visibility(
-                            visible: openingWindowsItem.startTime != '',
+                            visible: optionsItem != null,
                             child: Builder(
                               builder: (context) => InkWell(
                                 splashColor: Colors.transparent,
@@ -639,13 +455,9 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  FFAppState().editedLocalDateTimeRange =
-                                      LocalDateTimeRangeStruct(
-                                    startTime: openingWindowsItem.startTime,
-                                    endTime: openingWindowsItem.endTime,
-                                  );
-                                  FFAppState().editedLocalDateTimeRangeAction =
-                                      null;
+                                  FFAppState().editedOption =
+                                      functions.cloneOptionObject(optionsItem)!;
+                                  FFAppState().editedOptionAction = null;
                                   await showDialog(
                                     context: context,
                                     builder: (dialogContext) {
@@ -657,66 +469,60 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                                             const AlignmentDirectional(0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                        child: const LocalDateTimeRangeEditWidget(
+                                        child: const OptionEditWidget(
                                           isNew: false,
                                         ),
                                       );
                                     },
                                   );
 
-                                  if (FFAppState()
-                                          .editedLocalDateTimeRangeAction ==
+                                  if (FFAppState().editedOptionAction ==
                                       ActionType.UPDATE) {
                                     // Update selected range
-                                    FFAppState().updateEditedMenuOfferStruct(
+                                    FFAppState().updateEditedOfferPartStruct(
                                       (e) => e
-                                        ..updateOneTimeServingRanges(
-                                          (e) => e[openingWindowsIndex] =
-                                              FFAppState()
-                                                  .editedLocalDateTimeRange,
+                                        ..updateOptions(
+                                          (e) => e[optionsIndex] =
+                                              FFAppState().editedOption,
                                         ),
                                     );
                                     safeSetState(() {});
-                                  } else if (FFAppState()
-                                          .editedLocalDateTimeRangeAction ==
+                                  } else if (FFAppState().editedOptionAction ==
                                       ActionType.DELETE) {
                                     // Update selected range
-                                    FFAppState().updateEditedMenuOfferStruct(
+                                    FFAppState().updateEditedOfferPartStruct(
                                       (e) => e
-                                        ..updateOneTimeServingRanges(
-                                          (e) =>
-                                              e.removeAt(openingWindowsIndex),
+                                        ..updateOptions(
+                                          (e) => e.removeAt(optionsIndex),
                                         ),
                                     );
                                     safeSetState(() {});
-                                  } else if (FFAppState()
-                                          .editedLocalDateTimeRangeAction ==
+                                  } else if (FFAppState().editedOptionAction ==
                                       ActionType.CREATE) {
                                     // Update selected range
-                                    FFAppState().updateEditedMenuOfferStruct(
+                                    FFAppState().updateEditedOfferPartStruct(
                                       (e) => e
-                                        ..updateOneTimeServingRanges(
-                                          (e) => e.add(FFAppState()
-                                              .editedLocalDateTimeRange),
+                                        ..updateOptions(
+                                          (e) =>
+                                              e.add(FFAppState().editedOption),
                                         ),
                                     );
                                     safeSetState(() {});
                                   }
 
-                                  FFAppState().editedLocalDateTimeRange =
-                                      LocalDateTimeRangeStruct();
-                                  FFAppState().editedLocalDateTimeRangeAction =
-                                      null;
+                                  FFAppState().editedOption = OptionStruct();
+                                  FFAppState().editedOptionAction = null;
                                 },
                                 child: Material(
                                   color: Colors.transparent,
                                   child: ListTile(
                                     title: Text(
-                                      '${functions.dateTimeStringToString(openingWindowsItem.startTime)} - ${functions.dateTimeStringToString(openingWindowsItem.endTime)}',
+                                      optionsItem.name,
                                       style: FlutterFlowTheme.of(context)
                                           .titleLarge
                                           .override(
                                             fontFamily: 'Outfit',
+                                            fontSize: 18.0,
                                             letterSpacing: 0.0,
                                           ),
                                     ),
@@ -724,11 +530,11 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                                       Icons.arrow_forward_ios_rounded,
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryText,
-                                      size: 24.0,
+                                      size: 20.0,
                                     ),
                                     tileColor: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
-                                    dense: false,
+                                    dense: true,
                                     contentPadding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 12.0, 0.0),
@@ -759,7 +565,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                     children: [
                       FFButtonWidget(
                         onPressed: () async {
-                          FFAppState().editedMenuOfferAction = null;
+                          FFAppState().editedOfferPartAction = null;
                           Navigator.pop(context);
                         },
                         text: 'Anuluj',
@@ -791,7 +597,7 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                         onPressed: widget.isNew
                             ? null
                             : () async {
-                                FFAppState().editedMenuOfferAction =
+                                FFAppState().editedOfferPartAction =
                                     ActionType.DELETE;
                                 Navigator.pop(context);
                               },
@@ -824,20 +630,21 @@ class _PlaceMenuOfferEditWidgetState extends State<PlaceMenuOfferEditWidget> {
                       FFButtonWidget(
                         onPressed: () async {
                           // Update edited MenuOffer state
-                          FFAppState().updateEditedMenuOfferStruct(
+                          FFAppState().updateEditedOfferPartStruct(
                             (e) => e
                               ..name = _model.nameInputTextController.text
-                              ..basePrice = MonetaryAmountStruct(
-                                currencyCode: _model.ccyDropDownValue,
+                              ..required = _model.requiredSwitchValue
+                              ..supplement = MonetaryAmountStruct(
                                 amount: double.tryParse(
                                     _model.basePriceInputTextController.text),
+                                currencyCode: _model.ccyDropDownValue,
                               ),
                           );
                           if (widget.isNew) {
-                            FFAppState().editedMenuOfferAction =
+                            FFAppState().editedOfferPartAction =
                                 ActionType.CREATE;
                           } else {
-                            FFAppState().editedMenuOfferAction =
+                            FFAppState().editedOfferPartAction =
                                 ActionType.UPDATE;
                           }
 

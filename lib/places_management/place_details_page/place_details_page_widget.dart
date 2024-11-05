@@ -9,7 +9,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/places_management/place_menu_offer_edit/place_menu_offer_edit_widget.dart';
+import '/places_management/menus/menu_offer_edit/menu_offer_edit_widget.dart';
 import '/places_management/select_google_places_api_address/select_google_places_api_address_widget.dart';
 import '/places_management/week_day_time_range_edit/week_day_time_range_edit_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -1213,7 +1213,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                       dialogContext)
                                                                   .unfocus(),
                                                           child:
-                                                              const PlaceMenuOfferEditWidget(
+                                                              const MenuOfferEditWidget(
                                                             isNew: false,
                                                           ),
                                                         ),
@@ -1369,7 +1369,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 onTap: () =>
                                                     FocusScope.of(dialogContext)
                                                         .unfocus(),
-                                                child: const PlaceMenuOfferEditWidget(
+                                                child: const MenuOfferEditWidget(
                                                   isNew: true,
                                                 ),
                                               ),

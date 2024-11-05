@@ -10,12 +10,10 @@ class OptionStruct extends BaseStruct {
     String? name,
     String? description,
     MonetaryAmountStruct? supplement,
-    bool? required,
   })  : _id = id,
         _name = name,
         _description = description,
-        _supplement = supplement,
-        _required = required;
+        _supplement = supplement;
 
   // "id" field.
   String? _id;
@@ -49,19 +47,11 @@ class OptionStruct extends BaseStruct {
 
   bool hasSupplement() => _supplement != null;
 
-  // "required" field.
-  bool? _required;
-  bool get required => _required ?? false;
-  set required(bool? val) => _required = val;
-
-  bool hasRequired() => _required != null;
-
   static OptionStruct fromMap(Map<String, dynamic> data) => OptionStruct(
         id: data['id'] as String?,
         name: data['name'] as String?,
         description: data['description'] as String?,
         supplement: MonetaryAmountStruct.maybeFromMap(data['supplement']),
-        required: data['required'] as bool?,
       );
 
   static OptionStruct? maybeFromMap(dynamic data) =>
@@ -72,7 +62,6 @@ class OptionStruct extends BaseStruct {
         'name': _name,
         'description': _description,
         'supplement': _supplement?.toMap(),
-        'required': _required,
       }.withoutNulls;
 
   @override
@@ -92,10 +81,6 @@ class OptionStruct extends BaseStruct {
         'supplement': serializeParam(
           _supplement,
           ParamType.DataStruct,
-        ),
-        'required': serializeParam(
-          _required,
-          ParamType.bool,
         ),
       }.withoutNulls;
 
@@ -122,11 +107,6 @@ class OptionStruct extends BaseStruct {
           false,
           structBuilder: MonetaryAmountStruct.fromSerializableMap,
         ),
-        required: deserializeParam(
-          data['required'],
-          ParamType.bool,
-          false,
-        ),
       );
 
   @override
@@ -138,13 +118,12 @@ class OptionStruct extends BaseStruct {
         id == other.id &&
         name == other.name &&
         description == other.description &&
-        supplement == other.supplement &&
-        required == other.required;
+        supplement == other.supplement;
   }
 
   @override
   int get hashCode =>
-      const ListEquality().hash([id, name, description, supplement, required]);
+      const ListEquality().hash([id, name, description, supplement]);
 }
 
 OptionStruct createOptionStruct({
@@ -152,12 +131,10 @@ OptionStruct createOptionStruct({
   String? name,
   String? description,
   MonetaryAmountStruct? supplement,
-  bool? required,
 }) =>
     OptionStruct(
       id: id,
       name: name,
       description: description,
       supplement: supplement ?? MonetaryAmountStruct(),
-      required: required,
     );

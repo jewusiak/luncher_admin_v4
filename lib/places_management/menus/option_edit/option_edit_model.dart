@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'offer_part_edit_widget.dart' show OfferPartEditWidget;
+import 'option_edit_widget.dart' show OptionEditWidget;
 import 'package:flutter/material.dart';
 
-class OfferPartEditModel extends FlutterFlowModel<OfferPartEditWidget> {
+class OptionEditModel extends FlutterFlowModel<OptionEditWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for nameInput widget.
@@ -18,6 +18,11 @@ class OfferPartEditModel extends FlutterFlowModel<OfferPartEditWidget> {
   // State field(s) for CcyDropDown widget.
   String? ccyDropDownValue;
   FormFieldController<String>? ccyDropDownValueController;
+  // State field(s) for descriptionInput widget.
+  FocusNode? descriptionInputFocusNode;
+  TextEditingController? descriptionInputTextController;
+  String? Function(BuildContext, String?)?
+      descriptionInputTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -29,5 +34,8 @@ class OfferPartEditModel extends FlutterFlowModel<OfferPartEditWidget> {
 
     basePriceInputFocusNode?.dispose();
     basePriceInputTextController?.dispose();
+
+    descriptionInputFocusNode?.dispose();
+    descriptionInputTextController?.dispose();
   }
 }

@@ -1,10 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'place_menu_offer_edit_widget.dart' show PlaceMenuOfferEditWidget;
+import 'menu_offer_edit_widget.dart' show MenuOfferEditWidget;
 import 'package:flutter/material.dart';
 
-class PlaceMenuOfferEditModel
-    extends FlutterFlowModel<PlaceMenuOfferEditWidget> {
+class MenuOfferEditModel extends FlutterFlowModel<MenuOfferEditWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for nameInput widget.

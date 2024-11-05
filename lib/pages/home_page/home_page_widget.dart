@@ -204,7 +204,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ),
               ),
-              const Spacer(),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                  ),
+                ),
+              ),
               InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,

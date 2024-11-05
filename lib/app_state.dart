@@ -80,4 +80,36 @@ class FFAppState extends ChangeNotifier {
   set editedLocalDateTimeRangeAction(ActionType? value) {
     _editedLocalDateTimeRangeAction = value;
   }
+
+  PartStruct _editedOfferPart = PartStruct();
+  PartStruct get editedOfferPart => _editedOfferPart;
+  set editedOfferPart(PartStruct value) {
+    _editedOfferPart = value;
+  }
+
+  void updateEditedOfferPartStruct(Function(PartStruct) updateFn) {
+    updateFn(_editedOfferPart);
+  }
+
+  ActionType? _editedOfferPartAction;
+  ActionType? get editedOfferPartAction => _editedOfferPartAction;
+  set editedOfferPartAction(ActionType? value) {
+    _editedOfferPartAction = value;
+  }
+
+  OptionStruct _editedOption = OptionStruct();
+  OptionStruct get editedOption => _editedOption;
+  set editedOption(OptionStruct value) {
+    _editedOption = value;
+  }
+
+  void updateEditedOptionStruct(Function(OptionStruct) updateFn) {
+    updateFn(_editedOption);
+  }
+
+  ActionType? _editedOptionAction;
+  ActionType? get editedOptionAction => _editedOptionAction;
+  set editedOptionAction(ActionType? value) {
+    _editedOptionAction = value;
+  }
 }

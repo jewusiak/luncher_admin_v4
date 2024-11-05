@@ -618,7 +618,6 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                   onRefresh: () async {
                     safeSetState(
                         () => _model.placesListViewPagingController?.refresh());
-                    await _model.waitForOnePageForPlacesListView();
                   },
                   child: PagedListView<ApiPagingParams, dynamic>(
                     pagingController: _model.setPlacesListViewController(
