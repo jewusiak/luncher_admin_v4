@@ -19,6 +19,18 @@ List<String> concatLists(
   return list1 + list2;
 }
 
+PartStruct? clonePartObject(PartStruct? obj) {
+  return obj == null
+      ? null
+      : PartStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+}
+
+OptionStruct? cloneOptionObject(OptionStruct? obj) {
+  return obj == null
+      ? null
+      : OptionStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+}
+
 List<String> concatStringWithList(
   String str,
   List<String> list,
@@ -80,4 +92,12 @@ String? dateTimeStringToString(String? input) {
 
   DateTime? date = DateTime.tryParse(input);
   return date == null ? null : DateFormat('dd.MM.yyyy HH:mm').format(date);
+}
+
+String? replaceCommaWithDot(String? str) {
+  if (str == null) return null;
+  List<String> splitted = str.split(RegExp("\\.|,"));
+  return splitted.length < 2
+      ? splitted[0]
+      : "${splitted[0]}.${splitted.sublist(1).join()}";
 }

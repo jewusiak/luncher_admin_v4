@@ -187,7 +187,6 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                         onPressed: () async {
                           safeSetState(() =>
                               _model.usersListViewPagingController?.refresh());
-                          await _model.waitForOnePageForUsersListView();
                         },
                       ),
                       Padding(

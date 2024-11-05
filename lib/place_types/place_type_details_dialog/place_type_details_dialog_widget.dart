@@ -501,7 +501,7 @@ class _PlaceTypeDetailsDialogWidgetState
                             );
                           }
 
-                          if ((_model.createResult?.succeeded ?? true) ||
+                          if ((_model.createResult?.succeeded ?? true) &&
                               (_model.updateResult?.succeeded ?? true)) {
                             Navigator.pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(
