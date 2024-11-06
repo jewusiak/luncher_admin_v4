@@ -101,3 +101,18 @@ String? replaceCommaWithDot(String? str) {
       ? splitted[0]
       : "${splitted[0]}.${splitted.sublist(1).join()}";
 }
+
+String? dayOfWeekEnumToPolishName(String? enumValue) {
+  final days = {
+    "MONDAY": "Poniedziałek",
+    "TUESDAY": "Wtorek",
+    "WEDNESDAY": "Środa",
+    "THURSDAY": "Czwartek",
+    "FRIDAY": "Piątek",
+    "SATURDAY": "Sobota",
+    "SUNDAY": "Niedziela"
+  };
+  if (enumValue == null) return null;
+
+  return days[enumValue];
+}

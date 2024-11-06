@@ -635,7 +635,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                 ),
                               ),
                               Text(
-                                'User enabled',
+                                'Użytkownik włączony',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
