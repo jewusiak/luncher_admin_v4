@@ -1012,7 +1012,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       color: Colors.transparent,
                                                       child: ListTile(
                                                         title: Text(
-                                                          '${openingWindowsItem.startTime.day}, ${openingWindowsItem.startTime.time} - ${openingWindowsItem.startTime.day == openingWindowsItem.endTime.day ? '' : '${openingWindowsItem.endTime.day}, '}${openingWindowsItem.endTime.time}',
+                                                          '${functions.dayOfWeekEnumToPolishName(openingWindowsItem.startTime.day)}, ${openingWindowsItem.startTime.time} - ${openingWindowsItem.startTime.day == openingWindowsItem.endTime.day ? '' : '${functions.dayOfWeekEnumToPolishName(openingWindowsItem.endTime.day)}, '}${openingWindowsItem.endTime.time}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleLarge
