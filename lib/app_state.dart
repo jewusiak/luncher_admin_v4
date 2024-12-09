@@ -112,4 +112,37 @@ class FFAppState extends ChangeNotifier {
   set editedOptionAction(ActionType? value) {
     _editedOptionAction = value;
   }
+
+  SectionElementDtoStruct _editedSectionElement = SectionElementDtoStruct();
+  SectionElementDtoStruct get editedSectionElement => _editedSectionElement;
+  set editedSectionElement(SectionElementDtoStruct value) {
+    _editedSectionElement = value;
+  }
+
+  void updateEditedSectionElementStruct(
+      Function(SectionElementDtoStruct) updateFn) {
+    updateFn(_editedSectionElement);
+  }
+
+  ActionType? _editedSectionElementAction;
+  ActionType? get editedSectionElementAction => _editedSectionElementAction;
+  set editedSectionElementAction(ActionType? value) {
+    _editedSectionElementAction = value;
+  }
+
+  SectionDtoStruct _editedSection = SectionDtoStruct();
+  SectionDtoStruct get editedSection => _editedSection;
+  set editedSection(SectionDtoStruct value) {
+    _editedSection = value;
+  }
+
+  void updateEditedSectionStruct(Function(SectionDtoStruct) updateFn) {
+    updateFn(_editedSection);
+  }
+
+  ActionType? _editedSectionAction;
+  ActionType? get editedSectionAction => _editedSectionAction;
+  set editedSectionAction(ActionType? value) {
+    _editedSectionAction = value;
+  }
 }

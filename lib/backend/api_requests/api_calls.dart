@@ -17,6 +17,10 @@ class LuncherCoreAPIPOSTAuthLoginGroup {
   static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
   static LoginCall loginCall = LoginCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
 }
 
 class LoginCall {
@@ -32,20 +36,23 @@ class LoginCall {
   "email": "$email",
   "password": "$password"
 }''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'login',
-      apiUrl: '$baseUrl/auth/login',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: true,
-      decodeUtf8: true,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'login',
+        apiUrl: '$baseUrl/auth/login',
+        callType: ApiCallType.POST,
+        headers: const {},
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      LuncherCoreAPIPOSTAuthLoginGroup.interceptors,
     );
   }
 
@@ -766,6 +773,7 @@ class UpdatePlaceCall {
     String? ownerEmail,
     String? enabled,
     dynamic menuOffersJson,
+    List<String>? imageIdsList,
   }) async {
     name ??= FFAppConstants.nullvalue;
     longName ??= FFAppConstants.nullvalue;
@@ -788,7 +796,7 @@ class UpdatePlaceCall {
     ownerEmail ??= FFAppConstants.nullvalue;
     enabled ??= FFAppConstants.nullvalue;
     final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl();
-
+    final imageIds = _serializeList(imageIdsList);
     final openingWindows = _serializeJson(openingWindowsJson, true);
     final menuOffers = _serializeJson(menuOffersJson, true);
     final ffApiRequestBody = '''
@@ -818,6 +826,7 @@ class UpdatePlaceCall {
   },
   "menuOffers": $menuOffers,
   "ownerEmail": "$ownerEmail",
+  "imageIds": $imageIds,
   "enabled": "$enabled"
 }''';
     return FFApiInterceptor.makeApiCall(
@@ -931,6 +940,284 @@ class TextSearchCall {
 
 /// End Google Places API Group Code
 
+/// Start Luncher Core API (GET___content-management_arrangements_uuid) Group Code
+
+class LuncherCoreAPIGETContentManagementArrangementsUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetArrangementByIdCall getArrangementByIdCall =
+      GetArrangementByIdCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class GetArrangementByIdCall {
+  Future<ApiCallResponse> call({
+    String? uuid = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl =
+        LuncherCoreAPIGETContentManagementArrangementsUuidGroup.getBaseUrl();
+
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'getArrangementById',
+        apiUrl: '$baseUrl/content-management/arrangements/$uuid',
+        callType: ApiCallType.GET,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (GET___content-management_arrangements_uuid) Group Code
+
+/// Start Luncher Core API (POST___asset) Group Code
+
+class LuncherCoreAPIPOSTAssetGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static UploadImageCall uploadImageCall = UploadImageCall();
+}
+
+class UploadImageCall {
+  Future<ApiCallResponse> call({
+    String? description = '',
+    String? authorization = '',
+    FFUploadedFile? file,
+  }) async {
+    final baseUrl = LuncherCoreAPIPOSTAssetGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'uploadImage',
+      apiUrl: '$baseUrl/asset',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {
+        'description': description,
+        'file': file,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (POST___asset) Group Code
+
+/// Start Luncher Core API (PUT___content-management_arrangements_uuid) Group Code
+
+class LuncherCoreAPIPUTContentManagementArrangementsUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static UpdateArrangementCall updateArrangementCall = UpdateArrangementCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class UpdateArrangementCall {
+  Future<ApiCallResponse> call({
+    String? uuid = '',
+    String? authorization = '',
+    dynamic pageArrangementJson,
+  }) async {
+    final baseUrl =
+        LuncherCoreAPIPUTContentManagementArrangementsUuidGroup.getBaseUrl();
+
+    final pageArrangement = _serializeJson(pageArrangementJson);
+    final ffApiRequestBody = pageArrangement;
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'updateArrangement',
+        apiUrl: '$baseUrl/content-management/arrangements/$uuid',
+        callType: ApiCallType.PUT,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (PUT___content-management_arrangements_uuid) Group Code
+
+/// Start Luncher Core API (PUT___content-management_arrangements_uuid_primary) Group Code
+
+class LuncherCoreAPIPUTContentManagementArrangementsUuidPrimaryGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static MakeArrangementPrimaryCall makeArrangementPrimaryCall =
+      MakeArrangementPrimaryCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class MakeArrangementPrimaryCall {
+  Future<ApiCallResponse> call({
+    String? uuid = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl =
+        LuncherCoreAPIPUTContentManagementArrangementsUuidPrimaryGroup
+            .getBaseUrl();
+
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'makeArrangementPrimary',
+        apiUrl: '$baseUrl/content-management/arrangements/$uuid/primary',
+        callType: ApiCallType.PUT,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        bodyType: BodyType.NONE,
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (PUT___content-management_arrangements_uuid_primary) Group Code
+
+/// Start Luncher Core API (POST___content-management_arrangements) Group Code
+
+class LuncherCoreAPIPOSTContentManagementArrangementsGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static CreateArrangementCall createArrangementCall = CreateArrangementCall();
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class CreateArrangementCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+  }) async {
+    final baseUrl =
+        LuncherCoreAPIPOSTContentManagementArrangementsGroup.getBaseUrl();
+
+    const ffApiRequestBody = '''
+{
+  
+}''';
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'createArrangement',
+        apiUrl: '$baseUrl/content-management/arrangements',
+        callType: ApiCallType.POST,
+        headers: {
+          'Authorization': 'Bearer $authorization',
+        },
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (POST___content-management_arrangements) Group Code
+
+/// Start Luncher Core API (GET___content-management_arrangements) Group Code
+
+class LuncherCoreAPIGETContentManagementArrangementsGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static GetAllArrangementsCall getAllArrangementsCall =
+      GetAllArrangementsCall();
+}
+
+class GetAllArrangementsCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+  }) async {
+    final baseUrl =
+        LuncherCoreAPIGETContentManagementArrangementsGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getAllArrangements',
+      apiUrl: '$baseUrl/content-management/arrangements',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___content-management_arrangements) Group Code
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
@@ -973,4 +1260,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }

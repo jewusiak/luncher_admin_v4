@@ -19,16 +19,29 @@ List<String> concatLists(
   return list1 + list2;
 }
 
-PartStruct? clonePartObject(PartStruct? obj) {
+SectionDtoStruct? cloneSectionObject(SectionDtoStruct? obj) {
   return obj == null
       ? null
-      : PartStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+      : SectionDtoStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
 }
 
 OptionStruct? cloneOptionObject(OptionStruct? obj) {
   return obj == null
       ? null
       : OptionStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+}
+
+PartStruct? clonePartObject(PartStruct? obj) {
+  return obj == null
+      ? null
+      : PartStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+}
+
+SectionElementDtoStruct? cloneSectionElementObject(
+    SectionElementDtoStruct? obj) {
+  return obj == null
+      ? null
+      : SectionElementDtoStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
 }
 
 List<String> concatStringWithList(
@@ -102,6 +115,40 @@ String? replaceCommaWithDot(String? str) {
       : "${splitted[0]}.${splitted.sublist(1).join()}";
 }
 
+List<SectionDtoStruct>? swapItemsOfSectionList(
+  List<SectionDtoStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
+}
+
+List<SectionElementDtoStruct>? swapItemsOfSectionElementList(
+  List<SectionElementDtoStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
+}
+
 String? dayOfWeekEnumToPolishName(String? enumValue) {
   final days = {
     "MONDAY": "Poniedziałek",
@@ -115,4 +162,21 @@ String? dayOfWeekEnumToPolishName(String? enumValue) {
   if (enumValue == null) return null;
 
   return days[enumValue];
+}
+
+List<AssetStruct>? swapItemsOfAssetsList(
+  List<AssetStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
 }

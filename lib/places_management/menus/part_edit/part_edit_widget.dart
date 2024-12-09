@@ -186,13 +186,18 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                         functions.replaceCommaWithDot(_model
                                             .basePriceInputTextController
                                             .text)!;
-                                    _model.basePriceInputTextController
-                                            ?.selection =
-                                        TextSelection.collapsed(
-                                            offset: _model
-                                                .basePriceInputTextController!
-                                                .text
-                                                .length);
+                                    _model.basePriceInputFocusNode
+                                        ?.requestFocus();
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      _model.basePriceInputTextController
+                                          ?.selection = TextSelection.collapsed(
+                                        offset: _model
+                                            .basePriceInputTextController!
+                                            .text
+                                            .length,
+                                      );
+                                    });
                                   });
                                 },
                               ),
@@ -201,7 +206,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
-                                labelText: 'Cena bazowa',
+                                labelText: 'Dopłata',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -328,12 +333,14 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                           if (newValue) {
                             safeSetState(() {
                               _model.basePriceInputTextController?.text = '0';
-                              _model.basePriceInputTextController?.selection =
-                                  TextSelection.collapsed(
-                                      offset: _model
-                                          .basePriceInputTextController!
-                                          .text
-                                          .length);
+                              _model.basePriceInputFocusNode?.requestFocus();
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                _model.basePriceInputTextController?.selection =
+                                    TextSelection.collapsed(
+                                  offset: _model.basePriceInputTextController!
+                                      .text.length,
+                                );
+                              });
                             });
                           }
                         },
@@ -523,6 +530,19 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                           .override(
                                             fontFamily: 'Outfit',
                                             fontSize: 18.0,
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    subtitle: Text(
+                                      'Dopłata: ${valueOrDefault<String>(
+                                        optionsItem.supplement.amount
+                                            .toString(),
+                                        '0.00',
+                                      )} ${optionsItem.supplement.currencyCode}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
                                             letterSpacing: 0.0,
                                           ),
                                     ),

@@ -204,6 +204,37 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ),
               ),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed('CmsListPage');
+                },
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.layers,
+                    ),
+                    title: Text(
+                      'CMS',
+                      style: FlutterFlowTheme.of(context).titleLarge.override(
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 20.0,
+                    ),
+                    tileColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    dense: false,
+                  ),
+                ),
+              ),
               Expanded(
                 flex: 1,
                 child: Container(

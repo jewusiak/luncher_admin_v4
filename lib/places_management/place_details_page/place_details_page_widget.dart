@@ -9,11 +9,13 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/upload_data.dart';
 import '/places_management/menus/menu_offer_edit/menu_offer_edit_widget.dart';
 import '/places_management/select_google_places_api_address/select_google_places_api_address_widget.dart';
 import '/places_management/week_day_time_range_edit/week_day_time_range_edit_widget.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -61,22 +63,33 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
             (_model.getPlaceResult?.jsonBody ?? ''));
         safeSetState(() {
           _model.nameInputTextController?.text = _model.place!.name;
-          _model.nameInputTextController?.selection = TextSelection.collapsed(
-              offset: _model.nameInputTextController!.text.length);
+          _model.nameInputFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.nameInputTextController?.selection = TextSelection.collapsed(
+              offset: _model.nameInputTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.longNameInputTextController?.text = _model.place!.longName;
-          _model.longNameInputTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.longNameInputTextController!.text.length);
+          _model.longNameInputFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.longNameInputTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.longNameInputTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.placeDescriptionInputTextController?.text =
               _model.place!.description;
-          _model.placeDescriptionInputTextController?.selection =
-              TextSelection.collapsed(
-                  offset:
-                      _model.placeDescriptionInputTextController!.text.length);
+          _model.placeDescriptionInputFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.placeDescriptionInputTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.placeDescriptionInputTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.placeEnabledSwitchValue = _model.place!.enabled;
@@ -88,61 +101,100 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
         safeSetState(() {
           _model.address1stLineTextController?.text =
               _model.place!.address.firstLine;
-          _model.address1stLineTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.address1stLineTextController!.text.length);
+          _model.address1stLineFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.address1stLineTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.address1stLineTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.address2ndLineTextController?.text =
               _model.place!.address.secondLine;
-          _model.address2ndLineTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.address2ndLineTextController!.text.length);
+          _model.address2ndLineFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.address2ndLineTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.address2ndLineTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.addressZipCodeTextController?.text =
               _model.place!.address.zipCode;
-          _model.addressZipCodeTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.addressZipCodeTextController!.text.length);
+          _model.addressZipCodeFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.addressZipCodeTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.addressZipCodeTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.addressCityTextController?.text = _model.place!.address.city;
-          _model.addressCityTextController?.selection = TextSelection.collapsed(
-              offset: _model.addressCityTextController!.text.length);
+          _model.addressCityFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.addressCityTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.addressCityTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.addressDistrictTextController?.text =
               _model.place!.address.district;
-          _model.addressDistrictTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.addressDistrictTextController!.text.length);
+          _model.addressDistrictFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.addressDistrictTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.addressDistrictTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.addressCountryTextController?.text =
               _model.place!.address.country;
-          _model.addressCountryTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.addressCountryTextController!.text.length);
+          _model.addressCountryFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.addressCountryTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.addressCountryTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.locationLatTextController?.text =
               _model.place!.location.latitude.toString();
-          _model.locationLatTextController?.selection = TextSelection.collapsed(
-              offset: _model.locationLatTextController!.text.length);
+          _model.locationLatFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.locationLatTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.locationLatTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.locationLonTextController?.text =
               _model.place!.location.longitude.toString();
-          _model.locationLonTextController?.selection = TextSelection.collapsed(
-              offset: _model.locationLonTextController!.text.length);
+          _model.locationLonFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.locationLonTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.locationLonTextController!.text.length,
+            );
+          });
         });
         safeSetState(() {
           _model.googlePlaceIdInputTextController?.text =
               _model.place!.googleMapsReference;
-          _model.googlePlaceIdInputTextController?.selection =
-              TextSelection.collapsed(
-                  offset: _model.googlePlaceIdInputTextController!.text.length);
+          _model.googlePlaceIdInputFocusNode?.requestFocus();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _model.googlePlaceIdInputTextController?.selection =
+                TextSelection.collapsed(
+              offset: _model.googlePlaceIdInputTextController!.text.length,
+            );
+          });
         });
         return;
       } else {
@@ -302,6 +354,8 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                     menuOffersJson: _model.place?.menuOffers
                         .map((e) => e.toMap())
                         .toList(),
+                    imageIdsList:
+                        _model.place?.images.map((e) => e.id).toList(),
                   );
 
                   shouldSetState = true;
@@ -1144,11 +1198,264 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                             ),
                           ),
                           KeepAliveWidgetWrapper(
-                            builder: (context) => Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children:
-                                  <Widget>[].divide(const SizedBox(height: 20.0)),
+                            builder: (context) => SingleChildScrollView(
+                              primary: false,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 20.0, 0.0, 0.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        final selectedMedia = await selectMedia(
+                                          mediaSource: MediaSource.photoGallery,
+                                          multiImage: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          safeSetState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
+
+                                          try {
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
+                                          } finally {
+                                            _model.isDataUploading = false;
+                                          }
+                                          if (selectedUploadedFiles.length ==
+                                              selectedMedia.length) {
+                                            safeSetState(() {
+                                              _model.uploadedLocalFiles =
+                                                  selectedUploadedFiles;
+                                            });
+                                          } else {
+                                            safeSetState(() {});
+                                            return;
+                                          }
+                                        }
+
+                                        _model.iter = 0;
+                                        while (_model.iter <
+                                            _model.uploadedLocalFiles.length) {
+                                          _model.uploadFile =
+                                              await LuncherCoreAPIPOSTAssetGroup
+                                                  .uploadImageCall
+                                                  .call(
+                                            authorization:
+                                                currentAuthenticationToken,
+                                            file: _model.uploadedLocalFiles[
+                                                _model.iter],
+                                          );
+
+                                          _model.iter = _model.iter + 1;
+                                          _model.updatePlaceStruct(
+                                            (e) => e
+                                              ..updateImages(
+                                                (e) => e.add(
+                                                    AssetStruct.maybeFromMap(
+                                                        (_model.uploadFile
+                                                                ?.jsonBody ??
+                                                            ''))!),
+                                              ),
+                                          );
+                                        }
+                                        _model.iter = 0;
+                                        safeSetState(() {});
+
+                                        safeSetState(() {});
+                                      },
+                                      text: 'Dodaj nowe zdjęcie',
+                                      icon: const Icon(
+                                        Icons.upload_sharp,
+                                        size: 15.0,
+                                      ),
+                                      options: FFButtonOptions(
+                                        height: 40.0,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        elevation: 0.0,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 700.0,
+                                    ),
+                                    decoration: const BoxDecoration(),
+                                    child: Builder(
+                                      builder: (context) {
+                                        final imageIdsIter =
+                                            _model.place?.images.toList() ??
+                                                [];
+
+                                        return ReorderableListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: imageIdsIter.length,
+                                          itemBuilder:
+                                              (context, imageIdsIterIndex) {
+                                            final imageIdsIterItem =
+                                                imageIdsIter[imageIdsIterIndex];
+                                            return Container(
+                                              key: ValueKey(
+                                                  "ListView_0xzog8f3" '_' +
+                                                      imageIdsIterIndex
+                                                          .toString()),
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 5.0),
+                                                child: Container(
+                                                  height: 150.0,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      5.0,
+                                                                      5.0,
+                                                                      10.0,
+                                                                      5.0),
+                                                          child: Container(
+                                                            decoration:
+                                                                const BoxDecoration(),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                fadeInDuration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            500),
+                                                                fadeOutDuration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            500),
+                                                                imageUrl:
+                                                                    imageIdsIterItem
+                                                                        .accessUrl,
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    60.0,
+                                                                    0.0),
+                                                        child:
+                                                            FlutterFlowIconButton(
+                                                          borderRadius: 8.0,
+                                                          buttonSize: 40.0,
+                                                          fillColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .error,
+                                                          icon: Icon(
+                                                            Icons.delete_sharp,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .info,
+                                                            size: 24.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            _model
+                                                                .updatePlaceStruct(
+                                                              (e) => e
+                                                                ..updateImages(
+                                                                  (e) => e.removeAt(
+                                                                      imageIdsIterIndex),
+                                                                ),
+                                                            );
+                                                            safeSetState(() {});
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          onReorder: (int reorderableOldIndex,
+                                              int reorderableNewIndex) async {
+                                            // A1
+                                            _model.updatePlaceStruct(
+                                              (e) => e
+                                                ..images = functions
+                                                    .swapItemsOfAssetsList(
+                                                        _model.place?.images
+                                                            .toList(),
+                                                        reorderableOldIndex,
+                                                        reorderableNewIndex)!
+                                                    .toList(),
+                                            );
+
+                                            safeSetState(() {});
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ].divide(const SizedBox(height: 20.0)),
+                              ),
                             ),
                           ),
                           KeepAliveWidgetWrapper(
@@ -1294,6 +1601,17 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                           .override(
                                                             fontFamily:
                                                                 'Outfit',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                    subtitle: Text(
+                                                      'Cena bazowa: ${menuOffersItem.basePrice.amount.toString()} ${menuOffersItem.basePrice.currencyCode}',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
@@ -1503,13 +1821,20 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       .location
                                                       .latitude
                                                       .toString();
-                                                  _model.locationLatTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .locationLatTextController!
-                                                              .text
-                                                              .length);
+                                                  _model.locationLatFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.locationLatTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .locationLatTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model
@@ -1525,13 +1850,20 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       .location
                                                       .longitude
                                                       .toString();
-                                                  _model.locationLonTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .locationLonTextController!
-                                                              .text
-                                                              .length);
+                                                  _model.locationLonFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.locationLonTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .locationLonTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 await _model
                                                     .googleMapsController.future
@@ -1565,13 +1897,21 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   )![FFAppState()
                                                           .selectedGoogleMapPlacesApiIndex])
                                                       .id;
-                                                  _model.googlePlaceIdInputTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .googlePlaceIdInputTextController!
-                                                              .text
-                                                              .length);
+                                                  _model
+                                                      .googlePlaceIdInputFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.googlePlaceIdInputTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .googlePlaceIdInputTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.address1stLineTextController
@@ -1585,13 +1925,20 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                     ?.jsonBody ??
                                                                 ''),
                                                           )?.toList(), FFAppState().selectedGoogleMapPlacesApiIndex, 'street_number').longText}';
-                                                  _model.address1stLineTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .address1stLineTextController!
-                                                              .text
-                                                              .length);
+                                                  _model.address1stLineFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.address1stLineTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .address1stLineTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressZipCodeTextController?.text =
@@ -1609,13 +1956,20 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'postal_code')
                                                           .longText;
-                                                  _model.addressZipCodeTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .addressZipCodeTextController!
-                                                              .text
-                                                              .length);
+                                                  _model.addressZipCodeFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.addressZipCodeTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .addressZipCodeTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressCityTextController?.text =
@@ -1633,13 +1987,20 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'locality')
                                                           .longText;
-                                                  _model.addressCityTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .addressCityTextController!
-                                                              .text
-                                                              .length);
+                                                  _model.addressCityFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.addressCityTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .addressCityTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressDistrictTextController?.text =
@@ -1657,13 +2018,21 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'sublocality')
                                                           .longText;
-                                                  _model.addressDistrictTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .addressDistrictTextController!
-                                                              .text
-                                                              .length);
+                                                  _model
+                                                      .addressDistrictFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.addressDistrictTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .addressDistrictTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressCountryTextController?.text =
@@ -1681,13 +2050,20 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'country')
                                                           .shortText;
-                                                  _model.addressCountryTextController
-                                                          ?.selection =
-                                                      TextSelection.collapsed(
-                                                          offset: _model
-                                                              .addressCountryTextController!
-                                                              .text
-                                                              .length);
+                                                  _model.addressCountryFocusNode
+                                                      ?.requestFocus();
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    _model.addressCountryTextController
+                                                            ?.selection =
+                                                        TextSelection.collapsed(
+                                                      offset: _model
+                                                          .addressCountryTextController!
+                                                          .text
+                                                          .length,
+                                                    );
+                                                  });
                                                 });
                                               } else {
                                                 if (shouldSetState) {

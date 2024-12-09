@@ -41,7 +41,8 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
         return _supportedNullValues.any((e) => e == v);
       }
     });
-    return list.isEmpty;
+    // will not remove empty lists
+    return false; //list.isEmpty;
   }
 
   @override
@@ -51,6 +52,10 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
     // Perform any necessary calls or modifications to the [options] before
     // the API call is made.
     //Map<String, dynamic> params = options.params;
+
+    if (options == null || options.body == null || options.body == "") {
+      return options;
+    }
 
     Map<String, dynamic> bodyObject = jsonDecode(options.body ?? '');
 

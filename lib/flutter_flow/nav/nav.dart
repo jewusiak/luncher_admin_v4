@@ -142,6 +142,23 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   ParamType.int,
                 ),
               ),
+            ),
+            FFRoute(
+              name: 'PageArrangementDetails',
+              path: 'pageArrangementDetails',
+              requireAuth: true,
+              builder: (context, params) => PageArrangementDetailsWidget(
+                arrangementId: params.getParam(
+                  'arrangementId',
+                  ParamType.String,
+                ),
+              ),
+            ),
+            FFRoute(
+              name: 'CmsListPage',
+              path: 'cmsListPage',
+              requireAuth: true,
+              builder: (context, params) => const CmsListPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

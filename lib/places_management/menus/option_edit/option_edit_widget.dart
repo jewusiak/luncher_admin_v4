@@ -188,13 +188,18 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                         functions.replaceCommaWithDot(_model
                                             .basePriceInputTextController
                                             .text)!;
-                                    _model.basePriceInputTextController
-                                            ?.selection =
-                                        TextSelection.collapsed(
-                                            offset: _model
-                                                .basePriceInputTextController!
-                                                .text
-                                                .length);
+                                    _model.basePriceInputFocusNode
+                                        ?.requestFocus();
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      _model.basePriceInputTextController
+                                          ?.selection = TextSelection.collapsed(
+                                        offset: _model
+                                            .basePriceInputTextController!
+                                            .text
+                                            .length,
+                                      );
+                                    });
                                   });
                                 },
                               ),
@@ -202,7 +207,7 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
-                                labelText: 'Cena bazowa',
+                                labelText: 'Dopłata',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
