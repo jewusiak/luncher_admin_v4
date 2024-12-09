@@ -56,29 +56,33 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
     if (options == null || options.body == null || options.body == "") {
       return options;
     }
+    try {
+      Map<String, dynamic> bodyObject = jsonDecode(options.body ?? '');
 
-    Map<String, dynamic> bodyObject = jsonDecode(options.body ?? '');
+      print("Remove nulls called");
+      print(options.body ?? '--null--');
 
-    print("Remove nulls called");
-    print(options.body ?? '--null--');
+      removeNulls(bodyObject);
+      String bodyString = jsonEncode(bodyObject);
 
-    removeNulls(bodyObject);
-    String bodyString = jsonEncode(bodyObject);
+      print(bodyString);
 
-    print(bodyString);
+      final ApiCallOptions newOptions = ApiCallOptions(
+        callName: options.callName,
+        callType: options.callType,
+        bodyType: options.bodyType,
+        apiUrl: options.apiUrl,
+        params: options.params,
+        headers: options.headers,
+        returnBody: options.returnBody,
+        body: bodyString,
+      );
 
-    final ApiCallOptions newOptions = ApiCallOptions(
-      callName: options.callName,
-      callType: options.callType,
-      bodyType: options.bodyType,
-      apiUrl: options.apiUrl,
-      params: options.params,
-      headers: options.headers,
-      returnBody: options.returnBody,
-      body: bodyString,
-    );
-
-    return newOptions;
+      return newOptions;
+    } catch (e) {
+      print("When called remove-nulls:");
+      print(e);
+    }
   }
 
   @override
