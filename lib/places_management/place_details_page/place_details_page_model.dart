@@ -20,6 +20,10 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
 
   bool buildOpeningHrs = true;
 
+  String? editedImageOrder;
+
+  int iter = 0;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (getById)] action in PlaceDetailsPage widget.
@@ -49,6 +53,11 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
       placeDescriptionInputTextControllerValidator;
   // State field(s) for PlaceEnabledSwitch widget.
   bool? placeEnabledSwitchValue;
+  bool isDataUploading = false;
+  List<FFUploadedFile> uploadedLocalFiles = [];
+
+  // Stores action output result for [Backend Call - API (uploadImage)] action in Button widget.
+  ApiCallResponse? uploadFile;
   // Stores action output result for [Backend Call - API (TextSearch)] action in Button widget.
   ApiCallResponse? googleMapsApiCallResult;
   // State field(s) for address1stLine widget.

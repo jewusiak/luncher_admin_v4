@@ -145,7 +145,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         controller: _model.passwordTextController,
                         focusNode: _model.passwordFocusNode,
                         autofocus: true,
-                        textInputAction: TextInputAction.go,
+                        textInputAction: TextInputAction.done,
                         obscureText: !_model.passwordVisibility,
                         decoration: InputDecoration(
                           labelText: 'Hasło',

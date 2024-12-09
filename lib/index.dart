@@ -13,3 +13,6 @@ export '/place_types/place_types_list_page/place_types_list_page_widget.dart'
     show PlaceTypesListPageWidget;
 export '/places_management/place_details_page/place_details_page_widget.dart'
     show PlaceDetailsPageWidget;
+export '/cms/page_arrangement_details/page_arrangement_details_widget.dart'
+    show PageArrangementDetailsWidget;
+export '/cms/cms_list_page/cms_list_page_widget.dart' show CmsListPageWidget;

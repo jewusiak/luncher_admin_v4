@@ -7,30 +7,23 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class AssetStruct extends BaseStruct {
   AssetStruct({
-    String? uuid,
-    String? name,
+    String? id,
     String? description,
-    String? dateCreated,
-    String? publicUrl,
-  })  : _uuid = uuid,
-        _name = name,
+    String? accessUrl,
+    String? mimeType,
+    String? uploadStatus,
+  })  : _id = id,
         _description = description,
-        _dateCreated = dateCreated,
-        _publicUrl = publicUrl;
+        _accessUrl = accessUrl,
+        _mimeType = mimeType,
+        _uploadStatus = uploadStatus;
 
-  // "uuid" field.
-  String? _uuid;
-  String get uuid => _uuid ?? '';
-  set uuid(String? val) => _uuid = val;
+  // "id" field.
+  String? _id;
+  String get id => _id ?? '';
+  set id(String? val) => _id = val;
 
-  bool hasUuid() => _uuid != null;
-
-  // "name" field.
-  String? _name;
-  String get name => _name ?? '';
-  set name(String? val) => _name = val;
-
-  bool hasName() => _name != null;
+  bool hasId() => _id != null;
 
   // "description" field.
   String? _description;
@@ -39,72 +32,74 @@ class AssetStruct extends BaseStruct {
 
   bool hasDescription() => _description != null;
 
-  // "dateCreated" field.
-  String? _dateCreated;
-  String get dateCreated => _dateCreated ?? '';
-  set dateCreated(String? val) => _dateCreated = val;
+  // "accessUrl" field.
+  String? _accessUrl;
+  String get accessUrl => _accessUrl ?? '';
+  set accessUrl(String? val) => _accessUrl = val;
 
-  bool hasDateCreated() => _dateCreated != null;
+  bool hasAccessUrl() => _accessUrl != null;
 
-  // "publicUrl" field.
-  String? _publicUrl;
-  String get publicUrl => _publicUrl ?? '';
-  set publicUrl(String? val) => _publicUrl = val;
+  // "mimeType" field.
+  String? _mimeType;
+  String get mimeType => _mimeType ?? '';
+  set mimeType(String? val) => _mimeType = val;
 
-  bool hasPublicUrl() => _publicUrl != null;
+  bool hasMimeType() => _mimeType != null;
+
+  // "uploadStatus" field.
+  String? _uploadStatus;
+  String get uploadStatus => _uploadStatus ?? '';
+  set uploadStatus(String? val) => _uploadStatus = val;
+
+  bool hasUploadStatus() => _uploadStatus != null;
 
   static AssetStruct fromMap(Map<String, dynamic> data) => AssetStruct(
-        uuid: data['uuid'] as String?,
-        name: data['name'] as String?,
+        id: data['id'] as String?,
         description: data['description'] as String?,
-        dateCreated: data['dateCreated'] as String?,
-        publicUrl: data['publicUrl'] as String?,
+        accessUrl: data['accessUrl'] as String?,
+        mimeType: data['mimeType'] as String?,
+        uploadStatus: data['uploadStatus'] as String?,
       );
 
   static AssetStruct? maybeFromMap(dynamic data) =>
       data is Map ? AssetStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
-        'uuid': _uuid,
-        'name': _name,
+        'id': _id,
         'description': _description,
-        'dateCreated': _dateCreated,
-        'publicUrl': _publicUrl,
+        'accessUrl': _accessUrl,
+        'mimeType': _mimeType,
+        'uploadStatus': _uploadStatus,
       }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
-        'uuid': serializeParam(
-          _uuid,
-          ParamType.String,
-        ),
-        'name': serializeParam(
-          _name,
+        'id': serializeParam(
+          _id,
           ParamType.String,
         ),
         'description': serializeParam(
           _description,
           ParamType.String,
         ),
-        'dateCreated': serializeParam(
-          _dateCreated,
+        'accessUrl': serializeParam(
+          _accessUrl,
           ParamType.String,
         ),
-        'publicUrl': serializeParam(
-          _publicUrl,
+        'mimeType': serializeParam(
+          _mimeType,
+          ParamType.String,
+        ),
+        'uploadStatus': serializeParam(
+          _uploadStatus,
           ParamType.String,
         ),
       }.withoutNulls;
 
   static AssetStruct fromSerializableMap(Map<String, dynamic> data) =>
       AssetStruct(
-        uuid: deserializeParam(
-          data['uuid'],
-          ParamType.String,
-          false,
-        ),
-        name: deserializeParam(
-          data['name'],
+        id: deserializeParam(
+          data['id'],
           ParamType.String,
           false,
         ),
@@ -113,13 +108,18 @@ class AssetStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
-        dateCreated: deserializeParam(
-          data['dateCreated'],
+        accessUrl: deserializeParam(
+          data['accessUrl'],
           ParamType.String,
           false,
         ),
-        publicUrl: deserializeParam(
-          data['publicUrl'],
+        mimeType: deserializeParam(
+          data['mimeType'],
+          ParamType.String,
+          false,
+        ),
+        uploadStatus: deserializeParam(
+          data['uploadStatus'],
           ParamType.String,
           false,
         ),
@@ -131,29 +131,29 @@ class AssetStruct extends BaseStruct {
   @override
   bool operator ==(Object other) {
     return other is AssetStruct &&
-        uuid == other.uuid &&
-        name == other.name &&
+        id == other.id &&
         description == other.description &&
-        dateCreated == other.dateCreated &&
-        publicUrl == other.publicUrl;
+        accessUrl == other.accessUrl &&
+        mimeType == other.mimeType &&
+        uploadStatus == other.uploadStatus;
   }
 
   @override
   int get hashCode => const ListEquality()
-      .hash([uuid, name, description, dateCreated, publicUrl]);
+      .hash([id, description, accessUrl, mimeType, uploadStatus]);
 }
 
 AssetStruct createAssetStruct({
-  String? uuid,
-  String? name,
+  String? id,
   String? description,
-  String? dateCreated,
-  String? publicUrl,
+  String? accessUrl,
+  String? mimeType,
+  String? uploadStatus,
 }) =>
     AssetStruct(
-      uuid: uuid,
-      name: name,
+      id: id,
       description: description,
-      dateCreated: dateCreated,
-      publicUrl: publicUrl,
+      accessUrl: accessUrl,
+      mimeType: mimeType,
+      uploadStatus: uploadStatus,
     );

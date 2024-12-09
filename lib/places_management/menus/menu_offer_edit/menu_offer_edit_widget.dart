@@ -187,13 +187,18 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                         functions.replaceCommaWithDot(_model
                                             .basePriceInputTextController
                                             .text)!;
-                                    _model.basePriceInputTextController
-                                            ?.selection =
-                                        TextSelection.collapsed(
-                                            offset: _model
-                                                .basePriceInputTextController!
-                                                .text
-                                                .length);
+                                    _model.basePriceInputFocusNode
+                                        ?.requestFocus();
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      _model.basePriceInputTextController
+                                          ?.selection = TextSelection.collapsed(
+                                        offset: _model
+                                            .basePriceInputTextController!
+                                            .text
+                                            .length,
+                                      );
+                                    });
                                   });
                                 },
                               ),
@@ -498,6 +503,19 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                               .override(
                                                 fontFamily: 'Outfit',
                                                 fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        subtitle: Text(
+                                          'Dopłata: ${valueOrDefault<String>(
+                                            partsItem.supplement.amount
+                                                .toString(),
+                                            '0.00',
+                                          )} ${partsItem.supplement.currencyCode}',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
                                                 letterSpacing: 0.0,
                                               ),
                                         ),

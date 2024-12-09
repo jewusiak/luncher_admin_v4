@@ -521,13 +521,18 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                   true,
                                   true,
                                 );
-                                _model.newPasswordInputTextController
-                                        ?.selection =
-                                    TextSelection.collapsed(
-                                        offset: _model
-                                            .newPasswordInputTextController!
-                                            .text
-                                            .length);
+                                _model.newPasswordInputFocusNode
+                                    ?.requestFocus();
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  _model.newPasswordInputTextController
+                                      ?.selection = TextSelection.collapsed(
+                                    offset: _model
+                                        .newPasswordInputTextController!
+                                        .text
+                                        .length,
+                                  );
+                                });
                               });
                             },
                             text: 'Wygeneruj hasło',
@@ -592,7 +597,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             ),
                           ),
                           Text(
-                            'User enabled',
+                            'Użytkownik włączony',
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',

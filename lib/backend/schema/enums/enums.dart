@@ -7,6 +7,11 @@ enum ActionType {
   NONE,
 }
 
+enum SectionElementSourceElementType {
+  PLACE,
+  PLACE_TYPE,
+}
+
 extension FFEnumExtensions<T extends Enum> on T {
   String serialize() => name;
 }
@@ -20,6 +25,8 @@ T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (ActionType):
       return ActionType.values.deserialize(value) as T?;
+    case (SectionElementSourceElementType):
+      return SectionElementSourceElementType.values.deserialize(value) as T?;
     default:
       return null;
   }
