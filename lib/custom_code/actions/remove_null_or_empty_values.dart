@@ -53,7 +53,7 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
     // the API call is made.
     //Map<String, dynamic> params = options.params;
 
-    if (options == null || options.body == null || options.body == "") {
+    if (options.body == null || options.body == "") {
       return options;
     }
     try {
@@ -83,6 +83,7 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
       print("When called remove-nulls:");
       print(e);
     }
+    return options;
   }
 
   @override
