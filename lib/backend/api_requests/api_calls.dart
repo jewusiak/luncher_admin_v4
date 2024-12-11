@@ -17,10 +17,6 @@ class LuncherCoreAPIPOSTAuthLoginGroup {
   static String getBaseUrl() => 'https://api.pre.luncher.pl';
   static Map<String, String> headers = {};
   static LoginCall loginCall = LoginCall();
-
-  static final interceptors = [
-    RemoveNullOrEmptyValues(),
-  ];
 }
 
 class LoginCall {
@@ -36,23 +32,20 @@ class LoginCall {
   "email": "$email",
   "password": "$password"
 }''';
-    return FFApiInterceptor.makeApiCall(
-      ApiCallOptions(
-        callName: 'login',
-        apiUrl: '$baseUrl/auth/login',
-        callType: ApiCallType.POST,
-        headers: const {},
-        params: const {},
-        body: ffApiRequestBody,
-        bodyType: BodyType.JSON,
-        returnBody: true,
-        encodeBodyUtf8: true,
-        decodeUtf8: true,
-        cache: false,
-        isStreamingApi: false,
-        alwaysAllowBody: false,
-      ),
-      LuncherCoreAPIPOSTAuthLoginGroup.interceptors,
+    return ApiManager.instance.makeApiCall(
+      callName: 'login',
+      apiUrl: '$baseUrl/auth/login',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
     );
   }
 
