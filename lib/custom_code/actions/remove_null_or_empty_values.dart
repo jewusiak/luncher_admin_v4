@@ -54,6 +54,7 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
     //Map<String, dynamic> params = options.params;
 
     if (options.body == null || options.body == "") {
+      print("Returning old options - before try (empty body)");
       return options;
     }
     try {
@@ -77,12 +78,13 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
         returnBody: options.returnBody,
         body: bodyString,
       );
-
+      print("Returning new options");
       return newOptions;
     } catch (e) {
       print("When called remove-nulls:");
       print(e);
     }
+    print("Returning old options - after try");
     return options;
   }
 
