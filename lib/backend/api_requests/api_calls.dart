@@ -32,22 +32,29 @@ class LoginCall {
   "email": "$email",
   "password": "$password"
 }''';
-    return ApiManager.instance.makeApiCall(
-      callName: 'login',
-      apiUrl: '$baseUrl/auth/login',
-      callType: ApiCallType.POST,
-      headers: {},
-      params: {},
-      body: ffApiRequestBody,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      encodeBodyUtf8: true,
-      decodeUtf8: true,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
+    return FFApiInterceptor.makeApiCall(
+      ApiCallOptions(
+        callName: 'login',
+        apiUrl: '$baseUrl/auth/login',
+        callType: ApiCallType.POST,
+        headers: const {},
+        params: const {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+      interceptors,
     );
   }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
 
   String? accessToken(dynamic response) => castToType<String>(getJsonField(
         response,
