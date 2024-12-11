@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'dart:convert';
+
 import '/backend/api_requests/api_interceptor.dart';
 
 class RemoveNullOrEmptyValues extends FFApiInterceptor {
@@ -53,6 +55,9 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
     // the API call is made.
     //Map<String, dynamic> params = options.params;
 
+    print("Options in");
+    print(options);
+
     if (options.body == null || options.body == "") {
       print("Returning old options - before try (empty body)");
       return options;
@@ -79,6 +84,7 @@ class RemoveNullOrEmptyValues extends FFApiInterceptor {
         body: bodyString,
       );
       print("Returning new options");
+      print(newOptions);
       return newOptions;
     } catch (e) {
       print("When called remove-nulls:");
