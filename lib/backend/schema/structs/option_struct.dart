@@ -51,7 +51,9 @@ class OptionStruct extends BaseStruct {
         id: data['id'] as String?,
         name: data['name'] as String?,
         description: data['description'] as String?,
-        supplement: MonetaryAmountStruct.maybeFromMap(data['supplement']),
+        supplement: data['supplement'] is MonetaryAmountStruct
+            ? data['supplement']
+            : MonetaryAmountStruct.maybeFromMap(data['supplement']),
       );
 
   static OptionStruct? maybeFromMap(dynamic data) =>

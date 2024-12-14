@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_getters_setters
 
-import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -12,15 +11,13 @@ class SectionElementDtoStruct extends BaseStruct {
     String? header,
     String? subheader,
     String? uri,
-    String? thumbnailId,
-    String? thumbnailAccessUrl,
+    AssetStruct? thumbnail,
   })  : _sourceElementId = sourceElementId,
         _elementType = elementType,
         _header = header,
         _subheader = subheader,
         _uri = uri,
-        _thumbnailId = thumbnailId,
-        _thumbnailAccessUrl = thumbnailAccessUrl;
+        _thumbnail = thumbnail;
 
   // "sourceElementId" field.
   String? _sourceElementId;
@@ -57,19 +54,16 @@ class SectionElementDtoStruct extends BaseStruct {
 
   bool hasUri() => _uri != null;
 
-  // "thumbnailId" field.
-  String? _thumbnailId;
-  String get thumbnailId => _thumbnailId ?? '';
-  set thumbnailId(String? val) => _thumbnailId = val;
+  // "thumbnail" field.
+  AssetStruct? _thumbnail;
+  AssetStruct get thumbnail => _thumbnail ?? AssetStruct();
+  set thumbnail(AssetStruct? val) => _thumbnail = val;
 
-  bool hasThumbnailId() => _thumbnailId != null;
+  void updateThumbnail(Function(AssetStruct) updateFn) {
+    updateFn(_thumbnail ??= AssetStruct());
+  }
 
-  // "thumbnailAccessUrl" field.
-  String? _thumbnailAccessUrl;
-  String get thumbnailAccessUrl => _thumbnailAccessUrl ?? '';
-  set thumbnailAccessUrl(String? val) => _thumbnailAccessUrl = val;
-
-  bool hasThumbnailAccessUrl() => _thumbnailAccessUrl != null;
+  bool hasThumbnail() => _thumbnail != null;
 
   static SectionElementDtoStruct fromMap(Map<String, dynamic> data) =>
       SectionElementDtoStruct(
@@ -78,8 +72,9 @@ class SectionElementDtoStruct extends BaseStruct {
         header: data['header'] as String?,
         subheader: data['subheader'] as String?,
         uri: data['uri'] as String?,
-        thumbnailId: data['thumbnailId'] as String?,
-        thumbnailAccessUrl: data['thumbnailAccessUrl'] as String?,
+        thumbnail: data['thumbnail'] is AssetStruct
+            ? data['thumbnail']
+            : AssetStruct.maybeFromMap(data['thumbnail']),
       );
 
   static SectionElementDtoStruct? maybeFromMap(dynamic data) => data is Map
@@ -92,8 +87,7 @@ class SectionElementDtoStruct extends BaseStruct {
         'header': _header,
         'subheader': _subheader,
         'uri': _uri,
-        'thumbnailId': _thumbnailId,
-        'thumbnailAccessUrl': _thumbnailAccessUrl,
+        'thumbnail': _thumbnail?.toMap(),
       }.withoutNulls;
 
   @override
@@ -118,13 +112,9 @@ class SectionElementDtoStruct extends BaseStruct {
           _uri,
           ParamType.String,
         ),
-        'thumbnailId': serializeParam(
-          _thumbnailId,
-          ParamType.String,
-        ),
-        'thumbnailAccessUrl': serializeParam(
-          _thumbnailAccessUrl,
-          ParamType.String,
+        'thumbnail': serializeParam(
+          _thumbnail,
+          ParamType.DataStruct,
         ),
       }.withoutNulls;
 
@@ -156,15 +146,11 @@ class SectionElementDtoStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
-        thumbnailId: deserializeParam(
-          data['thumbnailId'],
-          ParamType.String,
+        thumbnail: deserializeStructParam(
+          data['thumbnail'],
+          ParamType.DataStruct,
           false,
-        ),
-        thumbnailAccessUrl: deserializeParam(
-          data['thumbnailAccessUrl'],
-          ParamType.String,
-          false,
+          structBuilder: AssetStruct.fromSerializableMap,
         ),
       );
 
@@ -179,20 +165,12 @@ class SectionElementDtoStruct extends BaseStruct {
         header == other.header &&
         subheader == other.subheader &&
         uri == other.uri &&
-        thumbnailId == other.thumbnailId &&
-        thumbnailAccessUrl == other.thumbnailAccessUrl;
+        thumbnail == other.thumbnail;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([
-        sourceElementId,
-        elementType,
-        header,
-        subheader,
-        uri,
-        thumbnailId,
-        thumbnailAccessUrl
-      ]);
+  int get hashCode => const ListEquality()
+      .hash([sourceElementId, elementType, header, subheader, uri, thumbnail]);
 }
 
 SectionElementDtoStruct createSectionElementDtoStruct({
@@ -201,8 +179,7 @@ SectionElementDtoStruct createSectionElementDtoStruct({
   String? header,
   String? subheader,
   String? uri,
-  String? thumbnailId,
-  String? thumbnailAccessUrl,
+  AssetStruct? thumbnail,
 }) =>
     SectionElementDtoStruct(
       sourceElementId: sourceElementId,
@@ -210,6 +187,5 @@ SectionElementDtoStruct createSectionElementDtoStruct({
       header: header,
       subheader: subheader,
       uri: uri,
-      thumbnailId: thumbnailId,
-      thumbnailAccessUrl: thumbnailAccessUrl,
+      thumbnail: thumbnail ?? AssetStruct(),
     );

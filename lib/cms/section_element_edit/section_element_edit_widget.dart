@@ -12,6 +12,8 @@ import '/flutter_flow/upload_data.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'section_element_edit_model.dart';
 export 'section_element_edit_model.dart';
@@ -568,6 +570,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                             color: FlutterFlowTheme.of(context).info,
                             size: 24.0,
                           ),
+                          showLoadingIndicator: true,
                           onPressed: () async {
                             final selectedMedia = await selectMedia(
                               mediaSource: MediaSource.photoGallery,
@@ -617,17 +620,9 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                 true)) {
                               FFAppState().updateEditedSectionElementStruct(
                                 (e) => e
-                                  ..thumbnailId = AssetStruct.maybeFromMap(
-                                          (_model.uploadApiCallResult
-                                                  ?.jsonBody ??
-                                              ''))
-                                      ?.id
-                                  ..thumbnailAccessUrl =
-                                      AssetStruct.maybeFromMap((_model
-                                                  .uploadApiCallResult
-                                                  ?.jsonBody ??
-                                              ''))
-                                          ?.accessUrl,
+                                  ..thumbnail = AssetStruct.maybeFromMap(
+                                      (_model.uploadApiCallResult?.jsonBody ??
+                                          '')),
                               );
                               safeSetState(() {});
                             } else {
@@ -652,10 +647,22 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            FFAppState()
-                                .editedSectionElement
-                                .thumbnailAccessUrl,
+                          child: OctoImage(
+                            placeholderBuilder: (_) => SizedBox.expand(
+                              child: Image(
+                                image: BlurHashImage(FFAppState()
+                                    .editedSectionElement
+                                    .thumbnail
+                                    .blurHash),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            image: NetworkImage(
+                              FFAppState()
+                                  .editedSectionElement
+                                  .thumbnail
+                                  .accessUrl,
+                            ),
                             width: 250.0,
                             height: 250.0,
                             fit: BoxFit.cover,

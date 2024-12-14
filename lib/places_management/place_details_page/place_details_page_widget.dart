@@ -19,6 +19,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:octo_image/octo_image.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'place_details_page_model.dart';
 export 'place_details_page_model.dart';
@@ -63,33 +66,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
             (_model.getPlaceResult?.jsonBody ?? ''));
         safeSetState(() {
           _model.nameInputTextController?.text = _model.place!.name;
-          _model.nameInputFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.nameInputTextController?.selection = TextSelection.collapsed(
-              offset: _model.nameInputTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.longNameInputTextController?.text = _model.place!.longName;
-          _model.longNameInputFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.longNameInputTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.longNameInputTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.placeDescriptionInputTextController?.text =
               _model.place!.description;
-          _model.placeDescriptionInputFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.placeDescriptionInputTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.placeDescriptionInputTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.placeEnabledSwitchValue = _model.place!.enabled;
@@ -101,100 +84,50 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
         safeSetState(() {
           _model.address1stLineTextController?.text =
               _model.place!.address.firstLine;
-          _model.address1stLineFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.address1stLineTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.address1stLineTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.address2ndLineTextController?.text =
               _model.place!.address.secondLine;
-          _model.address2ndLineFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.address2ndLineTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.address2ndLineTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.addressZipCodeTextController?.text =
               _model.place!.address.zipCode;
-          _model.addressZipCodeFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.addressZipCodeTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.addressZipCodeTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.addressCityTextController?.text = _model.place!.address.city;
-          _model.addressCityFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.addressCityTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.addressCityTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.addressDistrictTextController?.text =
               _model.place!.address.district;
-          _model.addressDistrictFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.addressDistrictTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.addressDistrictTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.addressCountryTextController?.text =
               _model.place!.address.country;
-          _model.addressCountryFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.addressCountryTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.addressCountryTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.locationLatTextController?.text =
               _model.place!.location.latitude.toString();
-          _model.locationLatFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.locationLatTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.locationLatTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.locationLonTextController?.text =
               _model.place!.location.longitude.toString();
-          _model.locationLonFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.locationLonTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.locationLonTextController!.text.length,
-            );
-          });
         });
         safeSetState(() {
           _model.googlePlaceIdInputTextController?.text =
               _model.place!.googleMapsReference;
-          _model.googlePlaceIdInputFocusNode?.requestFocus();
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _model.googlePlaceIdInputTextController?.selection =
-                TextSelection.collapsed(
-              offset: _model.googlePlaceIdInputTextController!.text.length,
-            );
-          });
+        });
+        safeSetState(() {
+          _model.websiteUrlTextController?.text = _model.place!.instagramHandle;
+        });
+        safeSetState(() {
+          _model.facebookPageIdTextController?.text =
+              _model.place!.facebookPageId;
+        });
+        safeSetState(() {
+          _model.phoneNumberTextController?.text = _model.place!.phoneNumber;
+        });
+        safeSetState(() {
+          _model.websiteUrlTextController?.text = _model.place!.webpageUrl;
         });
         return;
       } else {
@@ -264,6 +197,18 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
     _model.googlePlaceIdInputTextController ??= TextEditingController();
     _model.googlePlaceIdInputFocusNode ??= FocusNode();
 
+    _model.facebookPageIdTextController ??= TextEditingController();
+    _model.facebookPageIdFocusNode ??= FocusNode();
+
+    _model.instagramHandleTextController ??= TextEditingController();
+    _model.instagramHandleFocusNode ??= FocusNode();
+
+    _model.websiteUrlTextController ??= TextEditingController();
+    _model.websiteUrlFocusNode ??= FocusNode();
+
+    _model.phoneNumberTextController ??= TextEditingController();
+    _model.phoneNumberFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -279,7 +224,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         resizeToAvoidBottomInset: false,
@@ -356,6 +304,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                         .toList(),
                     imageIdsList:
                         _model.place?.images.map((e) => e.id).toList(),
+                    facebookPageId: _model.facebookPageIdTextController.text,
+                    instagramHandle: _model.websiteUrlTextController.text,
+                    webpageUrl: _model.websiteUrlTextController.text,
+                    phoneNumber: _model.phoneNumberTextController.text,
                   );
 
                   shouldSetState = true;
@@ -483,420 +435,362 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Wrap(
-                                  spacing: 20.0,
-                                  runSpacing: 20.0,
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  direction: Axis.horizontal,
-                                  runAlignment: WrapAlignment.start,
-                                  verticalDirection: VerticalDirection.down,
-                                  clipBehavior: Clip.none,
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        SizedBox(
-                                          width: 350.0,
-                                          child: TextFormField(
-                                            controller:
-                                                _model.nameInputTextController,
-                                            focusNode:
-                                                _model.nameInputFocusNode,
-                                            autofocus: false,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              labelText: 'Nazwa lokalu',
-                                              labelStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              alignLabelWithHint: true,
-                                              hintStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              filled: true,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                            cursorColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            validator: _model
-                                                .nameInputTextControllerValidator
-                                                .asValidator(context),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 350.0,
-                                          child: TextFormField(
-                                            controller: _model
-                                                .longNameInputTextController,
-                                            focusNode:
-                                                _model.longNameInputFocusNode,
-                                            autofocus: false,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              labelText: 'Długa nazwa lokalu',
-                                              labelStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              alignLabelWithHint: true,
-                                              hintStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              filled: true,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                            cursorColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            validator: _model
-                                                .longNameInputTextControllerValidator
-                                                .asValidator(context),
-                                          ),
-                                        ),
-                                        FutureBuilder<ApiCallResponse>(
-                                          future: _model.getPlaceTypes(
-                                            requestFn: () =>
-                                                LuncherCoreAPIGETPlacetypeGroup
-                                                    .getAllPlaceTypesCall
-                                                    .call(
-                                              authorization:
-                                                  currentAuthenticationToken,
-                                            ),
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                    ),
+                                    SizedBox(
+                                      width: 350.0,
+                                      child: TextFormField(
+                                        controller:
+                                            _model.nameInputTextController,
+                                        focusNode: _model.nameInputFocusNode,
+                                        autofocus: false,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          labelText: 'Nazwa lokalu',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
                                                   ),
-                                                ),
-                                              );
-                                            }
-                                            final placeTypeSelectorGetAllPlaceTypesResponse =
-                                                snapshot.data!;
-
-                                            return FlutterFlowDropDown<String>(
-                                              controller: _model
-                                                      .placeTypeSelectorValueController ??=
-                                                  FormFieldController<String>(
-                                                _model.placeTypeSelectorValue ??=
-                                                    _model.place?.placeType
-                                                        .identifier,
-                                              ),
-                                              options: List<String>.from(
-                                                  (placeTypeSelectorGetAllPlaceTypesResponse
-                                                              .jsonBody
-                                                              .toList()
-                                                              .map<PlaceTypeStruct?>(
-                                                                  PlaceTypeStruct
-                                                                      .maybeFromMap)
-                                                              .toList()
-                                                          as Iterable<
-                                                              PlaceTypeStruct?>)
-                                                      .withoutNulls
-                                                      .map((e) => e.identifier)
-                                                      .toList()),
-                                              optionLabels:
-                                                  (placeTypeSelectorGetAllPlaceTypesResponse
-                                                              .jsonBody
-                                                              .toList()
-                                                              .map<PlaceTypeStruct?>(
-                                                                  PlaceTypeStruct
-                                                                      .maybeFromMap)
-                                                              .toList()
-                                                          as Iterable<
-                                                              PlaceTypeStruct?>)
-                                                      .withoutNulls
-                                                      .map((e) => e.name)
-                                                      .toList(),
-                                              onChanged: (val) => safeSetState(
-                                                  () => _model
-                                                          .placeTypeSelectorValue =
-                                                      val),
-                                              width: 200.0,
-                                              height: 40.0,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              hintText: 'Rodzaj lokalu',
-                                              icon: Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 24.0,
-                                              ),
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              elevation: 2.0,
-                                              borderColor: Colors.transparent,
-                                              borderWidth: 0.0,
-                                              borderRadius: 8.0,
-                                              margin: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 0.0, 12.0, 0.0),
-                                              hidesUnderline: true,
-                                              isOverButton: false,
-                                              isSearchable: false,
-                                              isMultiSelect: false,
-                                            );
-                                          },
-                                        ),
-                                        SizedBox(
-                                          width: 550.0,
-                                          child: TextFormField(
-                                            controller: _model
-                                                .placeDescriptionInputTextController,
-                                            focusNode: _model
-                                                .placeDescriptionInputFocusNode,
-                                            autofocus: false,
-                                            textCapitalization:
-                                                TextCapitalization.sentences,
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              labelText: 'Opis lokalu',
-                                              alignLabelWithHint: true,
-                                              hintStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              filled: true,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                          alignLabelWithHint: true,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                            maxLines: null,
-                                            minLines: 5,
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            cursorColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            validator: _model
-                                                .placeDescriptionInputTextControllerValidator
-                                                .asValidator(context),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              'Włączone?',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
                                             ),
-                                            Switch.adaptive(
-                                              value: _model
-                                                  .placeEnabledSwitchValue!,
-                                              onChanged: (newValue) async {
-                                                safeSetState(() => _model
-                                                        .placeEnabledSwitchValue =
-                                                    newValue);
-                                              },
-                                              activeColor:
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .nameInputTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 350.0,
+                                      child: TextFormField(
+                                        controller:
+                                            _model.longNameInputTextController,
+                                        focusNode:
+                                            _model.longNameInputFocusNode,
+                                        autofocus: false,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          labelText: 'Długa nazwa lokalu',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          alignLabelWithHint: true,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .longNameInputTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
+                                    FutureBuilder<ApiCallResponse>(
+                                      future: _model.getPlaceTypes(
+                                        requestFn: () =>
+                                            LuncherCoreAPIGETPlacetypeGroup
+                                                .getAllPlaceTypesCall
+                                                .call(
+                                          authorization:
+                                              currentAuthenticationToken,
+                                        ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
                                                   FlutterFlowTheme.of(context)
                                                       .primary,
-                                              activeTrackColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              inactiveTrackColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              inactiveThumbColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                                ),
+                                              ),
                                             ),
-                                          ].divide(const SizedBox(width: 10.0)),
+                                          );
+                                        }
+                                        final placeTypeSelectorGetAllPlaceTypesResponse =
+                                            snapshot.data!;
+
+                                        return FlutterFlowDropDown<String>(
+                                          controller: _model
+                                                  .placeTypeSelectorValueController ??=
+                                              FormFieldController<String>(
+                                            _model.placeTypeSelectorValue ??=
+                                                _model.place?.placeType
+                                                    .identifier,
+                                          ),
+                                          options: List<String>.from(
+                                              (placeTypeSelectorGetAllPlaceTypesResponse
+                                                          .jsonBody
+                                                          .toList()
+                                                          .map<PlaceTypeStruct?>(
+                                                              PlaceTypeStruct
+                                                                  .maybeFromMap)
+                                                          .toList()
+                                                      as Iterable<
+                                                          PlaceTypeStruct?>)
+                                                  .withoutNulls
+                                                  .map((e) => e.identifier)
+                                                  .toList()),
+                                          optionLabels:
+                                              (placeTypeSelectorGetAllPlaceTypesResponse
+                                                          .jsonBody
+                                                          .toList()
+                                                          .map<PlaceTypeStruct?>(
+                                                              PlaceTypeStruct
+                                                                  .maybeFromMap)
+                                                          .toList()
+                                                      as Iterable<
+                                                          PlaceTypeStruct?>)
+                                                  .withoutNulls
+                                                  .map((e) => e.name)
+                                                  .toList(),
+                                          onChanged: (val) => safeSetState(() =>
+                                              _model.placeTypeSelectorValue =
+                                                  val),
+                                          width: 200.0,
+                                          height: 40.0,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          hintText: 'Rodzaj lokalu',
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          elevation: 2.0,
+                                          borderColor: Colors.transparent,
+                                          borderWidth: 0.0,
+                                          borderRadius: 8.0,
+                                          margin:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 0.0, 12.0, 0.0),
+                                          hidesUnderline: true,
+                                          isOverButton: false,
+                                          isSearchable: false,
+                                          isMultiSelect: false,
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 550.0,
+                                      child: TextFormField(
+                                        controller: _model
+                                            .placeDescriptionInputTextController,
+                                        focusNode: _model
+                                            .placeDescriptionInputFocusNode,
+                                        autofocus: false,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        textInputAction: TextInputAction.next,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          labelText: 'Opis lokalu',
+                                          alignLabelWithHint: true,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
                                         ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        maxLines: null,
+                                        minLines: 5,
+                                        keyboardType: TextInputType.multiline,
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .placeDescriptionInputTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
                                         Text(
-                                          'Place ID: ${widget.placeId}',
+                                          'Włączone?',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -904,9 +798,39 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
-                                      ].divide(const SizedBox(height: 15.0)),
+                                        Switch.adaptive(
+                                          value:
+                                              _model.placeEnabledSwitchValue!,
+                                          onChanged: (newValue) async {
+                                            safeSetState(() =>
+                                                _model.placeEnabledSwitchValue =
+                                                    newValue);
+                                          },
+                                          activeColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          activeTrackColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          inactiveTrackColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          inactiveThumbColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                        ),
+                                      ].divide(const SizedBox(width: 10.0)),
                                     ),
-                                  ],
+                                    Text(
+                                      'Place ID: ${widget.placeId}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ].divide(const SizedBox(height: 15.0)),
                                 ),
                               ],
                             ),
@@ -999,10 +923,15 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                         context)),
                                                             child:
                                                                 GestureDetector(
-                                                              onTap: () =>
-                                                                  FocusScope.of(
-                                                                          dialogContext)
-                                                                      .unfocus(),
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        dialogContext)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
                                                               child:
                                                                   const WeekDayTimeRangeEditWidget(),
                                                             ),
@@ -1158,9 +1087,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     .resolve(Directionality.of(
                                                         context)),
                                                 child: GestureDetector(
-                                                  onTap: () => FocusScope.of(
-                                                          dialogContext)
-                                                      .unfocus(),
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
                                                   child:
                                                       const WeekDayTimeRangeEditWidget(
                                                     isNew: true,
@@ -1207,106 +1140,162 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                   Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 20.0, 0.0, 0.0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        final selectedMedia = await selectMedia(
-                                          mediaSource: MediaSource.photoGallery,
-                                          multiImage: true,
-                                        );
-                                        if (selectedMedia != null &&
-                                            selectedMedia.every((m) =>
-                                                validateFileFormat(
-                                                    m.storagePath, context))) {
-                                          safeSetState(() =>
-                                              _model.isDataUploading = true);
-                                          var selectedUploadedFiles =
-                                              <FFUploadedFile>[];
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        FFButtonWidget(
+                                          onPressed: () async {
+                                            final selectedMedia =
+                                                await selectMedia(
+                                              mediaSource:
+                                                  MediaSource.photoGallery,
+                                              multiImage: true,
+                                            );
+                                            if (selectedMedia != null &&
+                                                selectedMedia.every((m) =>
+                                                    validateFileFormat(
+                                                        m.storagePath,
+                                                        context))) {
+                                              safeSetState(() => _model
+                                                  .isDataUploading = true);
+                                              var selectedUploadedFiles =
+                                                  <FFUploadedFile>[];
 
-                                          try {
-                                            selectedUploadedFiles =
-                                                selectedMedia
-                                                    .map((m) => FFUploadedFile(
-                                                          name: m.storagePath
-                                                              .split('/')
-                                                              .last,
-                                                          bytes: m.bytes,
-                                                          height: m.dimensions
-                                                              ?.height,
-                                                          width: m.dimensions
-                                                              ?.width,
-                                                          blurHash: m.blurHash,
-                                                        ))
-                                                    .toList();
-                                          } finally {
-                                            _model.isDataUploading = false;
-                                          }
-                                          if (selectedUploadedFiles.length ==
-                                              selectedMedia.length) {
-                                            safeSetState(() {
-                                              _model.uploadedLocalFiles =
-                                                  selectedUploadedFiles;
-                                            });
-                                          } else {
-                                            safeSetState(() {});
-                                            return;
-                                          }
-                                        }
+                                              try {
+                                                selectedUploadedFiles =
+                                                    selectedMedia
+                                                        .map((m) =>
+                                                            FFUploadedFile(
+                                                              name: m
+                                                                  .storagePath
+                                                                  .split('/')
+                                                                  .last,
+                                                              bytes: m.bytes,
+                                                              height: m
+                                                                  .dimensions
+                                                                  ?.height,
+                                                              width: m
+                                                                  .dimensions
+                                                                  ?.width,
+                                                              blurHash:
+                                                                  m.blurHash,
+                                                            ))
+                                                        .toList();
+                                              } finally {
+                                                _model.isDataUploading = false;
+                                              }
+                                              if (selectedUploadedFiles
+                                                      .length ==
+                                                  selectedMedia.length) {
+                                                safeSetState(() {
+                                                  _model.uploadedLocalFiles =
+                                                      selectedUploadedFiles;
+                                                });
+                                              } else {
+                                                safeSetState(() {});
+                                                return;
+                                              }
+                                            }
 
-                                        _model.iter = 0;
-                                        while (_model.iter <
-                                            _model.uploadedLocalFiles.length) {
-                                          _model.uploadFile =
-                                              await LuncherCoreAPIPOSTAssetGroup
-                                                  .uploadImageCall
-                                                  .call(
-                                            authorization:
-                                                currentAuthenticationToken,
-                                            file: _model.uploadedLocalFiles[
-                                                _model.iter],
-                                          );
+                                            _model.iter = 0;
+                                            _model.maxIter = _model
+                                                .uploadedLocalFiles.length;
+                                            while (_model.iter <
+                                                _model.uploadedLocalFiles
+                                                    .length) {
+                                              _model.uploadFile =
+                                                  await LuncherCoreAPIPOSTAssetGroup
+                                                      .uploadImageCall
+                                                      .call(
+                                                authorization:
+                                                    currentAuthenticationToken,
+                                                file: _model.uploadedLocalFiles
+                                                    .elementAtOrNull(
+                                                        _model.iter),
+                                              );
 
-                                          _model.iter = _model.iter + 1;
-                                          _model.updatePlaceStruct(
-                                            (e) => e
-                                              ..updateImages(
-                                                (e) => e.add(
-                                                    AssetStruct.maybeFromMap(
-                                                        (_model.uploadFile
+                                              _model.iter = _model.iter + 1;
+                                              _model.updatePlaceStruct(
+                                                (e) => e
+                                                  ..updateImages(
+                                                    (e) => e.add(AssetStruct
+                                                        .maybeFromMap((_model
+                                                                .uploadFile
                                                                 ?.jsonBody ??
                                                             ''))!),
-                                              ),
-                                          );
-                                        }
-                                        _model.iter = 0;
-                                        safeSetState(() {});
+                                                  ),
+                                              );
+                                              safeSetState(() {});
+                                            }
+                                            _model.iter = 0;
+                                            _model.maxIter = 0;
+                                            safeSetState(() {});
 
-                                        safeSetState(() {});
-                                      },
-                                      text: 'Dodaj nowe zdjęcie',
-                                      icon: const Icon(
-                                        Icons.upload_sharp,
-                                        size: 15.0,
-                                      ),
-                                      options: FFButtonOptions(
-                                        height: 40.0,
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        iconPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              color: Colors.white,
-                                              letterSpacing: 0.0,
+                                            safeSetState(() {});
+                                          },
+                                          text: 'Dodaj nowe zdjęcie',
+                                          icon: const Icon(
+                                            Icons.upload_sharp,
+                                            size: 15.0,
+                                          ),
+                                          options: FFButtonOptions(
+                                            height: 40.0,
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 16.0, 0.0),
+                                            iconPadding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color: Colors.white,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            elevation: 0.0,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                        if (_model.maxIter != 0)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    20.0, 0.0, 0.0, 0.0),
+                                            child: CircularPercentIndicator(
+                                              percent: functions.divideDoubles(
+                                                  _model.iter.toDouble(),
+                                                  _model.maxIter.toDouble())!,
+                                              radius: 25.0,
+                                              lineWidth: 5.0,
+                                              animation: true,
+                                              animateFromLastPercent: true,
+                                              progressColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .accent4,
+                                              center: Text(
+                                                '${_model.iter.toString()}/${_model.maxIter.toString()}',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineSmall
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
-                                        elevation: 0.0,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                                   Container(
@@ -1372,19 +1361,28 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   BorderRadius
                                                                       .circular(
                                                                           5.0),
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                fadeInDuration:
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            500),
-                                                                fadeOutDuration:
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            500),
-                                                                imageUrl:
-                                                                    imageIdsIterItem
-                                                                        .accessUrl,
+                                                              child: OctoImage(
+                                                                placeholderBuilder:
+                                                                    (_) => SizedBox
+                                                                        .expand(
+                                                                  child: Image(
+                                                                    image: BlurHashImage(
+                                                                        imageIdsIterItem
+                                                                            .blurHash),
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                                image:
+                                                                    CachedNetworkImageProvider(
+                                                                  imageIdsIterItem
+                                                                      .accessUrl,
+                                                                ),
+                                                                width: MediaQuery.sizeOf(
+                                                                            context)
+                                                                        .width *
+                                                                    1.0,
+                                                                height: 150.0,
                                                                 fit: BoxFit
                                                                     .contain,
                                                               ),
@@ -1515,10 +1513,15 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                     Directionality.of(
                                                                         context)),
                                                         child: GestureDetector(
-                                                          onTap: () =>
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus(),
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           child:
                                                               const MenuOfferEditWidget(
                                                             isNew: false,
@@ -1684,9 +1687,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                           Directionality.of(
                                                               context)),
                                               child: GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(dialogContext)
-                                                        .unfocus(),
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 child: const MenuOfferEditWidget(
                                                   isNew: true,
                                                 ),
@@ -1784,10 +1791,14 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                 Directionality.of(
                                                                     context)),
                                                     child: GestureDetector(
-                                                      onTap: () =>
-                                                          FocusScope.of(
-                                                                  dialogContext)
-                                                              .unfocus(),
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
                                                       child:
                                                           SelectGooglePlacesApiAddressWidget(
                                                         places:
@@ -1813,11 +1824,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       ?.text = (GooglePlacesAPIGroup
                                                           .textSearchCall
                                                           .places(
-                                                    (_model.googleMapsApiCallResult
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                  )![FFAppState()
-                                                          .selectedGoogleMapPlacesApiIndex])
+                                                            (_model.googleMapsApiCallResult
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          )!
+                                                          .elementAtOrNull(
+                                                              FFAppState()
+                                                                  .selectedGoogleMapPlacesApiIndex))!
                                                       .location
                                                       .latitude
                                                       .toString();
@@ -1842,11 +1855,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       ?.text = (GooglePlacesAPIGroup
                                                           .textSearchCall
                                                           .places(
-                                                    (_model.googleMapsApiCallResult
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                  )![FFAppState()
-                                                          .selectedGoogleMapPlacesApiIndex])
+                                                            (_model.googleMapsApiCallResult
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          )!
+                                                          .elementAtOrNull(
+                                                              FFAppState()
+                                                                  .selectedGoogleMapPlacesApiIndex))!
                                                       .location
                                                       .longitude
                                                       .toString();
@@ -1891,11 +1906,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       ?.text = (GooglePlacesAPIGroup
                                                           .textSearchCall
                                                           .places(
-                                                    (_model.googleMapsApiCallResult
-                                                            ?.jsonBody ??
-                                                        ''),
-                                                  )![FFAppState()
-                                                          .selectedGoogleMapPlacesApiIndex])
+                                                            (_model.googleMapsApiCallResult
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          )!
+                                                          .elementAtOrNull(
+                                                              FFAppState()
+                                                                  .selectedGoogleMapPlacesApiIndex))!
                                                       .id;
                                                   _model
                                                       .googlePlaceIdInputFocusNode
@@ -3057,9 +3074,362 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                             ),
                           ),
                           KeepAliveWidgetWrapper(
-                            builder: (context) => const Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [],
+                            builder: (context) => Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Container(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 400.0,
+                                ),
+                                decoration: const BoxDecoration(),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextFormField(
+                                      controller:
+                                          _model.facebookPageIdTextController,
+                                      focusNode: _model.facebookPageIdFocusNode,
+                                      autofocus: false,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        labelText: 'Facebook Page ID',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        alignLabelWithHint: true,
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      cursorColor: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      validator: _model
+                                          .facebookPageIdTextControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                    Text(
+                                      'ID strony z końca linku: np. \'moja strona\' z: \nfacebook.com/mojastrona',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
+                                      child: TextFormField(
+                                        controller: _model
+                                            .instagramHandleTextController,
+                                        focusNode:
+                                            _model.instagramHandleFocusNode,
+                                        autofocus: false,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          labelText: 'Instagram Handle',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          alignLabelWithHint: true,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .instagramHandleTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
+                                    Text(
+                                      'Instagram Handle (np. @abcdef)',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
+                                      child: TextFormField(
+                                        controller:
+                                            _model.websiteUrlTextController,
+                                        focusNode: _model.websiteUrlFocusNode,
+                                        autofocus: false,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          labelText: 'Strona WWW',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          alignLabelWithHint: true,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        keyboardType: TextInputType.url,
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .websiteUrlTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 15.0, 0.0, 0.0),
+                                      child: TextFormField(
+                                        controller:
+                                            _model.phoneNumberTextController,
+                                        focusNode: _model.phoneNumberFocusNode,
+                                        autofocus: false,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          labelText: 'Nr telefonu',
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          alignLabelWithHint: true,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        keyboardType: TextInputType.phone,
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .phoneNumberTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ],

@@ -64,7 +64,9 @@ class PartStruct extends BaseStruct {
         id: data['id'] as String?,
         name: data['name'] as String?,
         required: data['required'] as bool?,
-        supplement: MonetaryAmountStruct.maybeFromMap(data['supplement']),
+        supplement: data['supplement'] is MonetaryAmountStruct
+            ? data['supplement']
+            : MonetaryAmountStruct.maybeFromMap(data['supplement']),
         options: getStructList(
           data['options'],
           OptionStruct.fromMap,

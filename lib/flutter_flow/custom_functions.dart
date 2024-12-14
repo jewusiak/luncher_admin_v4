@@ -180,3 +180,11 @@ List<AssetStruct>? swapItemsOfAssetsList(
   }
   return listIn;
 }
+
+double? divideDoubles(
+  double? base,
+  double? divider,
+) {
+  if (base == null || divider == null) return null;
+  return base / divider;
+}

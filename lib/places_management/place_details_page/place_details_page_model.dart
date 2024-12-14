@@ -24,6 +24,8 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
 
   int iter = 0;
 
+  int maxIter = 0;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (getById)] action in PlaceDetailsPage widget.
@@ -105,6 +107,24 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
   // State field(s) for GoogleMap widget.
   LatLng? googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
+  // State field(s) for FacebookPageId widget.
+  FocusNode? facebookPageIdFocusNode;
+  TextEditingController? facebookPageIdTextController;
+  String? Function(BuildContext, String?)?
+      facebookPageIdTextControllerValidator;
+  // State field(s) for InstagramHandle widget.
+  FocusNode? instagramHandleFocusNode;
+  TextEditingController? instagramHandleTextController;
+  String? Function(BuildContext, String?)?
+      instagramHandleTextControllerValidator;
+  // State field(s) for WebsiteUrl widget.
+  FocusNode? websiteUrlFocusNode;
+  TextEditingController? websiteUrlTextController;
+  String? Function(BuildContext, String?)? websiteUrlTextControllerValidator;
+  // State field(s) for PhoneNumber widget.
+  FocusNode? phoneNumberFocusNode;
+  TextEditingController? phoneNumberTextController;
+  String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
 
   /// Query cache managers for this widget.
 
@@ -164,6 +184,18 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
 
     googlePlaceIdInputFocusNode?.dispose();
     googlePlaceIdInputTextController?.dispose();
+
+    facebookPageIdFocusNode?.dispose();
+    facebookPageIdTextController?.dispose();
+
+    instagramHandleFocusNode?.dispose();
+    instagramHandleTextController?.dispose();
+
+    websiteUrlFocusNode?.dispose();
+    websiteUrlTextController?.dispose();
+
+    phoneNumberFocusNode?.dispose();
+    phoneNumberTextController?.dispose();
 
     /// Dispose query cache managers for this widget.
 
