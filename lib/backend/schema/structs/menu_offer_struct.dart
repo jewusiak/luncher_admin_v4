@@ -86,7 +86,9 @@ class MenuOfferStruct extends BaseStruct {
   static MenuOfferStruct fromMap(Map<String, dynamic> data) => MenuOfferStruct(
         id: data['id'] as String?,
         name: data['name'] as String?,
-        basePrice: MonetaryAmountStruct.maybeFromMap(data['basePrice']),
+        basePrice: data['basePrice'] is MonetaryAmountStruct
+            ? data['basePrice']
+            : MonetaryAmountStruct.maybeFromMap(data['basePrice']),
         parts: getStructList(
           data['parts'],
           PartStruct.fromMap,

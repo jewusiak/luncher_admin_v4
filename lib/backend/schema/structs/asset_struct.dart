@@ -12,11 +12,13 @@ class AssetStruct extends BaseStruct {
     String? accessUrl,
     String? mimeType,
     String? uploadStatus,
+    String? blurHash,
   })  : _id = id,
         _description = description,
         _accessUrl = accessUrl,
         _mimeType = mimeType,
-        _uploadStatus = uploadStatus;
+        _uploadStatus = uploadStatus,
+        _blurHash = blurHash;
 
   // "id" field.
   String? _id;
@@ -53,12 +55,20 @@ class AssetStruct extends BaseStruct {
 
   bool hasUploadStatus() => _uploadStatus != null;
 
+  // "blurHash" field.
+  String? _blurHash;
+  String get blurHash => _blurHash ?? '';
+  set blurHash(String? val) => _blurHash = val;
+
+  bool hasBlurHash() => _blurHash != null;
+
   static AssetStruct fromMap(Map<String, dynamic> data) => AssetStruct(
         id: data['id'] as String?,
         description: data['description'] as String?,
         accessUrl: data['accessUrl'] as String?,
         mimeType: data['mimeType'] as String?,
         uploadStatus: data['uploadStatus'] as String?,
+        blurHash: data['blurHash'] as String?,
       );
 
   static AssetStruct? maybeFromMap(dynamic data) =>
@@ -70,6 +80,7 @@ class AssetStruct extends BaseStruct {
         'accessUrl': _accessUrl,
         'mimeType': _mimeType,
         'uploadStatus': _uploadStatus,
+        'blurHash': _blurHash,
       }.withoutNulls;
 
   @override
@@ -92,6 +103,10 @@ class AssetStruct extends BaseStruct {
         ),
         'uploadStatus': serializeParam(
           _uploadStatus,
+          ParamType.String,
+        ),
+        'blurHash': serializeParam(
+          _blurHash,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -123,6 +138,11 @@ class AssetStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        blurHash: deserializeParam(
+          data['blurHash'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -135,12 +155,13 @@ class AssetStruct extends BaseStruct {
         description == other.description &&
         accessUrl == other.accessUrl &&
         mimeType == other.mimeType &&
-        uploadStatus == other.uploadStatus;
+        uploadStatus == other.uploadStatus &&
+        blurHash == other.blurHash;
   }
 
   @override
   int get hashCode => const ListEquality()
-      .hash([id, description, accessUrl, mimeType, uploadStatus]);
+      .hash([id, description, accessUrl, mimeType, uploadStatus, blurHash]);
 }
 
 AssetStruct createAssetStruct({
@@ -149,6 +170,7 @@ AssetStruct createAssetStruct({
   String? accessUrl,
   String? mimeType,
   String? uploadStatus,
+  String? blurHash,
 }) =>
     AssetStruct(
       id: id,
@@ -156,4 +178,5 @@ AssetStruct createAssetStruct({
       accessUrl: accessUrl,
       mimeType: mimeType,
       uploadStatus: uploadStatus,
+      blurHash: blurHash,
     );

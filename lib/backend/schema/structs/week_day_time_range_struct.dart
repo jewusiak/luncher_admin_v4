@@ -35,8 +35,12 @@ class WeekDayTimeRangeStruct extends BaseStruct {
 
   static WeekDayTimeRangeStruct fromMap(Map<String, dynamic> data) =>
       WeekDayTimeRangeStruct(
-        startTime: WeekDayTimeStruct.maybeFromMap(data['startTime']),
-        endTime: WeekDayTimeStruct.maybeFromMap(data['endTime']),
+        startTime: data['startTime'] is WeekDayTimeStruct
+            ? data['startTime']
+            : WeekDayTimeStruct.maybeFromMap(data['startTime']),
+        endTime: data['endTime'] is WeekDayTimeStruct
+            ? data['endTime']
+            : WeekDayTimeStruct.maybeFromMap(data['endTime']),
       );
 
   static WeekDayTimeRangeStruct? maybeFromMap(dynamic data) => data is Map

@@ -76,8 +76,12 @@ class GoogleTextSearchResponseStruct extends BaseStruct {
           data['addressComponents'],
           GoogleAddressComponentStruct.fromMap,
         ),
-        location: LocationStruct.maybeFromMap(data['location']),
-        displayName: GoogleDisplayNameStruct.maybeFromMap(data['displayName']),
+        location: data['location'] is LocationStruct
+            ? data['location']
+            : LocationStruct.maybeFromMap(data['location']),
+        displayName: data['displayName'] is GoogleDisplayNameStruct
+            ? data['displayName']
+            : GoogleDisplayNameStruct.maybeFromMap(data['displayName']),
       );
 
   static GoogleTextSearchResponseStruct? maybeFromMap(dynamic data) =>

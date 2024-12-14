@@ -199,15 +199,23 @@ class PlaceDtoStruct extends BaseStruct {
         instagramHandle: data['instagramHandle'] as String?,
         webpageUrl: data['webpageUrl'] as String?,
         phoneNumber: data['phoneNumber'] as String?,
-        address: AddressStruct.maybeFromMap(data['address']),
+        address: data['address'] is AddressStruct
+            ? data['address']
+            : AddressStruct.maybeFromMap(data['address']),
         googleMapsReference: data['googleMapsReference'] as String?,
         openingWindows: getStructList(
           data['openingWindows'],
           WeekDayTimeRangeStruct.fromMap,
         ),
-        placeType: PlaceTypeStruct.maybeFromMap(data['placeType']),
-        location: LocationStruct.maybeFromMap(data['location']),
-        owner: UserIdDtoStruct.maybeFromMap(data['owner']),
+        placeType: data['placeType'] is PlaceTypeStruct
+            ? data['placeType']
+            : PlaceTypeStruct.maybeFromMap(data['placeType']),
+        location: data['location'] is LocationStruct
+            ? data['location']
+            : LocationStruct.maybeFromMap(data['location']),
+        owner: data['owner'] is UserIdDtoStruct
+            ? data['owner']
+            : UserIdDtoStruct.maybeFromMap(data['owner']),
         images: getStructList(
           data['images'],
           AssetStruct.fromMap,
