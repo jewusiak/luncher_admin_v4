@@ -83,141 +83,242 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+              child: FlutterFlowIconButton(
+                borderRadius: 8.0,
+                buttonSize: 40.0,
+                fillColor: FlutterFlowTheme.of(context).primary,
+                icon: Icon(
+                  Icons.delete_sharp,
+                  color: _model.deletingEnabled
+                      ? FlutterFlowTheme.of(context).error
+                      : FlutterFlowTheme.of(context).info,
+                  size: 24.0,
+                ),
+                onPressed: () async {
+                  if (_model.deletingEnabled) {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Tryb usuwania wyłączony',
+                          style: TextStyle(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
+                        ),
+                        duration: const Duration(milliseconds: 4000),
+                        backgroundColor: FlutterFlowTheme.of(context).secondary,
+                      ),
+                    );
+                  } else {
+                    var confirmDialogResponse = await showDialog<bool>(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Włączenie usuwania'),
+                              content: const Text(
+                                  'UWAGA - do usunięcia lokalu wystarczy jedno kliknięcie! '),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext, false),
+                                  child: const Text('Anuluj'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext, true),
+                                  child: const Text('Kontynuuj'),
+                                ),
+                              ],
+                            );
+                          },
+                        ) ??
+                        false;
+                    if (confirmDialogResponse) {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Jesteś w trybie usuwania!',
+                            style: TextStyle(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
+                          ),
+                          duration: const Duration(milliseconds: 4000),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).secondary,
+                        ),
+                      );
+                    } else {
+                      return;
+                    }
+                  }
+
+                  _model.deletingEnabled = !_model.deletingEnabled;
+                  safeSetState(() {});
+                },
+              ),
+            ),
+          ],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
-                  child: Wrap(
-                    spacing: 10.0,
-                    runSpacing: 10.0,
-                    alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    direction: Axis.horizontal,
-                    runAlignment: WrapAlignment.start,
-                    verticalDirection: VerticalDirection.down,
-                    clipBehavior: Clip.none,
-                    children: [
-                      SizedBox(
-                        width: 350.0,
-                        child: TextFormField(
-                          controller: _model.searchFieldTextController,
-                          focusNode: _model.searchFieldFocusNode,
-                          onChanged: (_) => EasyDebounce.debounce(
-                            '_model.searchFieldTextController',
-                            const Duration(milliseconds: 2000),
-                            () => safeSetState(() {}),
-                          ),
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'Wyszukaj...',
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                            hintStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).alternate,
-                                width: 2.0,
+          child: Align(
+            alignment: const AlignmentDirectional(0.0, 0.0),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),
+                      child: Wrap(
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children: [
+                          SizedBox(
+                            width: 350.0,
+                            child: TextFormField(
+                              controller: _model.searchFieldTextController,
+                              focusNode: _model.searchFieldFocusNode,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                '_model.searchFieldTextController',
+                                const Duration(milliseconds: 2000),
+                                () => safeSetState(() {}),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primary,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).error,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            suffixIcon: _model
-                                    .searchFieldTextController!.text.isNotEmpty
-                                ? InkWell(
-                                    onTap: () async {
-                                      _model.searchFieldTextController?.clear();
-                                      safeSetState(() {});
-                                    },
-                                    child: const Icon(
-                                      Icons.clear,
-                                      size: 20.0,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Wyszukaj...',
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
                                     ),
-                                  )
-                                : null,
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                suffixIcon: _model.searchFieldTextController!
+                                        .text.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () async {
+                                          _model.searchFieldTextController
+                                              ?.clear();
+                                          safeSetState(() {});
+                                        },
+                                        child: const Icon(
+                                          Icons.clear,
+                                          size: 20.0,
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                          validator: _model.searchFieldTextControllerValidator
-                              .asValidator(context),
-                        ),
-                      ),
-                      FutureBuilder<ApiCallResponse>(
-                        future: LuncherCoreAPIGETPlacetypeGroup
-                            .getAllPlaceTypesCall
-                            .call(
-                          authorization: currentAuthenticationToken,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          final placeTypeSelectorGetAllPlaceTypesResponse =
-                              snapshot.data!;
-
-                          return FlutterFlowDropDown<String>(
-                            controller:
-                                _model.placeTypeSelectorValueController ??=
-                                    FormFieldController<String>(
-                              _model.placeTypeSelectorValue ??=
-                                  FFAppConstants.nullvalue,
+                              validator: _model
+                                  .searchFieldTextControllerValidator
+                                  .asValidator(context),
                             ),
-                            options: List<String>.from(
-                                functions.concatStringWithList(
-                                    FFAppConstants.nullvalue,
+                          ),
+                          FutureBuilder<ApiCallResponse>(
+                            future: _model.placeTypeQuery(
+                              requestFn: () => LuncherCoreAPIGETPlacetypeGroup
+                                  .getAllPlaceTypesCall
+                                  .call(
+                                authorization: currentAuthenticationToken,
+                              ),
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        FlutterFlowTheme.of(context).primary,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              final placeTypeSelectorGetAllPlaceTypesResponse =
+                                  snapshot.data!;
+
+                              return FlutterFlowDropDown<String>(
+                                controller:
+                                    _model.placeTypeSelectorValueController ??=
+                                        FormFieldController<String>(
+                                  _model.placeTypeSelectorValue ??=
+                                      FFAppConstants.nullvalue,
+                                ),
+                                options: List<String>.from(
+                                    functions.concatStringWithList(
+                                        FFAppConstants.nullvalue,
+                                        (placeTypeSelectorGetAllPlaceTypesResponse
+                                                    .jsonBody
+                                                    .toList()
+                                                    .map<PlaceTypeStruct?>(
+                                                        PlaceTypeStruct
+                                                            .maybeFromMap)
+                                                    .toList()
+                                                as Iterable<PlaceTypeStruct?>)
+                                            .withoutNulls
+                                            .map((e) => e.identifier)
+                                            .toList())),
+                                optionLabels: functions.concatStringWithList(
+                                    '---',
                                     (placeTypeSelectorGetAllPlaceTypesResponse
                                                 .jsonBody
                                                 .toList()
@@ -226,21 +327,51 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                 .toList()
                                             as Iterable<PlaceTypeStruct?>)
                                         .withoutNulls
-                                        .map((e) => e.identifier)
-                                        .toList())),
-                            optionLabels: functions.concatStringWithList(
-                                '---',
-                                (placeTypeSelectorGetAllPlaceTypesResponse
-                                        .jsonBody
-                                        .toList()
-                                        .map<PlaceTypeStruct?>(
-                                            PlaceTypeStruct.maybeFromMap)
-                                        .toList() as Iterable<PlaceTypeStruct?>)
-                                    .withoutNulls
-                                    .map((e) => e.name)
-                                    .toList()),
+                                        .map((e) => e.name)
+                                        .toList()),
+                                onChanged: (val) => safeSetState(
+                                    () => _model.placeTypeSelectorValue = val),
+                                width: 200.0,
+                                height: 40.0,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
+                                hintText: '---',
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 24.0,
+                                ),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                elevation: 2.0,
+                                borderColor: Colors.transparent,
+                                borderWidth: 0.0,
+                                borderRadius: 8.0,
+                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 12.0, 0.0),
+                                hidesUnderline: true,
+                                isOverButton: false,
+                                isSearchable: false,
+                                isMultiSelect: false,
+                              );
+                            },
+                          ),
+                          FlutterFlowDropDown<String>(
+                            controller:
+                                _model.placeEnabledSelectorValueController ??=
+                                    FormFieldController<String>(
+                              _model.placeEnabledSelectorValue ??= 'null',
+                            ),
+                            options:
+                                List<String>.from(['null', 'true', 'false']),
+                            optionLabels: const ['Wł/wył', 'Włączone', 'Wyłączone'],
                             onChanged: (val) => safeSetState(
-                                () => _model.placeTypeSelectorValue = val),
+                                () => _model.placeEnabledSelectorValue = val),
                             width: 200.0,
                             height: 40.0,
                             textStyle: FlutterFlowTheme.of(context)
@@ -249,7 +380,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                   fontFamily: 'Readex Pro',
                                   letterSpacing: 0.0,
                                 ),
-                            hintText: '---',
+                            hintText: 'Wł/wył',
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -267,234 +398,214 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                             isOverButton: false,
                             isSearchable: false,
                             isMultiSelect: false,
-                          );
-                        },
-                      ),
-                      FlutterFlowDropDown<String>(
-                        controller:
-                            _model.placeEnabledSelectorValueController ??=
-                                FormFieldController<String>(
-                          _model.placeEnabledSelectorValue ??= 'null',
-                        ),
-                        options: List<String>.from(['null', 'true', 'false']),
-                        optionLabels: const ['Wł/wył', 'Włączone', 'Wyłączone'],
-                        onChanged: (val) => safeSetState(
-                            () => _model.placeEnabledSelectorValue = val),
-                        width: 200.0,
-                        height: 40.0,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.override(
-                                  fontFamily: 'Readex Pro',
-                                  letterSpacing: 0.0,
-                                ),
-                        hintText: 'Wł/wył',
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        fillColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        elevation: 2.0,
-                        borderColor: Colors.transparent,
-                        borderWidth: 0.0,
-                        borderRadius: 8.0,
-                        margin: const EdgeInsetsDirectional.fromSTEB(
-                            12.0, 0.0, 12.0, 0.0),
-                        hidesUnderline: true,
-                        isOverButton: false,
-                        isSearchable: false,
-                        isMultiSelect: false,
-                      ),
-                      SizedBox(
-                        width: 200.0,
-                        child: Autocomplete<String>(
-                          initialValue: const TextEditingValue(),
-                          optionsBuilder: (textEditingValue) {
-                            if (textEditingValue.text == '') {
-                              return const Iterable<String>.empty();
-                            }
-                            return _model.owners
-                                .map((e) => e.email)
-                                .toList()
-                                .where((option) {
-                              final lowercaseOption = option.toLowerCase();
-                              return lowercaseOption.contains(
-                                  textEditingValue.text.toLowerCase());
-                            });
-                          },
-                          optionsViewBuilder: (context, onSelected, options) {
-                            return AutocompleteOptionsList(
-                              textFieldKey: _model.ownerTextFieldKey,
-                              textController:
-                                  _model.ownerTextFieldTextController!,
-                              options: options.toList(),
-                              onSelected: onSelected,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
-                                  ),
-                              textHighlightStyle: const TextStyle(),
-                              elevation: 4.0,
-                              optionBackgroundColor:
-                                  FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                              optionHighlightColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              maxHeight: 200.0,
-                            );
-                          },
-                          onSelected: (String selection) {
-                            safeSetState(() => _model
-                                .ownerTextFieldSelectedOption = selection);
-                            FocusScope.of(context).unfocus();
-                          },
-                          fieldViewBuilder: (
-                            context,
-                            textEditingController,
-                            focusNode,
-                            onEditingComplete,
-                          ) {
-                            _model.ownerTextFieldFocusNode = focusNode;
-
-                            _model.ownerTextFieldTextController =
-                                textEditingController;
-                            return TextFormField(
-                              key: _model.ownerTextFieldKey,
-                              controller: textEditingController,
-                              focusNode: focusNode,
-                              onEditingComplete: onEditingComplete,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                '_model.ownerTextFieldTextController',
-                                const Duration(milliseconds: 500),
-                                () async {
-                                  var shouldSetState = false;
-                                  _model.ownersSearchResult =
-                                      await LuncherCoreAPIGETUsersSearchGroup
-                                          .adminSearchUsersCall
-                                          .call(
-                                    authorization: currentAuthenticationToken,
-                                    query: _model
-                                        .ownerTextFieldTextController.text,
-                                    size: 10,
-                                    page: 0,
-                                  );
-
-                                  shouldSetState = true;
-                                  if ((_model.ownersSearchResult?.succeeded ??
-                                      true)) {
-                                    _model.owners = ((_model.ownersSearchResult
-                                                    ?.jsonBody ??
-                                                '')
-                                            .toList()
-                                            .map<UserStruct?>(
-                                                UserStruct.maybeFromMap)
-                                            .toList() as Iterable<UserStruct?>)
-                                        .withoutNulls
-                                        .toList()
-                                        .cast<UserStruct>();
-                                    safeSetState(() {});
-                                    if (shouldSetState) safeSetState(() {});
-                                    return;
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Nie udało się pobrać właścieli',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
-                                        ),
-                                        duration: const Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .tertiary,
+                          ),
+                          SizedBox(
+                            width: 200.0,
+                            child: Autocomplete<String>(
+                              initialValue: const TextEditingValue(),
+                              optionsBuilder: (textEditingValue) {
+                                if (textEditingValue.text == '') {
+                                  return const Iterable<String>.empty();
+                                }
+                                return _model.owners
+                                    .map((e) => e.email)
+                                    .toList()
+                                    .where((option) {
+                                  final lowercaseOption = option.toLowerCase();
+                                  return lowercaseOption.contains(
+                                      textEditingValue.text.toLowerCase());
+                                });
+                              },
+                              optionsViewBuilder:
+                                  (context, onSelected, options) {
+                                return AutocompleteOptionsList(
+                                  textFieldKey: _model.ownerTextFieldKey,
+                                  textController:
+                                      _model.ownerTextFieldTextController!,
+                                  options: options.toList(),
+                                  onSelected: onSelected,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
                                       ),
-                                    );
-                                    if (shouldSetState) safeSetState(() {});
-                                    return;
-                                  }
+                                  textHighlightStyle: const TextStyle(),
+                                  elevation: 4.0,
+                                  optionBackgroundColor:
+                                      FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                  optionHighlightColor:
+                                      FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                  maxHeight: 200.0,
+                                );
+                              },
+                              onSelected: (String selection) {
+                                safeSetState(() => _model
+                                    .ownerTextFieldSelectedOption = selection);
+                                FocusScope.of(context).unfocus();
+                              },
+                              fieldViewBuilder: (
+                                context,
+                                textEditingController,
+                                focusNode,
+                                onEditingComplete,
+                              ) {
+                                _model.ownerTextFieldFocusNode = focusNode;
 
-                                  if (shouldSetState) safeSetState(() {});
-                                },
-                              ),
-                              autofocus: false,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: true,
-                                labelStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                                hintText: 'Wybierz właściciela...',
-                                hintStyle: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context).error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                suffixIcon: _model.ownerTextFieldTextController!
-                                        .text.isNotEmpty
-                                    ? InkWell(
-                                        onTap: () async {
-                                          _model.ownerTextFieldTextController
-                                              ?.clear();
-                                          var shouldSetState = false;
-                                          _model.ownersSearchResult =
-                                              await LuncherCoreAPIGETUsersSearchGroup
-                                                  .adminSearchUsersCall
-                                                  .call(
-                                            authorization:
-                                                currentAuthenticationToken,
-                                            query: _model
-                                                .ownerTextFieldTextController
-                                                .text,
-                                            size: 10,
-                                            page: 0,
-                                          );
+                                _model.ownerTextFieldTextController =
+                                    textEditingController;
+                                return TextFormField(
+                                  key: _model.ownerTextFieldKey,
+                                  controller: textEditingController,
+                                  focusNode: focusNode,
+                                  onEditingComplete: onEditingComplete,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    '_model.ownerTextFieldTextController',
+                                    const Duration(milliseconds: 500),
+                                    () async {
+                                      var shouldSetState = false;
+                                      _model.ownersSearchResult =
+                                          await LuncherCoreAPIGETUsersSearchGroup
+                                              .adminSearchUsersCall
+                                              .call(
+                                        authorization:
+                                            currentAuthenticationToken,
+                                        query: _model
+                                            .ownerTextFieldTextController.text,
+                                        size: 10,
+                                        page: 0,
+                                      );
 
-                                          shouldSetState = true;
-                                          if ((_model.ownersSearchResult
-                                                  ?.succeeded ??
-                                              true)) {
-                                            _model.owners =
-                                                ((_model.ownersSearchResult
+                                      shouldSetState = true;
+                                      if ((_model
+                                              .ownersSearchResult?.succeeded ??
+                                          true)) {
+                                        _model.owners = ((_model
+                                                            .ownersSearchResult
+                                                            ?.jsonBody ??
+                                                        '')
+                                                    .toList()
+                                                    .map<UserStruct?>(
+                                                        UserStruct.maybeFromMap)
+                                                    .toList()
+                                                as Iterable<UserStruct?>)
+                                            .withoutNulls
+                                            .toList()
+                                            .cast<UserStruct>();
+                                        safeSetState(() {});
+                                        if (shouldSetState) {
+                                          safeSetState(() {});
+                                        }
+                                        return;
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Nie udało się pobrać właścieli',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                const Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .tertiary,
+                                          ),
+                                        );
+                                        if (shouldSetState) {
+                                          safeSetState(() {});
+                                        }
+                                        return;
+                                      }
+
+                                      if (shouldSetState) safeSetState(() {});
+                                    },
+                                  ),
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    hintText: 'Wybierz właściciela...',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    filled: true,
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    suffixIcon: _model
+                                            .ownerTextFieldTextController!
+                                            .text
+                                            .isNotEmpty
+                                        ? InkWell(
+                                            onTap: () async {
+                                              _model
+                                                  .ownerTextFieldTextController
+                                                  ?.clear();
+                                              var shouldSetState = false;
+                                              _model.ownersSearchResult =
+                                                  await LuncherCoreAPIGETUsersSearchGroup
+                                                      .adminSearchUsersCall
+                                                      .call(
+                                                authorization:
+                                                    currentAuthenticationToken,
+                                                query: _model
+                                                    .ownerTextFieldTextController
+                                                    .text,
+                                                size: 10,
+                                                page: 0,
+                                              );
+
+                                              shouldSetState = true;
+                                              if ((_model.ownersSearchResult
+                                                      ?.succeeded ??
+                                                  true)) {
+                                                _model.owners = ((_model
+                                                                    .ownersSearchResult
                                                                     ?.jsonBody ??
                                                                 '')
                                                             .toList()
@@ -507,258 +618,394 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                     .withoutNulls
                                                     .toList()
                                                     .cast<UserStruct>();
-                                            safeSetState(() {});
-                                            if (shouldSetState) {
-                                              safeSetState(() {});
-                                            }
-                                            return;
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Nie udało się pobrać właścieli',
-                                                  style: TextStyle(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
+                                                safeSetState(() {});
+                                                if (shouldSetState) {
+                                                  safeSetState(() {});
+                                                }
+                                                return;
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Nie udało się pobrać właścieli',
+                                                      style: TextStyle(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                      ),
+                                                    ),
+                                                    duration: const Duration(
+                                                        milliseconds: 4000),
+                                                    backgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .tertiary,
                                                   ),
-                                                ),
-                                                duration: const Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                              ),
-                                            );
-                                            if (shouldSetState) {
-                                              safeSetState(() {});
-                                            }
-                                            return;
-                                          }
+                                                );
+                                                if (shouldSetState) {
+                                                  safeSetState(() {});
+                                                }
+                                                return;
+                                              }
 
-                                          if (shouldSetState) {
-                                            safeSetState(() {});
-                                          }
-                                          safeSetState(() {});
-                                        },
-                                        child: const Icon(
-                                          Icons.clear,
-                                          size: 15.0,
-                                        ),
-                                      )
-                                    : null,
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    letterSpacing: 0.0,
+                                              if (shouldSetState) {
+                                                safeSetState(() {});
+                                              }
+                                              safeSetState(() {});
+                                            },
+                                            child: const Icon(
+                                              Icons.clear,
+                                              size: 15.0,
+                                            ),
+                                          )
+                                        : null,
                                   ),
-                              keyboardType: TextInputType.emailAddress,
-                              cursorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              validator: _model
-                                  .ownerTextFieldTextControllerValidator
-                                  .asValidator(context),
-                            );
-                          },
-                        ),
-                      ),
-                      FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).primary,
-                        borderRadius: 45.0,
-                        borderWidth: 1.0,
-                        buttonSize: 45.0,
-                        fillColor: FlutterFlowTheme.of(context).accent1,
-                        icon: Icon(
-                          Icons.search,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
-                        onPressed: () async {
-                          safeSetState(() =>
-                              _model.placesListViewPagingController?.refresh());
-                        },
-                      ),
-                      Builder(
-                        builder: (context) => FlutterFlowIconButton(
-                          borderColor: FlutterFlowTheme.of(context).primary,
-                          borderRadius: 45.0,
-                          borderWidth: 1.0,
-                          buttonSize: 45.0,
-                          fillColor: FlutterFlowTheme.of(context).accent1,
-                          icon: Icon(
-                            Icons.add,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24.0,
-                          ),
-                          onPressed: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (dialogContext) {
-                                return Dialog(
-                                  elevation: 0,
-                                  insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Colors.transparent,
-                                  alignment: const AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      FocusScope.of(dialogContext).unfocus();
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                    },
-                                    child: const CreatePlaceDialogWidget(),
-                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  cursorColor:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  validator: _model
+                                      .ownerTextFieldTextControllerValidator
+                                      .asValidator(context),
                                 );
                               },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                RefreshIndicator(
-                  onRefresh: () async {
-                    safeSetState(
-                        () => _model.placesListViewPagingController?.refresh());
-                  },
-                  child: PagedListView<ApiPagingParams, dynamic>(
-                    pagingController: _model.setPlacesListViewController(
-                      (nextPageMarker) => LuncherCoreAPIPOSTPlaceSearchGroup
-                          .searchQueryCall
-                          .call(
-                        authorization: currentAuthenticationToken,
-                        textQuery:
-                            _model.searchFieldTextController.text == ''
-                                ? FFAppConstants.nullvalue
-                                : _model.searchFieldTextController.text,
-                        placeTypeIdentifier: _model.placeTypeSelectorValue,
-                        page: nextPageMarker.nextPageNumber,
-                        size: 10,
-                        enabled: () {
-                          if (_model.placeEnabledSelectorValue == 'true') {
-                            return true;
-                          } else if (_model.placeEnabledSelectorValue ==
-                              'false') {
-                            return false;
-                          } else {
-                            return null;
-                          }
-                        }()
-                            ?.toString(),
-                        ownerEmail: _model.ownerTextFieldTextController.text == ''
-                            ? FFAppConstants.nullvalue
-                            : _model.ownerTextFieldTextController.text,
-                      ),
-                    ),
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    reverse: false,
-                    scrollDirection: Axis.vertical,
-                    builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                      // Customize what your widget looks like when it's loading the first page.
-                      firstPageProgressIndicatorBuilder: (_) => Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
                             ),
                           ),
-                        ),
-                      ),
-                      // Customize what your widget looks like when it's loading another page.
-                      newPageProgressIndicatorBuilder: (_) => Center(
-                        child: SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              FlutterFlowTheme.of(context).primary,
+                          FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).primary,
+                            borderRadius: 45.0,
+                            borderWidth: 1.0,
+                            buttonSize: 45.0,
+                            fillColor: FlutterFlowTheme.of(context).accent1,
+                            icon: Icon(
+                              Icons.search,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
                             ),
+                            onPressed: () async {
+                              safeSetState(() =>
+                                  _model.listViewPagingController?.refresh());
+                            },
                           ),
-                        ),
-                      ),
-
-                      itemBuilder: (context, _, placesListIndex) {
-                        final placesListItem = _model
-                            .placesListViewPagingController!
-                            .itemList![placesListIndex];
-                        return InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed(
-                              'PlaceDetailsPage',
-                              queryParameters: {
-                                'placeId': serializeParam(
-                                  placesListItem.id,
-                                  ParamType.String,
-                                ),
-                              }.withoutNulls,
-                            );
-
-                            safeSetState(() => _model
-                                .placesListViewPagingController
-                                ?.refresh());
-                            await _model.waitForOnePageForPlacesListView();
-                          },
-                          child: Material(
-                            color: Colors.transparent,
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.check,
-                                color: placesListItem.enabled
-                                    ? const Color(0xFF29DF3F)
-                                    : Colors.transparent,
-                                size: 30.0,
-                              ),
-                              title: Text(
-                                '${placesListItem.name} (${placesListItem.longName})',
-                                style: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              subtitle: Text(
-                                '${placesListItem.address.firstLine}, ${placesListItem.address.district}, ${placesListItem.address.city}',
-                                style: FlutterFlowTheme.of(context)
-                                    .labelMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                          Builder(
+                            builder: (context) => FlutterFlowIconButton(
+                              borderColor: FlutterFlowTheme.of(context).primary,
+                              borderRadius: 45.0,
+                              borderWidth: 1.0,
+                              buttonSize: 45.0,
+                              fillColor: FlutterFlowTheme.of(context).accent1,
+                              icon: Icon(
+                                Icons.add,
+                                color: FlutterFlowTheme.of(context).primaryText,
                                 size: 24.0,
                               ),
-                              tileColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              dense: false,
-                              contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 12.0, 0.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return Dialog(
+                                      elevation: 0,
+                                      insetPadding: EdgeInsets.zero,
+                                      backgroundColor: Colors.transparent,
+                                      alignment: const AlignmentDirectional(0.0, 0.0)
+                                          .resolve(Directionality.of(context)),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(dialogContext)
+                                              .unfocus();
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        child: const CreatePlaceDialogWidget(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 1200.0,
+                      ),
+                      decoration: const BoxDecoration(),
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          safeSetState(
+                              () => _model.listViewPagingController?.refresh());
+                        },
+                        child: PagedListView<ApiPagingParams, dynamic>(
+                          pagingController: _model.setListViewController(
+                            (nextPageMarker) =>
+                                LuncherCoreAPIPOSTPlaceSearchGroup
+                                    .searchQueryCall
+                                    .call(
+                              page: nextPageMarker.nextPageNumber,
+                              authorization: currentAuthenticationToken,
+                              size: 20,
+                              placeTypeIdentifier: valueOrDefault<String>(
+                                _model.placeTypeSelectorValue,
+                                'd6f35f82-da54-4473-b7a0-ab7b59cbafe7',
+                              ),
+                              textQuery: valueOrDefault<String>(
+                                _model.searchFieldTextController.text,
+                                'd6f35f82-da54-4473-b7a0-ab7b59cbafe7',
+                              ),
+                              ownerEmail: valueOrDefault<String>(
+                                _model.ownerTextFieldTextController.text,
+                                'd6f35f82-da54-4473-b7a0-ab7b59cbafe7',
+                              ),
+                              enabled: valueOrDefault<String>(
+                                _model.placeEnabledSelectorValue,
+                                'd6f35f82-da54-4473-b7a0-ab7b59cbafe7',
                               ),
                             ),
                           ),
-                        );
-                      },
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          reverse: false,
+                          scrollDirection: Axis.vertical,
+                          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                            // Customize what your widget looks like when it's loading the first page.
+                            firstPageProgressIndicatorBuilder: (_) => Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Customize what your widget looks like when it's loading another page.
+                            newPageProgressIndicatorBuilder: (_) => Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            itemBuilder: (context, _, placesListIndex) {
+                              final placesListItem = _model
+                                  .listViewPagingController!
+                                  .itemList![placesListIndex];
+                              return Visibility(
+                                visible: _model.removedPlaceIds
+                                        .contains(placesListItem.id) ==
+                                    false,
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      'PlaceDetailsPage',
+                                      queryParameters: {
+                                        'placeId': serializeParam(
+                                          placesListItem.id,
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+
+                                    safeSetState(() => _model
+                                        .listViewPagingController
+                                        ?.refresh());
+                                  },
+                                  child: Container(
+                                    width: 1200.0,
+                                    height: 62.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 8.0, 20.0, 8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                const AlignmentDirectional(-1.0, 0.0),
+                                            child: Icon(
+                                              Icons.check,
+                                              color: placesListItem.enabled
+                                                  ? const Color(0xFF29DF3F)
+                                                  : Colors.transparent,
+                                              size: 30.0,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    20.0, 0.0, 0.0, 0.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${placesListItem.name}${placesListItem.longName != null && placesListItem.longName != '' ? ' (${placesListItem.longName})' : ' '}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .titleLarge
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                                Text(
+                                                  '${placesListItem.address.firstLine}, ${placesListItem.address.district}, ${placesListItem.address.city}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          if (_model.deletingEnabled)
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 0.0, 20.0, 0.0),
+                                              child: FlutterFlowIconButton(
+                                                borderColor: Colors.transparent,
+                                                borderRadius: 8.0,
+                                                buttonSize: 40.0,
+                                                fillColor: const Color(0xFFC51E34),
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .info,
+                                                  size: 24.0,
+                                                ),
+                                                showLoadingIndicator: true,
+                                                onPressed: () async {
+                                                  _model.deleteQuery =
+                                                      await LuncherCoreAPIDELETEPlacePlaceUuidGroup
+                                                          .removePlaceCall
+                                                          .call(
+                                                    authorization:
+                                                        currentAuthenticationToken,
+                                                    placeUuid:
+                                                        placesListItem.id,
+                                                  );
+
+                                                  if ((_model.deleteQuery
+                                                          ?.succeeded ??
+                                                      true)) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .clearSnackBars();
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Usunięto pomyślnie',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                          ),
+                                                        ),
+                                                        duration: const Duration(
+                                                            milliseconds: 4000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .success,
+                                                      ),
+                                                    );
+                                                    _model.addToRemovedPlaceIds(
+                                                        placesListItem.id);
+                                                    safeSetState(() {});
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .clearSnackBars();
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Nie udało się usunąć danych!',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                          ),
+                                                        ),
+                                                        duration: const Duration(
+                                                            milliseconds: 4000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  safeSetState(() {});
+                                                },
+                                              ),
+                                            ),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 30.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 1200.0,
+                      ),
+                      decoration: const BoxDecoration(),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

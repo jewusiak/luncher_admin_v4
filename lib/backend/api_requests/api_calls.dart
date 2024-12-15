@@ -1211,6 +1211,41 @@ class GetAllArrangementsCall {
 
 /// End Luncher Core API (GET___content-management_arrangements) Group Code
 
+/// Start Luncher Core API (DELETE___place_placeUuid) Group Code
+
+class LuncherCoreAPIDELETEPlacePlaceUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static RemovePlaceCall removePlaceCall = RemovePlaceCall();
+}
+
+class RemovePlaceCall {
+  Future<ApiCallResponse> call({
+    String? placeUuid = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIDELETEPlacePlaceUuidGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'removePlace',
+      apiUrl: '$baseUrl/place/$placeUuid',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (DELETE___place_placeUuid) Group Code
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

@@ -2,6 +2,8 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/request_manager.dart';
+
 import 'dart:async';
 import 'places_list_page_widget.dart' show PlacesListPageWidget;
 import 'package:flutter/material.dart';
@@ -18,6 +20,18 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
       owners.insert(index, item);
   void updateOwnersAtIndex(int index, Function(UserStruct) updateFn) =>
       owners[index] = updateFn(owners[index]);
+
+  bool deletingEnabled = false;
+
+  List<String> removedPlaceIds = [];
+  void addToRemovedPlaceIds(String item) => removedPlaceIds.add(item);
+  void removeFromRemovedPlaceIds(String item) => removedPlaceIds.remove(item);
+  void removeAtIndexFromRemovedPlaceIds(int index) =>
+      removedPlaceIds.removeAt(index);
+  void insertAtIndexInRemovedPlaceIds(int index, String item) =>
+      removedPlaceIds.insert(index, item);
+  void updateRemovedPlaceIdsAtIndex(int index, Function(String) updateFn) =>
+      removedPlaceIds[index] = updateFn(removedPlaceIds[index]);
 
   ///  State fields for stateful widgets in this page.
 
@@ -40,10 +54,30 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
       ownerTextFieldTextControllerValidator;
   // Stores action output result for [Backend Call - API (adminSearchUsers)] action in OwnerTextField widget.
   ApiCallResponse? ownersSearchResult;
-  // State field(s) for PlacesListView widget.
+  // State field(s) for ListView widget.
 
-  PagingController<ApiPagingParams, dynamic>? placesListViewPagingController;
-  Function(ApiPagingParams nextPageMarker)? placesListViewApiCall;
+  PagingController<ApiPagingParams, dynamic>? listViewPagingController;
+  Function(ApiPagingParams nextPageMarker)? listViewApiCall;
+
+  // Stores action output result for [Backend Call - API (removePlace)] action in IconButton widget.
+  ApiCallResponse? deleteQuery;
+
+  /// Query cache managers for this widget.
+
+  final _placeTypeQueryManager = FutureRequestManager<ApiCallResponse>();
+  Future<ApiCallResponse> placeTypeQuery({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Future<ApiCallResponse> Function() requestFn,
+  }) =>
+      _placeTypeQueryManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearPlaceTypeQueryCache() => _placeTypeQueryManager.clear();
+  void clearPlaceTypeQueryCacheKey(String? uniqueKey) =>
+      _placeTypeQueryManager.clearRequest(uniqueKey);
 
   @override
   void initState(BuildContext context) {}
@@ -55,11 +89,15 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
 
     ownerTextFieldFocusNode?.dispose();
 
-    placesListViewPagingController?.dispose();
+    listViewPagingController?.dispose();
+
+    /// Dispose query cache managers for this widget.
+
+    clearPlaceTypeQueryCache();
   }
 
   /// Additional helper methods.
-  Future waitForOnePageForPlacesListView({
+  Future waitForOnePageForListView({
     double minWait = 0,
     double maxWait = double.infinity,
   }) async {
@@ -68,23 +106,21 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
       await Future.delayed(const Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
       final requestComplete =
-          (placesListViewPagingController?.nextPageKey?.nextPageNumber ?? 0) >
-              0;
+          (listViewPagingController?.nextPageKey?.nextPageNumber ?? 0) > 0;
       if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
         break;
       }
     }
   }
 
-  PagingController<ApiPagingParams, dynamic> setPlacesListViewController(
+  PagingController<ApiPagingParams, dynamic> setListViewController(
     Function(ApiPagingParams) apiCall,
   ) {
-    placesListViewApiCall = apiCall;
-    return placesListViewPagingController ??=
-        _createPlacesListViewController(apiCall);
+    listViewApiCall = apiCall;
+    return listViewPagingController ??= _createListViewController(apiCall);
   }
 
-  PagingController<ApiPagingParams, dynamic> _createPlacesListViewController(
+  PagingController<ApiPagingParams, dynamic> _createListViewController(
     Function(ApiPagingParams) query,
   ) {
     final controller = PagingController<ApiPagingParams, dynamic>(
@@ -94,13 +130,12 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
         lastResponse: null,
       ),
     );
-    return controller..addPageRequestListener(placesListViewSearchQueryPage);
+    return controller..addPageRequestListener(listViewSearchQueryPage);
   }
 
-  void placesListViewSearchQueryPage(ApiPagingParams nextPageMarker) =>
-      placesListViewApiCall!(nextPageMarker)
-          .then((placesListViewSearchQueryResponse) {
-        final pageItems = ((placesListViewSearchQueryResponse.jsonBody
+  void listViewSearchQueryPage(ApiPagingParams nextPageMarker) =>
+      listViewApiCall!(nextPageMarker).then((listViewSearchQueryResponse) {
+        final pageItems = ((listViewSearchQueryResponse.jsonBody
                         .toList()
                         .map<PlaceDtoStruct?>(PlaceDtoStruct.maybeFromMap)
                         .toList() as Iterable<PlaceDtoStruct?>)
@@ -108,13 +143,13 @@ class PlacesListPageModel extends FlutterFlowModel<PlacesListPageWidget> {
                 [])
             .toList() as List;
         final newNumItems = nextPageMarker.numItems + pageItems.length;
-        placesListViewPagingController?.appendPage(
+        listViewPagingController?.appendPage(
           pageItems,
           (pageItems.isNotEmpty)
               ? ApiPagingParams(
                   nextPageNumber: nextPageMarker.nextPageNumber + 1,
                   numItems: newNumItems,
-                  lastResponse: placesListViewSearchQueryResponse,
+                  lastResponse: listViewSearchQueryResponse,
                 )
               : null,
         );
