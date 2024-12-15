@@ -82,7 +82,9 @@ class _PlaceTypeDetailsDialogWidgetState
           final containerGetByIdentifierResponse = snapshot.data!;
 
           return Container(
-            width: MediaQuery.sizeOf(context).width * 0.9,
+            constraints: const BoxConstraints(
+              maxWidth: 500.0,
+            ),
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(12.0),
