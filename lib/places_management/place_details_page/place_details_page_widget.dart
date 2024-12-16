@@ -129,6 +129,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
         safeSetState(() {
           _model.websiteUrlTextController?.text = _model.place!.webpageUrl;
         });
+        safeSetState(() {
+          _model.instagramHandleTextController?.text =
+              _model.place!.instagramHandle;
+        });
         return;
       } else {
         await showDialog(
