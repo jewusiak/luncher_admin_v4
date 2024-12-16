@@ -435,6 +435,33 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                                         'Znaleziono: ${PlaceDtoStruct.maybeFromMap((_model.searchPlaceResult2?.jsonBody ?? ''))?.name}';
                                                     _model.isIdValid = true;
                                                     safeSetState(() {});
+                                                    if (((FFAppState()
+                                                                    .editedSectionElement
+                                                                    .thumbnail ==
+                                                                null) ||
+                                                            (FFAppState()
+                                                                        .editedSectionElement
+                                                                        .thumbnail
+                                                                        .id ==
+                                                                    '')) &&
+                                                        (PlaceDtoStruct.maybeFromMap((_model
+                                                                        .searchPlaceResult2
+                                                                        ?.jsonBody ??
+                                                                    ''))!
+                                                                .images.isNotEmpty)) {
+                                                      FFAppState()
+                                                          .updateEditedSectionElementStruct(
+                                                        (e) => e
+                                                          ..thumbnail = PlaceDtoStruct
+                                                                  .maybeFromMap((_model
+                                                                          .searchPlaceResult2
+                                                                          ?.jsonBody ??
+                                                                      ''))
+                                                              ?.images
+                                                              .firstOrNull,
+                                                      );
+                                                      safeSetState(() {});
+                                                    }
                                                   } else {
                                                     _model.placeSearchInfoText =
                                                         'Nie znaleziono miejsca...';
