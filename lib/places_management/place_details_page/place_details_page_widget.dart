@@ -305,7 +305,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                     imageIdsList:
                         _model.place?.images.map((e) => e.id).toList(),
                     facebookPageId: _model.facebookPageIdTextController.text,
-                    instagramHandle: _model.websiteUrlTextController.text,
+                    instagramHandle: _model.instagramHandleTextController.text,
                     webpageUrl: _model.websiteUrlTextController.text,
                     phoneNumber: _model.phoneNumberTextController.text,
                   );
