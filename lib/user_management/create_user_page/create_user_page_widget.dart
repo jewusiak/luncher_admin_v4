@@ -524,18 +524,6 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                   true,
                                   true,
                                 );
-                                _model.newPasswordInputFocusNode
-                                    ?.requestFocus();
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  _model.newPasswordInputTextController
-                                      ?.selection = TextSelection.collapsed(
-                                    offset: _model
-                                        .newPasswordInputTextController!
-                                        .text
-                                        .length,
-                                  );
-                                });
                               });
                             },
                             text: 'Wygeneruj hasło',

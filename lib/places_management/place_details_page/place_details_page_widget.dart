@@ -1838,20 +1838,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       .location
                                                       .latitude
                                                       .toString();
-                                                  _model.locationLatFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.locationLatTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .locationLatTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model
@@ -1869,20 +1855,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       .location
                                                       .longitude
                                                       .toString();
-                                                  _model.locationLonFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.locationLonTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .locationLonTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 await _model
                                                     .googleMapsController.future
@@ -1918,21 +1890,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                               FFAppState()
                                                                   .selectedGoogleMapPlacesApiIndex))!
                                                       .id;
-                                                  _model
-                                                      .googlePlaceIdInputFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.googlePlaceIdInputTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .googlePlaceIdInputTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.address1stLineTextController
@@ -1946,20 +1903,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                     ?.jsonBody ??
                                                                 ''),
                                                           )?.toList(), FFAppState().selectedGoogleMapPlacesApiIndex, 'street_number').longText}';
-                                                  _model.address1stLineFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.address1stLineTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .address1stLineTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressZipCodeTextController?.text =
@@ -1977,20 +1920,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'postal_code')
                                                           .longText;
-                                                  _model.addressZipCodeFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.addressZipCodeTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .addressZipCodeTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressCityTextController?.text =
@@ -2008,20 +1937,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'locality')
                                                           .longText;
-                                                  _model.addressCityFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.addressCityTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .addressCityTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressDistrictTextController?.text =
@@ -2039,21 +1954,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'sublocality')
                                                           .longText;
-                                                  _model
-                                                      .addressDistrictFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.addressDistrictTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .addressDistrictTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                                 safeSetState(() {
                                                   _model.addressCountryTextController?.text =
@@ -2071,20 +1971,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   .selectedGoogleMapPlacesApiIndex,
                                                               'country')
                                                           .shortText;
-                                                  _model.addressCountryFocusNode
-                                                      ?.requestFocus();
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    _model.addressCountryTextController
-                                                            ?.selection =
-                                                        TextSelection.collapsed(
-                                                      offset: _model
-                                                          .addressCountryTextController!
-                                                          .text
-                                                          .length,
-                                                    );
-                                                  });
                                                 });
                                               } else {
                                                 if (shouldSetState) {
