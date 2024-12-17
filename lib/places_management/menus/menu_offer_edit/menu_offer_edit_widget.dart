@@ -187,18 +187,6 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                         functions.replaceCommaWithDot(_model
                                             .basePriceInputTextController
                                             .text)!;
-                                    _model.basePriceInputFocusNode
-                                        ?.requestFocus();
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      _model.basePriceInputTextController
-                                          ?.selection = TextSelection.collapsed(
-                                        offset: _model
-                                            .basePriceInputTextController!
-                                            .text
-                                            .length,
-                                      );
-                                    });
                                   });
                                 },
                               ),

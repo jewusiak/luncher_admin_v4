@@ -186,18 +186,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                         functions.replaceCommaWithDot(_model
                                             .basePriceInputTextController
                                             .text)!;
-                                    _model.basePriceInputFocusNode
-                                        ?.requestFocus();
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      _model.basePriceInputTextController
-                                          ?.selection = TextSelection.collapsed(
-                                        offset: _model
-                                            .basePriceInputTextController!
-                                            .text
-                                            .length,
-                                      );
-                                    });
                                   });
                                 },
                               ),
@@ -333,14 +321,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                           if (newValue) {
                             safeSetState(() {
                               _model.basePriceInputTextController?.text = '0';
-                              _model.basePriceInputFocusNode?.requestFocus();
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                _model.basePriceInputTextController?.selection =
-                                    TextSelection.collapsed(
-                                  offset: _model.basePriceInputTextController!
-                                      .text.length,
-                                );
-                              });
                             });
                           }
                         },

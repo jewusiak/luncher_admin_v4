@@ -188,18 +188,6 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                         functions.replaceCommaWithDot(_model
                                             .basePriceInputTextController
                                             .text)!;
-                                    _model.basePriceInputFocusNode
-                                        ?.requestFocus();
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      _model.basePriceInputTextController
-                                          ?.selection = TextSelection.collapsed(
-                                        offset: _model
-                                            .basePriceInputTextController!
-                                            .text
-                                            .length,
-                                      );
-                                    });
                                   });
                                 },
                               ),
