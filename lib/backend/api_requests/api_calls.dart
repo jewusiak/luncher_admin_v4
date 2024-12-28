@@ -1246,6 +1246,41 @@ class RemovePlaceCall {
 
 /// End Luncher Core API (DELETE___place_placeUuid) Group Code
 
+/// Start Luncher Core API (DELETE___users_uuid) Group Code
+
+class LuncherCoreAPIDELETEUsersUuidGroup {
+  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static Map<String, String> headers = {};
+  static DeleteUserCall deleteUserCall = DeleteUserCall();
+}
+
+class DeleteUserCall {
+  Future<ApiCallResponse> call({
+    String? uuid = '',
+    String? authorization = '',
+  }) async {
+    final baseUrl = LuncherCoreAPIDELETEUsersUuidGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'deleteUser',
+      apiUrl: '$baseUrl/users/$uuid',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer $authorization',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (DELETE___users_uuid) Group Code
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

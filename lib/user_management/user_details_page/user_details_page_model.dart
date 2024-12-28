@@ -35,6 +35,8 @@ class UserDetailsPageModel extends FlutterFlowModel<UserDetailsPageWidget> {
   // Stores action output result for [Backend Call - API (updateUser)] action in Button widget.
   ApiCallResponse? updateCallResult;
   Completer<ApiCallResponse>? apiRequestCompleter;
+  // Stores action output result for [Backend Call - API (deleteUser)] action in Button widget.
+  ApiCallResponse? deleteResult;
 
   @override
   void initState(BuildContext context) {
