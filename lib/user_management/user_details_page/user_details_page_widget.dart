@@ -652,112 +652,207 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 50.0, 0.0, 0.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              var shouldSetState = false;
-                              _model.updateCallResult =
-                                  await LuncherCoreAPIPUTUsersUserIdGroup
-                                      .updateUserCall
-                                      .call(
-                                authorization: currentAuthenticationToken,
-                                userId: widget.userId,
-                                email: _model.emailInputTextController.text,
-                                firstName:
-                                    _model.firstnameInputTextController.text,
-                                surname: _model.surnameInputTextController.text,
-                                password:
-                                    _model.newPasswordInputTextController.text,
-                                role: _model.userRoleSelectorValue,
-                                enabled: _model.userEnabledCheckboxValue,
-                              );
-
-                              shouldSetState = true;
-                              if ((_model.updateCallResult?.succeeded ??
-                                  true)) {
-                                safeSetState(
-                                    () => _model.apiRequestCompleter = null);
-                                await _model.waitForApiRequestCompleted();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Zaaktualizowano pomyślnie',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                      ),
-                                    ),
-                                    duration: const Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                );
-                                if (shouldSetState) safeSetState(() {});
-                                return;
-                              } else {
-                                if ((_model.updateCallResult?.statusCode ??
-                                        200) ==
-                                    400) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Nieprawidłowe dane (sprawdź hasło).',
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                      ),
-                                      duration: const Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondary,
-                                    ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  var shouldSetState = false;
+                                  _model.updateCallResult =
+                                      await LuncherCoreAPIPUTUsersUserIdGroup
+                                          .updateUserCall
+                                          .call(
+                                    authorization: currentAuthenticationToken,
+                                    userId: widget.userId,
+                                    email: _model.emailInputTextController.text,
+                                    firstName: _model
+                                        .firstnameInputTextController.text,
+                                    surname:
+                                        _model.surnameInputTextController.text,
+                                    password: _model
+                                        .newPasswordInputTextController.text,
+                                    role: _model.userRoleSelectorValue,
+                                    enabled: _model.userEnabledCheckboxValue,
                                   );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        'Błąd serwera - skontaktuj się z administratorem.',
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
+
+                                  shouldSetState = true;
+                                  if ((_model.updateCallResult?.succeeded ??
+                                      true)) {
+                                    safeSetState(() =>
+                                        _model.apiRequestCompleter = null);
+                                    await _model.waitForApiRequestCompleted();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Zaaktualizowano pomyślnie',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
                                         ),
+                                        duration: const Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
                                       ),
-                                      duration: const Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondary,
-                                    ),
-                                  );
-                                }
+                                    );
+                                    if (shouldSetState) safeSetState(() {});
+                                    return;
+                                  } else {
+                                    if ((_model.updateCallResult?.statusCode ??
+                                            200) ==
+                                        400) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Nieprawidłowe dane (sprawdź hasło).',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              const Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Błąd serwera - skontaktuj się z administratorem.',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              const Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
+                                    }
 
-                                if (shouldSetState) safeSetState(() {});
-                                return;
-                              }
+                                    if (shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
 
-                              if (shouldSetState) safeSetState(() {});
-                            },
-                            text: 'Zapisz zmiany',
-                            options: FFButtonOptions(
-                              height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    letterSpacing: 0.0,
+                                  if (shouldSetState) safeSetState(() {});
+                                },
+                                text: 'Zapisz zmiany',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 0.0, 24.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  elevation: 3.0,
+                                  borderSide: const BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
                                   ),
-                              elevation: 3.0,
-                              borderSide: const BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    _model.deleteResult =
+                                        await LuncherCoreAPIDELETEUsersUuidGroup
+                                            .deleteUserCall
+                                            .call(
+                                      authorization: currentAuthenticationToken,
+                                      uuid: widget.userId,
+                                    );
+
+                                    if ((_model.deleteResult?.succeeded ??
+                                        true)) {
+                                      context.safePop();
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Usunięto użytkownika pomyślnie!',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              const Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Usunięcie użytkownika nieudane!',
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                            ),
+                                          ),
+                                          duration:
+                                              const Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .error,
+                                        ),
+                                      );
+                                    }
+
+                                    safeSetState(() {});
+                                  },
+                                  text: 'Usuń użytkownika',
+                                  options: FFButtonOptions(
+                                    height: 40.0,
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).error,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
