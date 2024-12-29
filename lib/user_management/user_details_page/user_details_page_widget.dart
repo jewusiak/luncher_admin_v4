@@ -670,8 +670,12 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                         .firstnameInputTextController.text,
                                     surname:
                                         _model.surnameInputTextController.text,
-                                    password: _model
-                                        .newPasswordInputTextController.text,
+                                    password: _model.newPasswordInputTextController
+                                                    .text ==
+                                                ''
+                                        ? FFAppConstants.nullvalue
+                                        : _model.newPasswordInputTextController
+                                            .text,
                                     role: _model.userRoleSelectorValue,
                                     enabled: _model.userEnabledCheckboxValue,
                                   );
