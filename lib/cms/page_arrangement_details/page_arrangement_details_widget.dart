@@ -75,7 +75,7 @@ class _PageArrangementDetailsWidgetState
 
     _model.tabBarController = TabController(
       vsync: this,
-      length: 2,
+      length: 1,
       initialIndex: 0,
     )..addListener(() => safeSetState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -225,13 +225,10 @@ class _PageArrangementDetailsWidgetState
                           Tab(
                             text: 'Podstawowe dane',
                           ),
-                          Tab(
-                            text: 'Podgląd',
-                          ),
                         ],
                         controller: _model.tabBarController,
                         onTap: (i) async {
-                          [() async {}, () async {}][i]();
+                          [() async {}][i]();
                         },
                       ),
                     ),
@@ -666,7 +663,6 @@ class _PageArrangementDetailsWidgetState
                               ].divide(const SizedBox(height: 20.0)),
                             ),
                           ),
-                          Container(),
                         ],
                       ),
                     ),
