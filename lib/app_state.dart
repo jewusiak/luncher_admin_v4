@@ -45,22 +45,6 @@ class FFAppState extends ChangeNotifier {
     _selectedGoogleMapPlacesApiIndex = value;
   }
 
-  MenuOfferStruct _editedMenuOffer = MenuOfferStruct();
-  MenuOfferStruct get editedMenuOffer => _editedMenuOffer;
-  set editedMenuOffer(MenuOfferStruct value) {
-    _editedMenuOffer = value;
-  }
-
-  void updateEditedMenuOfferStruct(Function(MenuOfferStruct) updateFn) {
-    updateFn(_editedMenuOffer);
-  }
-
-  ActionType? _editedMenuOfferAction;
-  ActionType? get editedMenuOfferAction => _editedMenuOfferAction;
-  set editedMenuOfferAction(ActionType? value) {
-    _editedMenuOfferAction = value;
-  }
-
   LocalDateTimeRangeStruct _editedLocalDateTimeRange =
       LocalDateTimeRangeStruct();
   LocalDateTimeRangeStruct get editedLocalDateTimeRange =>
@@ -79,6 +63,22 @@ class FFAppState extends ChangeNotifier {
       _editedLocalDateTimeRangeAction;
   set editedLocalDateTimeRangeAction(ActionType? value) {
     _editedLocalDateTimeRangeAction = value;
+  }
+
+  MenuOfferStruct _editedMenuOffer = MenuOfferStruct();
+  MenuOfferStruct get editedMenuOffer => _editedMenuOffer;
+  set editedMenuOffer(MenuOfferStruct value) {
+    _editedMenuOffer = value;
+  }
+
+  void updateEditedMenuOfferStruct(Function(MenuOfferStruct) updateFn) {
+    updateFn(_editedMenuOffer);
+  }
+
+  ActionType? _editedMenuOfferAction;
+  ActionType? get editedMenuOfferAction => _editedMenuOfferAction;
+  set editedMenuOfferAction(ActionType? value) {
+    _editedMenuOfferAction = value;
   }
 
   PartStruct _editedOfferPart = PartStruct();

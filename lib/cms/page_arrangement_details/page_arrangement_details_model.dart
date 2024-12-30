@@ -21,11 +21,6 @@ class PageArrangementDetailsModel
   ApiCallResponse? getArrangementResult;
   // Stores action output result for [Backend Call - API (updateArrangement)] action in SaveButton widget.
   ApiCallResponse? updateResult;
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
-
   // Stores action output result for [Backend Call - API (makeArrangementPrimary)] action in Button widget.
   ApiCallResponse? apiResultxmv;
 
@@ -33,7 +28,5 @@ class PageArrangementDetailsModel
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    tabBarController?.dispose();
-  }
+  void dispose() {}
 }
