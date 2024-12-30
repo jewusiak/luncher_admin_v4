@@ -1500,6 +1500,9 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       functions
                                                           .cloneMenuOfferObject(
                                                               menuOffersItem)!;
+                                                  FFAppState()
+                                                          .editedMenuOfferAction =
+                                                      null;
                                                   safeSetState(() {});
                                                   await showDialog(
                                                     context: context,
