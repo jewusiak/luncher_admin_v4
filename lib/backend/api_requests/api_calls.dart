@@ -14,7 +14,13 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 /// Start Luncher Core API (POST___auth_login) Group Code
 
 class LuncherCoreAPIPOSTAuthLoginGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static LoginCall loginCall = LoginCall();
 }
@@ -24,8 +30,12 @@ class LoginCall {
     String? authorization = '',
     String? email = '',
     String? password = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIPOSTAuthLoginGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPOSTAuthLoginGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -64,7 +74,13 @@ class LoginCall {
 /// Start Luncher Core API (GET___profile) Group Code
 
 class LuncherCoreAPIGETProfileGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetProfileCall getProfileCall = GetProfileCall();
 }
@@ -72,8 +88,12 @@ class LuncherCoreAPIGETProfileGroup {
 class GetProfileCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETProfileGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETProfileGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getProfile',
@@ -98,7 +118,13 @@ class GetProfileCall {
 /// Start Luncher Core API (DELETE___auth_logout) Group Code
 
 class LuncherCoreAPIDELETEAuthLogoutGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static LogoutCall logoutCall = LogoutCall();
 }
@@ -106,8 +132,12 @@ class LuncherCoreAPIDELETEAuthLogoutGroup {
 class LogoutCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIDELETEAuthLogoutGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIDELETEAuthLogoutGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'logout',
@@ -132,7 +162,13 @@ class LogoutCall {
 /// Start Luncher Core API (POST___users) Group Code
 
 class LuncherCoreAPIPOSTUsersGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static CreateUserCall createUserCall = CreateUserCall();
 }
@@ -146,8 +182,12 @@ class CreateUserCall {
     String? password = '',
     String? role = '',
     bool? enabled = true,
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIPOSTUsersGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPOSTUsersGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -183,7 +223,13 @@ class CreateUserCall {
 /// Start Luncher Core API (GET___users_available_roles) Group Code
 
 class LuncherCoreAPIGETUsersAvailableRolesGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetAvailableRolesCall getAvailableRolesCall = GetAvailableRolesCall();
 }
@@ -191,8 +237,12 @@ class LuncherCoreAPIGETUsersAvailableRolesGroup {
 class GetAvailableRolesCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETUsersAvailableRolesGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETUsersAvailableRolesGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAvailableRoles',
@@ -227,7 +277,13 @@ class GetAvailableRolesCall {
 /// Start Luncher Core API (PUT___users_userId) Group Code
 
 class LuncherCoreAPIPUTUsersUserIdGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return 'https://api.pre.luncher.pl';
+  }
+
   static Map<String, String> headers = {};
   static UpdateUserCall updateUserCall = UpdateUserCall();
 }
@@ -242,8 +298,12 @@ class UpdateUserCall {
     String? password = '',
     String? role = '',
     bool? enabled,
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIPUTUsersUserIdGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPUTUsersUserIdGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -286,7 +346,13 @@ class UpdateUserCall {
 /// Start Luncher Core API (GET___users_search) Group Code
 
 class LuncherCoreAPIGETUsersSearchGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static AdminSearchUsersCall adminSearchUsersCall = AdminSearchUsersCall();
 }
@@ -297,8 +363,12 @@ class AdminSearchUsersCall {
     int? size,
     int? page,
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETUsersSearchGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETUsersSearchGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'adminSearchUsers',
@@ -327,7 +397,13 @@ class AdminSearchUsersCall {
 /// Start Luncher Core API (GET___users_uuid) Group Code
 
 class LuncherCoreAPIGETUsersUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetUserByUuidCall getUserByUuidCall = GetUserByUuidCall();
 }
@@ -336,8 +412,12 @@ class GetUserByUuidCall {
   Future<ApiCallResponse> call({
     String? uuid = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETUsersUuidGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETUsersUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getUserByUuid',
@@ -362,7 +442,13 @@ class GetUserByUuidCall {
 /// Start Luncher Core API (GET___placetype) Group Code
 
 class LuncherCoreAPIGETPlacetypeGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetAllPlaceTypesCall getAllPlaceTypesCall = GetAllPlaceTypesCall();
 }
@@ -370,8 +456,12 @@ class LuncherCoreAPIGETPlacetypeGroup {
 class GetAllPlaceTypesCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETPlacetypeGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETPlacetypeGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAllPlaceTypes',
@@ -396,7 +486,13 @@ class GetAllPlaceTypesCall {
 /// Start Luncher Core API (DELETE___placetype_identifier) Group Code
 
 class LuncherCoreAPIDELETEPlacetypeIdentifierGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static DeletePlaceTypeCall deletePlaceTypeCall = DeletePlaceTypeCall();
 }
@@ -405,8 +501,12 @@ class DeletePlaceTypeCall {
   Future<ApiCallResponse> call({
     String? identifier = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIDELETEPlacetypeIdentifierGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIDELETEPlacetypeIdentifierGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'deletePlaceType',
@@ -431,7 +531,13 @@ class DeletePlaceTypeCall {
 /// Start Luncher Core API (POST___placetype) Group Code
 
 class LuncherCoreAPIPOSTPlacetypeGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static CreatePlaceTypeCall createPlaceTypeCall = CreatePlaceTypeCall();
 }
@@ -442,8 +548,12 @@ class CreatePlaceTypeCall {
     String? idenitifier = '',
     String? iconName = '',
     String? name = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIPOSTPlacetypeGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPOSTPlacetypeGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -483,7 +593,13 @@ class CreatePlaceTypeCall {
 /// Start Luncher Core API (PUT___placetype_identifier) Group Code
 
 class LuncherCoreAPIPUTPlacetypeIdentifierGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static UpdatePlaceTypeCall updatePlaceTypeCall = UpdatePlaceTypeCall();
 
@@ -498,8 +614,12 @@ class UpdatePlaceTypeCall {
     String? authorization = '',
     String? iconName = '',
     String? name = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIPUTPlacetypeIdentifierGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPUTPlacetypeIdentifierGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -535,7 +655,13 @@ class UpdatePlaceTypeCall {
 /// Start Luncher Core API (GET___placetype_identifier) Group Code
 
 class LuncherCoreAPIGETPlacetypeIdentifierGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetByIdentifierCall getByIdentifierCall = GetByIdentifierCall();
 }
@@ -544,8 +670,12 @@ class GetByIdentifierCall {
   Future<ApiCallResponse> call({
     String? identifier = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETPlacetypeIdentifierGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETPlacetypeIdentifierGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getByIdentifier',
@@ -570,7 +700,10 @@ class GetByIdentifierCall {
 /// Start Luncher Core API (POST___place_search) Group Code
 
 class LuncherCoreAPIPOSTPlaceSearchGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl = '',
+  }) =>
+      '$backendurl';
   static Map<String, String> headers = {};
   static SearchQueryCall searchQueryCall = SearchQueryCall();
 
@@ -589,6 +722,7 @@ class SearchQueryCall {
     String? enabled,
     int? size,
     int? page,
+    String? backendurl = '',
   }) async {
     textQuery ??= FFAppConstants.nullvalue;
     placeTypeIdentifier ??= FFAppConstants.nullvalue;
@@ -597,7 +731,9 @@ class SearchQueryCall {
     enabled ??= FFAppConstants.nullvalue;
     size ??= FFAppConstants.nullvalueINT;
     page ??= FFAppConstants.nullvalueINT;
-    final baseUrl = LuncherCoreAPIPOSTPlaceSearchGroup.getBaseUrl();
+    final baseUrl = LuncherCoreAPIPOSTPlaceSearchGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -641,7 +777,13 @@ class SearchQueryCall {
 /// Start Luncher Core API (GET___place_uuid) Group Code
 
 class LuncherCoreAPIGETPlaceUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetByIdCall getByIdCall = GetByIdCall();
 }
@@ -650,8 +792,12 @@ class GetByIdCall {
   Future<ApiCallResponse> call({
     String? uuid = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIGETPlaceUuidGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETPlaceUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getById',
@@ -676,7 +822,13 @@ class GetByIdCall {
 /// Start Luncher Core API (POST___place) Group Code
 
 class LuncherCoreAPIPOSTPlaceGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static CreatePlaceCall createPlaceCall = CreatePlaceCall();
 }
@@ -687,11 +839,15 @@ class CreatePlaceCall {
     String? name,
     String? placeTypeIdentifier,
     String? enabled,
+    String? backendurl,
   }) async {
     name ??= FFAppConstants.nullvalue;
     placeTypeIdentifier ??= FFAppConstants.nullvalue;
     enabled ??= FFAppConstants.nullvalue;
-    final baseUrl = LuncherCoreAPIPOSTPlaceGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPOSTPlaceGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -731,7 +887,13 @@ class CreatePlaceCall {
 /// Start Luncher Core API (PUT___place_placeUuid) Group Code
 
 class LuncherCoreAPIPUTPlacePlaceUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static UpdatePlaceCall updatePlaceCall = UpdatePlaceCall();
 
@@ -767,6 +929,7 @@ class UpdatePlaceCall {
     String? enabled,
     dynamic menuOffersJson,
     List<String>? imageIdsList,
+    String? backendurl,
   }) async {
     name ??= FFAppConstants.nullvalue;
     longName ??= FFAppConstants.nullvalue;
@@ -788,7 +951,10 @@ class UpdatePlaceCall {
     locationLongitude ??= FFAppConstants.nullvalueDOUBLE;
     ownerEmail ??= FFAppConstants.nullvalue;
     enabled ??= FFAppConstants.nullvalue;
-    final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
     final imageIds = _serializeList(imageIdsList);
     final openingWindows = _serializeJson(openingWindowsJson, true);
     final menuOffers = _serializeJson(menuOffersJson, true);
@@ -936,7 +1102,13 @@ class TextSearchCall {
 /// Start Luncher Core API (GET___content-management_arrangements_uuid) Group Code
 
 class LuncherCoreAPIGETContentManagementArrangementsUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetArrangementByIdCall getArrangementByIdCall =
       GetArrangementByIdCall();
@@ -950,9 +1122,13 @@ class GetArrangementByIdCall {
   Future<ApiCallResponse> call({
     String? uuid = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl =
-        LuncherCoreAPIGETContentManagementArrangementsUuidGroup.getBaseUrl();
+        LuncherCoreAPIGETContentManagementArrangementsUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return FFApiInterceptor.makeApiCall(
       ApiCallOptions(
@@ -984,7 +1160,13 @@ class GetArrangementByIdCall {
 /// Start Luncher Core API (POST___asset) Group Code
 
 class LuncherCoreAPIPOSTAssetGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static UploadImageCall uploadImageCall = UploadImageCall();
 }
@@ -994,8 +1176,12 @@ class UploadImageCall {
     String? description = '',
     String? authorization = '',
     FFUploadedFile? file,
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIPOSTAssetGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPOSTAssetGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'uploadImage',
@@ -1024,7 +1210,13 @@ class UploadImageCall {
 /// Start Luncher Core API (PUT___content-management_arrangements_uuid) Group Code
 
 class LuncherCoreAPIPUTContentManagementArrangementsUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static UpdateArrangementCall updateArrangementCall = UpdateArrangementCall();
 
@@ -1038,9 +1230,13 @@ class UpdateArrangementCall {
     String? uuid = '',
     String? authorization = '',
     dynamic pageArrangementJson,
+    String? backendurl,
   }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl =
-        LuncherCoreAPIPUTContentManagementArrangementsUuidGroup.getBaseUrl();
+        LuncherCoreAPIPUTContentManagementArrangementsUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     final pageArrangement = _serializeJson(pageArrangementJson);
     final ffApiRequestBody = pageArrangement;
@@ -1076,7 +1272,13 @@ class UpdateArrangementCall {
 /// Start Luncher Core API (PUT___content-management_arrangements_uuid_primary) Group Code
 
 class LuncherCoreAPIPUTContentManagementArrangementsUuidPrimaryGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static MakeArrangementPrimaryCall makeArrangementPrimaryCall =
       MakeArrangementPrimaryCall();
@@ -1090,10 +1292,14 @@ class MakeArrangementPrimaryCall {
   Future<ApiCallResponse> call({
     String? uuid = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl =
         LuncherCoreAPIPUTContentManagementArrangementsUuidPrimaryGroup
-            .getBaseUrl();
+            .getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return FFApiInterceptor.makeApiCall(
       ApiCallOptions(
@@ -1126,7 +1332,13 @@ class MakeArrangementPrimaryCall {
 /// Start Luncher Core API (POST___content-management_arrangements) Group Code
 
 class LuncherCoreAPIPOSTContentManagementArrangementsGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static CreateArrangementCall createArrangementCall = CreateArrangementCall();
 
@@ -1138,9 +1350,13 @@ class LuncherCoreAPIPOSTContentManagementArrangementsGroup {
 class CreateArrangementCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? backendurl,
   }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl =
-        LuncherCoreAPIPOSTContentManagementArrangementsGroup.getBaseUrl();
+        LuncherCoreAPIPOSTContentManagementArrangementsGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     const ffApiRequestBody = '''
 {
@@ -1178,7 +1394,13 @@ class CreateArrangementCall {
 /// Start Luncher Core API (GET___content-management_arrangements) Group Code
 
 class LuncherCoreAPIGETContentManagementArrangementsGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static GetAllArrangementsCall getAllArrangementsCall =
       GetAllArrangementsCall();
@@ -1187,9 +1409,13 @@ class LuncherCoreAPIGETContentManagementArrangementsGroup {
 class GetAllArrangementsCall {
   Future<ApiCallResponse> call({
     String? authorization = '',
+    String? backendurl,
   }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl =
-        LuncherCoreAPIGETContentManagementArrangementsGroup.getBaseUrl();
+        LuncherCoreAPIGETContentManagementArrangementsGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAllArrangements',
@@ -1214,7 +1440,13 @@ class GetAllArrangementsCall {
 /// Start Luncher Core API (DELETE___place_placeUuid) Group Code
 
 class LuncherCoreAPIDELETEPlacePlaceUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static RemovePlaceCall removePlaceCall = RemovePlaceCall();
 }
@@ -1223,8 +1455,12 @@ class RemovePlaceCall {
   Future<ApiCallResponse> call({
     String? placeUuid = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIDELETEPlacePlaceUuidGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIDELETEPlacePlaceUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'removePlace',
@@ -1249,7 +1485,13 @@ class RemovePlaceCall {
 /// Start Luncher Core API (DELETE___users_uuid) Group Code
 
 class LuncherCoreAPIDELETEUsersUuidGroup {
-  static String getBaseUrl() => 'https://api.pre.luncher.pl';
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static DeleteUserCall deleteUserCall = DeleteUserCall();
 }
@@ -1258,8 +1500,12 @@ class DeleteUserCall {
   Future<ApiCallResponse> call({
     String? uuid = '',
     String? authorization = '',
+    String? backendurl,
   }) async {
-    final baseUrl = LuncherCoreAPIDELETEUsersUuidGroup.getBaseUrl();
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIDELETEUsersUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'deleteUser',
