@@ -281,7 +281,7 @@ class LuncherCoreAPIPUTUsersUserIdGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return 'https://api.pre.luncher.pl';
+    return backendurl;
   }
 
   static Map<String, String> headers = {};
@@ -701,9 +701,12 @@ class GetByIdentifierCall {
 
 class LuncherCoreAPIPOSTPlaceSearchGroup {
   static String getBaseUrl({
-    String? backendurl = '',
-  }) =>
-      '$backendurl';
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return backendurl;
+  }
+
   static Map<String, String> headers = {};
   static SearchQueryCall searchQueryCall = SearchQueryCall();
 
@@ -722,7 +725,7 @@ class SearchQueryCall {
     String? enabled,
     int? size,
     int? page,
-    String? backendurl = '',
+    String? backendurl,
   }) async {
     textQuery ??= FFAppConstants.nullvalue;
     placeTypeIdentifier ??= FFAppConstants.nullvalue;
@@ -731,6 +734,7 @@ class SearchQueryCall {
     enabled ??= FFAppConstants.nullvalue;
     size ??= FFAppConstants.nullvalueINT;
     page ??= FFAppConstants.nullvalueINT;
+    backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl = LuncherCoreAPIPOSTPlaceSearchGroup.getBaseUrl(
       backendurl: backendurl,
     );
