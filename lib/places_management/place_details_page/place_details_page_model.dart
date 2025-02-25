@@ -5,6 +5,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/request_manager.dart';
 
+import '/index.dart';
+import 'dart:async';
 import 'place_details_page_widget.dart' show PlaceDetailsPageWidget;
 import 'package:flutter/material.dart';
 
@@ -60,6 +62,7 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
 
   // Stores action output result for [Backend Call - API (uploadImage)] action in Button widget.
   ApiCallResponse? uploadFile;
+  Completer<ApiCallResponse>? apiRequestCompleter;
   // Stores action output result for [Backend Call - API (TextSearch)] action in Button widget.
   ApiCallResponse? googleMapsApiCallResult;
   // State field(s) for address1stLine widget.
@@ -200,5 +203,21 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
     /// Dispose query cache managers for this widget.
 
     clearGetPlaceTypesCache();
+  }
+
+  /// Additional helper methods.
+  Future waitForApiRequestCompleted({
+    double minWait = 0,
+    double maxWait = double.infinity,
+  }) async {
+    final stopwatch = Stopwatch()..start();
+    while (true) {
+      await Future.delayed(Duration(milliseconds: 50));
+      final timeElapsed = stopwatch.elapsedMilliseconds;
+      final requestComplete = apiRequestCompleter?.isCompleted ?? false;
+      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
+        break;
+      }
+    }
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 class FFDevEnvironmentValues {
-  static const String currentEnvironment = 'Production';
+  static const String currentEnvironment = 'PRE';
   static const String environmentValuesPath =
       'assets/environment_values/environment.json';
 
@@ -22,6 +22,7 @@ class FFDevEnvironmentValues {
       final data = await json.decode(response);
       _backendurl = data['backendurl'];
       _mapsPlacesKey = data['mapsPlacesKey'];
+      _importsbackendurl = data['importsbackendurl'];
     } catch (e) {
       print('Error loading environment values: $e');
     }
@@ -32,4 +33,7 @@ class FFDevEnvironmentValues {
 
   String _mapsPlacesKey = '';
   String get mapsPlacesKey => _mapsPlacesKey;
+
+  String _importsbackendurl = '';
+  String get importsbackendurl => _importsbackendurl;
 }

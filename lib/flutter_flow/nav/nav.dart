@@ -7,9 +7,10 @@ import '/backend/schema/structs/index.dart';
 
 import '/auth/custom_auth/custom_auth_user_provider.dart';
 
-import '/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+import '/index.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -77,34 +78,34 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomePageWidget() : const LoginPageWidget(),
+          appStateNotifier.loggedIn ? HomePageWidget() : LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomePageWidget() : const LoginPageWidget(),
+              appStateNotifier.loggedIn ? HomePageWidget() : LoginPageWidget(),
           routes: [
             FFRoute(
-              name: 'LoginPage',
-              path: 'login',
-              builder: (context, params) => const LoginPageWidget(),
+              name: LoginPageWidget.routeName,
+              path: LoginPageWidget.routePath,
+              builder: (context, params) => LoginPageWidget(),
             ),
             FFRoute(
-              name: 'HomePage',
-              path: 'homePage',
+              name: HomePageWidget.routeName,
+              path: HomePageWidget.routePath,
               requireAuth: true,
-              builder: (context, params) => const HomePageWidget(),
+              builder: (context, params) => HomePageWidget(),
             ),
             FFRoute(
-              name: 'UsersListPage',
-              path: 'usersListPage',
+              name: UsersListPageWidget.routeName,
+              path: UsersListPageWidget.routePath,
               requireAuth: true,
-              builder: (context, params) => const UsersListPageWidget(),
+              builder: (context, params) => UsersListPageWidget(),
             ),
             FFRoute(
-              name: 'UserDetailsPage',
-              path: 'userDetailsPage',
+              name: UserDetailsPageWidget.routeName,
+              path: UserDetailsPageWidget.routePath,
               requireAuth: true,
               builder: (context, params) => UserDetailsPageWidget(
                 userId: params.getParam(
@@ -114,26 +115,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'CreateUserPage',
-              path: 'createUser',
+              name: CreateUserPageWidget.routeName,
+              path: CreateUserPageWidget.routePath,
               requireAuth: true,
-              builder: (context, params) => const CreateUserPageWidget(),
+              builder: (context, params) => CreateUserPageWidget(),
             ),
             FFRoute(
-              name: 'PlacesListPage',
-              path: 'placesListPage',
+              name: PlacesListPageWidget.routeName,
+              path: PlacesListPageWidget.routePath,
               requireAuth: true,
-              builder: (context, params) => const PlacesListPageWidget(),
+              builder: (context, params) => PlacesListPageWidget(),
             ),
             FFRoute(
-              name: 'PlaceTypesListPage',
-              path: 'placeTypesListPage',
+              name: PlaceTypesListPageWidget.routeName,
+              path: PlaceTypesListPageWidget.routePath,
               requireAuth: true,
-              builder: (context, params) => const PlaceTypesListPageWidget(),
+              builder: (context, params) => PlaceTypesListPageWidget(),
             ),
             FFRoute(
-              name: 'PlaceDetailsPage',
-              path: 'placeDetails',
+              name: PlaceDetailsPageWidget.routeName,
+              path: PlaceDetailsPageWidget.routePath,
               requireAuth: true,
               builder: (context, params) => PlaceDetailsPageWidget(
                 placeId: params.getParam(
@@ -147,8 +148,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'PageArrangementDetails',
-              path: 'pageArrangementDetails',
+              name: PageArrangementDetailsWidget.routeName,
+              path: PageArrangementDetailsWidget.routePath,
               requireAuth: true,
               builder: (context, params) => PageArrangementDetailsWidget(
                 arrangementId: params.getParam(
@@ -158,10 +159,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'CmsListPage',
-              path: 'cmsListPage',
+              name: CmsListPageWidget.routeName,
+              path: CmsListPageWidget.routePath,
               requireAuth: true,
-              builder: (context, params) => const CmsListPageWidget(),
+              builder: (context, params) => CmsListPageWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -401,7 +402,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

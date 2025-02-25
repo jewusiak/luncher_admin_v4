@@ -16,7 +16,7 @@ class OptionEditWidget extends StatefulWidget {
   const OptionEditWidget({
     super.key,
     bool? isNew,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
 
@@ -65,9 +65,9 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
@@ -75,14 +75,14 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                   child: Text(
                     'Edycja opcji dania',
                     style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -92,7 +92,7 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Wrap(
                     spacing: 20.0,
                     runSpacing: 10.0,
@@ -104,10 +104,10 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                           maxWidth: 375.0,
                         ),
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: TextFormField(
                           controller: _model.nameInputTextController,
                           focusNode: _model.nameInputFocusNode,
@@ -130,14 +130,14 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                   letterSpacing: 0.0,
                                 ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
@@ -174,14 +174,14 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
+                          Container(
                             width: 150.0,
                             child: TextFormField(
                               controller: _model.basePriceInputTextController,
                               focusNode: _model.basePriceInputFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.basePriceInputTextController',
-                                const Duration(milliseconds: 100),
+                                Duration(milliseconds: 100),
                                 () async {
                                   safeSetState(() {
                                     _model.basePriceInputTextController?.text =
@@ -210,14 +210,14 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
@@ -265,7 +265,7 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                   .supplement
                                   .currencyCode,
                             ),
-                            options: const ['PLN', 'EUR', 'CZK', 'USD'],
+                            options: ['PLN', 'EUR', 'CZK', 'USD'],
                             onChanged: (val) => safeSetState(
                                 () => _model.ccyDropDownValue = val),
                             width: 100.0,
@@ -288,21 +288,21 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                             borderColor: Colors.transparent,
                             borderWidth: 0.0,
                             borderRadius: 8.0,
-                            margin: const EdgeInsetsDirectional.fromSTEB(
+                            margin: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
                             isOverButton: false,
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
-                        ].divide(const SizedBox(width: 20.0)),
+                        ].divide(SizedBox(width: 20.0)),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
-                  child: SizedBox(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  child: Container(
                     width: 200.0,
                     child: TextFormField(
                       controller: _model.descriptionInputTextController,
@@ -324,14 +324,14 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Color(0x00000000),
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Color(0x00000000),
                             width: 1.0,
                           ),
@@ -367,7 +367,7 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                   child: Wrap(
                     spacing: 0.0,
                     runSpacing: 15.0,
@@ -387,9 +387,9 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -420,9 +420,9 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).error,
                           textStyle:
@@ -432,12 +432,12 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
-                          disabledColor: const Color(0xFFE9E9E9),
+                          disabledColor: Color(0xFFE9E9E9),
                           disabledTextColor:
                               FlutterFlowTheme.of(context).secondaryText,
                         ),
@@ -468,9 +468,9 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -480,7 +480,7 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -490,7 +490,7 @@ class _OptionEditWidgetState extends State<OptionEditWidget> {
                     ],
                   ),
                 ),
-              ].divide(const SizedBox(height: 0.0)),
+              ].divide(SizedBox(height: 0.0)),
             ),
           ),
         ),

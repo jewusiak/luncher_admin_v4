@@ -13,7 +13,7 @@ class LocalDateTimeRangeEditWidget extends StatefulWidget {
   const LocalDateTimeRangeEditWidget({
     super.key,
     bool? isNew,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
 
@@ -52,9 +52,9 @@ class _LocalDateTimeRangeEditWidgetState
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 350.0,
         ),
         decoration: BoxDecoration(
@@ -62,7 +62,7 @@ class _LocalDateTimeRangeEditWidgetState
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class _LocalDateTimeRangeEditWidgetState
                           FFAppState().editedLocalDateTimeRange.startTime),
                       '-',
                     ),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.calendar_month,
                       size: 18.0,
                     ),
@@ -112,9 +112,9 @@ class _LocalDateTimeRangeEditWidgetState
                       width: 200.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -162,7 +162,7 @@ class _LocalDateTimeRangeEditWidgetState
                           FFAppState().editedLocalDateTimeRange.endTime),
                       '-',
                     ),
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.calendar_month,
                       size: 18.0,
                     ),
@@ -170,9 +170,9 @@ class _LocalDateTimeRangeEditWidgetState
                       width: 200.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -204,9 +204,9 @@ class _LocalDateTimeRangeEditWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -235,9 +235,9 @@ class _LocalDateTimeRangeEditWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).error,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -246,12 +246,12 @@ class _LocalDateTimeRangeEditWidgetState
                                 letterSpacing: 0.0,
                               ),
                       elevation: 0.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
-                      disabledColor: const Color(0xFFE9E9E9),
+                      disabledColor: Color(0xFFE9E9E9),
                       disabledTextColor:
                           FlutterFlowTheme.of(context).secondaryText,
                     ),
@@ -273,9 +273,9 @@ class _LocalDateTimeRangeEditWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -284,7 +284,7 @@ class _LocalDateTimeRangeEditWidgetState
                                 letterSpacing: 0.0,
                               ),
                       elevation: 0.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),
@@ -293,7 +293,7 @@ class _LocalDateTimeRangeEditWidgetState
                   ),
                 ],
               ),
-            ].divide(const SizedBox(height: 24.0)),
+            ].divide(SizedBox(height: 24.0)),
           ),
         ),
       ),

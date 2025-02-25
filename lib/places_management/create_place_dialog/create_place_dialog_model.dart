@@ -17,7 +17,7 @@ class CreatePlaceDialogModel extends FlutterFlowModel<CreatePlaceDialogWidget> {
       return 'Wypełnij nazwę';
     }
 
-    if (val.isEmpty) {
+    if (val.length < 1) {
       return 'Wypełnij nazwę';
     }
 

@@ -13,7 +13,7 @@ class PlaceTypeDetailsDialogWidget extends StatefulWidget {
     super.key,
     bool? isNew,
     this.id,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
   final String? id;
@@ -57,7 +57,7 @@ class _PlaceTypeDetailsDialogWidgetState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: FutureBuilder<ApiCallResponse>(
         future:
             LuncherCoreAPIGETPlacetypeIdentifierGroup.getByIdentifierCall.call(
@@ -82,7 +82,7 @@ class _PlaceTypeDetailsDialogWidgetState
           final containerGetByIdentifierResponse = snapshot.data!;
 
           return Container(
-            constraints: const BoxConstraints(
+            constraints: BoxConstraints(
               maxWidth: 500.0,
             ),
             decoration: BoxDecoration(
@@ -90,7 +90,7 @@ class _PlaceTypeDetailsDialogWidgetState
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +110,7 @@ class _PlaceTypeDetailsDialogWidgetState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: Text(
                               'Name',
@@ -123,7 +123,7 @@ class _PlaceTypeDetailsDialogWidgetState
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: TextFormField(
                               controller: _model.nameInputTextController ??=
@@ -153,21 +153,21 @@ class _PlaceTypeDetailsDialogWidgetState
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
@@ -195,7 +195,7 @@ class _PlaceTypeDetailsDialogWidgetState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: Text(
                               'Identyfikator',
@@ -208,7 +208,7 @@ class _PlaceTypeDetailsDialogWidgetState
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: TextFormField(
                               controller:
@@ -240,21 +240,21 @@ class _PlaceTypeDetailsDialogWidgetState
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
@@ -283,7 +283,7 @@ class _PlaceTypeDetailsDialogWidgetState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: Text(
                               'Nazwa ikony (Material UI)',
@@ -296,7 +296,7 @@ class _PlaceTypeDetailsDialogWidgetState
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 4.0, 0.0),
                             child: TextFormField(
                               controller: _model.iconNameInputTextController ??=
@@ -326,21 +326,21 @@ class _PlaceTypeDetailsDialogWidgetState
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
@@ -364,7 +364,7 @@ class _PlaceTypeDetailsDialogWidgetState
                           ),
                         ],
                       ),
-                    ].divide(const SizedBox(height: 16.0)),
+                    ].divide(SizedBox(height: 16.0)),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -378,9 +378,9 @@ class _PlaceTypeDetailsDialogWidgetState
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -403,7 +403,7 @@ class _PlaceTypeDetailsDialogWidgetState
                         onPressed: widget.isNew
                             ? null
                             : () async {
-                                var shouldSetState = false;
+                                var _shouldSetState = false;
                                 _model.deleteResult =
                                     await LuncherCoreAPIDELETEPlacetypeIdentifierGroup
                                         .deletePlaceTypeCall
@@ -412,7 +412,7 @@ class _PlaceTypeDetailsDialogWidgetState
                                   identifier: widget.id,
                                 );
 
-                                shouldSetState = true;
+                                _shouldSetState = true;
                                 if ((_model.deleteResult?.succeeded ?? true)) {
                                   Navigator.pop(context);
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -424,13 +424,13 @@ class _PlaceTypeDetailsDialogWidgetState
                                               .primaryText,
                                         ),
                                       ),
-                                      duration: const Duration(milliseconds: 4000),
+                                      duration: Duration(milliseconds: 4000),
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .secondary,
                                     ),
                                   );
-                                  if (shouldSetState) safeSetState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
                                   return;
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -442,25 +442,25 @@ class _PlaceTypeDetailsDialogWidgetState
                                               .primaryText,
                                         ),
                                       ),
-                                      duration: const Duration(milliseconds: 4000),
+                                      duration: Duration(milliseconds: 4000),
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .secondary,
                                     ),
                                   );
-                                  if (shouldSetState) safeSetState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
                                   return;
                                 }
 
-                                if (shouldSetState) safeSetState(() {});
+                                if (_shouldSetState) safeSetState(() {});
                               },
                         text: 'Usuń',
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).error,
                           textStyle:
@@ -470,7 +470,7 @@ class _PlaceTypeDetailsDialogWidgetState
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -515,7 +515,7 @@ class _PlaceTypeDetailsDialogWidgetState
                                         .primaryText,
                                   ),
                                 ),
-                                duration: const Duration(milliseconds: 4000),
+                                duration: Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).secondary,
                               ),
@@ -530,7 +530,7 @@ class _PlaceTypeDetailsDialogWidgetState
                                         .primaryText,
                                   ),
                                 ),
-                                duration: const Duration(milliseconds: 4000),
+                                duration: Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).secondary,
                               ),
@@ -543,9 +543,9 @@ class _PlaceTypeDetailsDialogWidgetState
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -555,7 +555,7 @@ class _PlaceTypeDetailsDialogWidgetState
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -564,7 +564,7 @@ class _PlaceTypeDetailsDialogWidgetState
                       ),
                     ],
                   ),
-                ].divide(const SizedBox(height: 24.0)),
+                ].divide(SizedBox(height: 24.0)),
               ),
             ),
           );

@@ -22,7 +22,7 @@ class SectionElementEditWidget extends StatefulWidget {
   const SectionElementEditWidget({
     super.key,
     bool? isNew,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
 
@@ -116,9 +116,9 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 1000.0,
         ),
         decoration: BoxDecoration(
@@ -126,7 +126,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             primary: false,
             child: Column(
@@ -134,7 +134,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                   child: Text(
                     'Edycja elementu sekcji',
                     style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -163,14 +163,14 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                               letterSpacing: 0.0,
                             ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 1.0,
                       ),
@@ -202,7 +202,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                       .asValidator(context),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                   child: TextFormField(
                     controller: _model.subHeaderInputTextController,
                     focusNode: _model.subHeaderInputFocusNode,
@@ -223,14 +223,14 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                 letterSpacing: 0.0,
                               ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Color(0x00000000),
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Color(0x00000000),
                           width: 1.0,
                         ),
@@ -265,10 +265,10 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                 ),
                 Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
-                  decoration: const BoxDecoration(),
+                  decoration: BoxDecoration(),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
                     child: Wrap(
                       spacing: 15.0,
                       runSpacing: 10.0,
@@ -310,7 +310,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                           borderColor: Colors.transparent,
                           borderWidth: 0.0,
                           borderRadius: 8.0,
-                          margin: const EdgeInsetsDirectional.fromSTEB(
+                          margin: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 12.0, 0.0),
                           hidesUnderline: true,
                           isOverButton: false,
@@ -384,7 +384,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                     borderColor: Colors.transparent,
                                     borderWidth: 0.0,
                                     borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                    margin: EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 12.0, 0.0),
                                     hidesUnderline: true,
                                     isOverButton: false,
@@ -398,14 +398,14 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           20.0, 0.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          SizedBox(
+                                          Container(
                                             width: 400.0,
                                             child: TextFormField(
                                               controller: _model
@@ -415,7 +415,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                               onChanged: (_) =>
                                                   EasyDebounce.debounce(
                                                 '_model.indentificatorInputTextController',
-                                                const Duration(milliseconds: 200),
+                                                Duration(milliseconds: 200),
                                                 () async {
                                                   _model.searchPlaceResult2 =
                                                       await LuncherCoreAPIGETPlaceUuidGroup
@@ -448,7 +448,9 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                                                         .searchPlaceResult2
                                                                         ?.jsonBody ??
                                                                     ''))!
-                                                                .images.isNotEmpty)) {
+                                                                .images
+                                                                .length >
+                                                            0)) {
                                                       FFAppState()
                                                           .updateEditedSectionElementStruct(
                                                         (e) => e
@@ -496,7 +498,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                                         ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -506,7 +508,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -583,7 +585,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                 Flexible(
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -662,7 +664,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                           .primaryText,
                                     ),
                                   ),
-                                  duration: const Duration(milliseconds: 4000),
+                                  duration: Duration(milliseconds: 4000),
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
@@ -708,7 +710,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                 ),
                 Flexible(
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -724,9 +726,9 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                           options: FFButtonOptions(
                             width: 100.0,
                             height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
@@ -758,9 +760,9 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                           options: FFButtonOptions(
                             width: 100.0,
                             height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).error,
                             textStyle: FlutterFlowTheme.of(context)
@@ -771,12 +773,12 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                   letterSpacing: 0.0,
                                 ),
                             elevation: 0.0,
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: Colors.transparent,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
-                            disabledColor: const Color(0xFFE9E9E9),
+                            disabledColor: Color(0xFFE9E9E9),
                             disabledTextColor:
                                 FlutterFlowTheme.of(context).secondaryText,
                           ),
@@ -832,7 +834,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                           .alternate,
                                     ),
                                   ),
-                                  duration: const Duration(milliseconds: 4000),
+                                  duration: Duration(milliseconds: 4000),
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).error,
                                 ),
@@ -843,9 +845,9 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                           options: FFButtonOptions(
                             width: 100.0,
                             height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
@@ -856,7 +858,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                                   letterSpacing: 0.0,
                                 ),
                             elevation: 0.0,
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: Colors.transparent,
                               width: 1.0,
                             ),
@@ -867,7 +869,7 @@ class _SectionElementEditWidgetState extends State<SectionElementEditWidget> {
                     ),
                   ),
                 ),
-              ].divide(const SizedBox(height: 0.0)),
+              ].divide(SizedBox(height: 0.0)),
             ),
           ),
         ),
