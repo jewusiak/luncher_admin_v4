@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/backend/schema/structs/index.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'create_place_dialog_model.dart';
 export 'create_place_dialog_model.dart';
@@ -48,10 +49,10 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 0.9,
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
@@ -59,7 +60,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
                       child: Text(
                         'Nazwa',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -91,7 +92,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 10.0),
+                          EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 10.0),
                       child: TextFormField(
                         controller: _model.nameInputTextController,
                         focusNode: _model.nameInputFocusNode,
@@ -112,21 +113,21 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1.0,
                             ),
@@ -146,10 +147,10 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                       ),
                     ),
                     Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 4.0, 0.0),
                         child: Text(
                           'Typ lokalu',
                           style:
@@ -161,7 +162,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                       ),
                     ),
                     Container(
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: FutureBuilder<ApiCallResponse>(
                         future: LuncherCoreAPIGETPlacetypeGroup
                             .getAllPlaceTypesCall
@@ -233,7 +234,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                             borderColor: FlutterFlowTheme.of(context).alternate,
                             borderWidth: 0.0,
                             borderRadius: 8.0,
-                            margin: const EdgeInsetsDirectional.fromSTEB(
+                            margin: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
                             isOverButton: false,
@@ -259,9 +260,9 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -279,7 +280,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                   ),
                   FFButtonWidget(
                     onPressed: () async {
-                      var shouldSetState = false;
+                      var _shouldSetState = false;
                       _model.createResult = await LuncherCoreAPIPOSTPlaceGroup
                           .createPlaceCall
                           .call(
@@ -289,12 +290,12 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                         enabled: false.toString(),
                       );
 
-                      shouldSetState = true;
+                      _shouldSetState = true;
                       if ((_model.createResult?.succeeded ?? true)) {
                         Navigator.pop(context);
 
                         context.pushNamed(
-                          'PlaceDetailsPage',
+                          PlaceDetailsPageWidget.routeName,
                           queryParameters: {
                             'placeId': serializeParam(
                               PlaceDtoStruct.maybeFromMap(
@@ -313,44 +314,44 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                             ),
-                            duration: const Duration(milliseconds: 4000),
+                            duration: Duration(milliseconds: 4000),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).secondary,
                           ),
                         );
-                        if (shouldSetState) safeSetState(() {});
+                        if (_shouldSetState) safeSetState(() {});
                         return;
                       } else {
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
-                              title: const Text('Niepowodzenie'),
-                              content: const Text('Nie udało się stworzyć lokalu!'),
+                              title: Text('Niepowodzenie'),
+                              content: Text('Nie udało się stworzyć lokalu!'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
+                                  child: Text('Ok'),
                                 ),
                               ],
                             );
                           },
                         );
-                        if (shouldSetState) safeSetState(() {});
+                        if (_shouldSetState) safeSetState(() {});
                         return;
                       }
 
-                      if (shouldSetState) safeSetState(() {});
+                      if (_shouldSetState) safeSetState(() {});
                     },
                     text: 'Stwórz',
                     options: FFButtonOptions(
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -359,7 +360,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                                 letterSpacing: 0.0,
                               ),
                       elevation: 0.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),
@@ -368,7 +369,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                   ),
                 ],
               ),
-            ].divide(const SizedBox(height: 24.0)),
+            ].divide(SizedBox(height: 24.0)),
           ),
         ),
       ),

@@ -4,12 +4,16 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
+
+  static String routeName = 'HomePage';
+  static String routePath = 'homePage';
 
   @override
   State<HomePageWidget> createState() => _HomePageWidgetState();
@@ -57,13 +61,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
                 child: Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Text(
                           'Witaj,',
                           style:
@@ -75,7 +79,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           '${currentUserData?.firstName} ${currentUserData?.surname}',
                           style:
@@ -87,7 +91,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           '${currentUserData?.email}',
                           style:
@@ -99,7 +103,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           '(${currentUserData?.role})',
                           style:
@@ -123,12 +127,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    context.pushNamed('UsersListPage');
+                    context.pushNamed(UsersListPageWidget.routeName);
                   },
                   child: Material(
                     color: Colors.transparent,
                     child: ListTile(
-                      leading: const Icon(
+                      leading: Icon(
                         Icons.person,
                       ),
                       title: Text(
@@ -155,12 +159,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed('PlacesListPage');
+                  context.pushNamed(PlacesListPageWidget.routeName);
                 },
                 child: Material(
                   color: Colors.transparent,
                   child: ListTile(
-                    leading: const Icon(
+                    leading: Icon(
                       Icons.home,
                     ),
                     title: Text(
@@ -189,12 +193,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    context.pushNamed('PlaceTypesListPage');
+                    context.pushNamed(PlaceTypesListPageWidget.routeName);
                   },
                   child: Material(
                     color: Colors.transparent,
                     child: ListTile(
-                      leading: const Icon(
+                      leading: Icon(
                         Icons.style_rounded,
                       ),
                       title: Text(
@@ -223,12 +227,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    context.pushNamed('CmsListPage');
+                    context.pushNamed(CmsListPageWidget.routeName);
                   },
                   child: Material(
                     color: Colors.transparent,
                     child: ListTile(
-                      leading: const Icon(
+                      leading: Icon(
                         Icons.layers,
                       ),
                       title: Text(
@@ -276,12 +280,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   await authManager.signOut();
                   GoRouter.of(context).clearRedirectLocation();
 
-                  context.goNamedAuth('LoginPage', context.mounted);
+                  context.goNamedAuth(
+                      LoginPageWidget.routeName, context.mounted);
                 },
                 child: Material(
                   color: Colors.transparent,
                   child: ListTile(
-                    leading: const Icon(
+                    leading: Icon(
                       Icons.logout,
                     ),
                     title: Text(
@@ -308,11 +313,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
-            borderColor: const Color(0x00F1F4F8),
+            borderColor: Color(0x00F1F4F8),
             borderRadius: 20.0,
             borderWidth: 1.0,
             buttonSize: 40.0,
-            fillColor: const Color(0x00F1F4F8),
+            fillColor: Color(0x00F1F4F8),
             icon: Icon(
               Icons.menu,
               color: FlutterFlowTheme.of(context).primaryBackground,
@@ -331,7 +336,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -342,7 +347,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             children: [
               Expanded(
                 child: Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Text(
                     'Wybierz z menu podstronę',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(

@@ -14,7 +14,7 @@ class WeekDayTimeRangeEditWidget extends StatefulWidget {
   const WeekDayTimeRangeEditWidget({
     super.key,
     bool? isNew,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
 
@@ -53,9 +53,9 @@ class _WeekDayTimeRangeEditWidgetState
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 440.0,
         ),
         decoration: BoxDecoration(
@@ -63,7 +63,7 @@ class _WeekDayTimeRangeEditWidgetState
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class _WeekDayTimeRangeEditWidgetState
                       'SATURDAY',
                       'SUNDAY'
                     ]),
-                    optionLabels: const [
+                    optionLabels: [
                       'Poniedziałek',
                       'Wtorek',
                       'Środa',
@@ -112,6 +112,10 @@ class _WeekDayTimeRangeEditWidgetState
                     ],
                     onChanged: (val) async {
                       safeSetState(() => _model.startDayDDValue = val);
+                      safeSetState(() {
+                        _model.endDayDDValueController?.value =
+                            _model.startDayDDValue!;
+                      });
                       FFAppState().updateEditedWeekDayTimeRangeStruct(
                         (e) => e
                           ..updateStartTime(
@@ -138,7 +142,7 @@ class _WeekDayTimeRangeEditWidgetState
                     borderWidth: 0.0,
                     borderRadius: 8.0,
                     margin:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                     hidesUnderline: true,
                     isOverButton: false,
                     isSearchable: false,
@@ -161,16 +165,16 @@ class _WeekDayTimeRangeEditWidgetState
                       safeSetState(() {});
                     },
                     text: FFAppState().editedWeekDayTimeRange.startTime.time,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.access_time_outlined,
                       size: 18.0,
                     ),
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -214,7 +218,7 @@ class _WeekDayTimeRangeEditWidgetState
                       'SATURDAY',
                       'SUNDAY'
                     ]),
-                    optionLabels: const [
+                    optionLabels: [
                       'Poniedziałek',
                       'Wtorek',
                       'Środa',
@@ -251,7 +255,7 @@ class _WeekDayTimeRangeEditWidgetState
                     borderWidth: 0.0,
                     borderRadius: 8.0,
                     margin:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
                     hidesUnderline: true,
                     isOverButton: false,
                     isSearchable: false,
@@ -274,16 +278,16 @@ class _WeekDayTimeRangeEditWidgetState
                       safeSetState(() {});
                     },
                     text: FFAppState().editedWeekDayTimeRange.endTime.time,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.access_time_outlined,
                       size: 18.0,
                     ),
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -315,9 +319,9 @@ class _WeekDayTimeRangeEditWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -346,9 +350,9 @@ class _WeekDayTimeRangeEditWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).error,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -357,12 +361,12 @@ class _WeekDayTimeRangeEditWidgetState
                                 letterSpacing: 0.0,
                               ),
                       elevation: 0.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
-                      disabledColor: const Color(0xFFE9E9E9),
+                      disabledColor: Color(0xFFE9E9E9),
                       disabledTextColor:
                           FlutterFlowTheme.of(context).secondaryText,
                     ),
@@ -384,9 +388,9 @@ class _WeekDayTimeRangeEditWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -395,7 +399,7 @@ class _WeekDayTimeRangeEditWidgetState
                                 letterSpacing: 0.0,
                               ),
                       elevation: 0.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),
@@ -404,7 +408,7 @@ class _WeekDayTimeRangeEditWidgetState
                   ),
                 ],
               ),
-            ].divide(const SizedBox(height: 24.0)),
+            ].divide(SizedBox(height: 24.0)),
           ),
         ),
       ),

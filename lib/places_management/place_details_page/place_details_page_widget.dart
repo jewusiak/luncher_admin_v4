@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import '/places_management/imports/import_details_widget/import_details_widget_widget.dart';
 import '/places_management/menus/menu_offer_edit/menu_offer_edit_widget.dart';
 import '/places_management/select_google_places_api_address/select_google_places_api_address_widget.dart';
 import '/places_management/week_day_time_range_edit/week_day_time_range_edit_widget.dart';
@@ -31,10 +32,13 @@ class PlaceDetailsPageWidget extends StatefulWidget {
     super.key,
     required this.placeId,
     int? selectedPage,
-  }) : selectedPage = selectedPage ?? 0;
+  }) : this.selectedPage = selectedPage ?? 0;
 
   final String? placeId;
   final int selectedPage;
+
+  static String routeName = 'PlaceDetailsPage';
+  static String routePath = 'placeDetails';
 
   @override
   State<PlaceDetailsPageWidget> createState() => _PlaceDetailsPageWidgetState();
@@ -133,36 +137,34 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
           _model.instagramHandleTextController?.text =
               _model.place!.instagramHandle;
         });
-        return;
       } else {
         await showDialog(
           context: context,
           builder: (alertDialogContext) {
             return AlertDialog(
-              title: const Text('Błąd'),
-              content: const Text('Nie udało się pobrać danych o lokalu!'),
+              title: Text('Błąd'),
+              content: Text('Nie udało się pobrać danych o lokalu!'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(alertDialogContext),
-                  child: const Text('Ok'),
+                  child: Text('Ok'),
                 ),
               ],
             );
           },
         );
-        return;
       }
     });
 
     _model.tabBarController = TabController(
       vsync: this,
-      length: 6,
+      length: 7,
       initialIndex: min(
           valueOrDefault<int>(
             widget.selectedPage,
             0,
           ),
-          5),
+          6),
     )..addListener(() => safeSetState(() {}));
     _model.nameInputTextController ??= TextEditingController();
     _model.nameInputFocusNode ??= FocusNode();
@@ -244,7 +246,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -264,7 +266,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
               child: FlutterFlowIconButton(
                 borderRadius: 8.0,
                 buttonSize: 40.0,
@@ -276,7 +278,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                 ),
                 showLoadingIndicator: true,
                 onPressed: () async {
-                  var shouldSetState = false;
                   _model.saveResult = await LuncherCoreAPIPUTPlacePlaceUuidGroup
                       .updatePlaceCall
                       .call(
@@ -314,13 +315,12 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                     phoneNumber: _model.phoneNumberTextController.text,
                   );
 
-                  shouldSetState = true;
                   if ((_model.saveResult?.succeeded ?? true)) {
                     if (Navigator.of(context).canPop()) {
                       context.pop();
                     }
                     context.pushNamed(
-                      'PlaceDetailsPage',
+                      PlaceDetailsPageWidget.routeName,
                       queryParameters: {
                         'placeId': serializeParam(
                           widget.placeId,
@@ -336,35 +336,31 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Pomyślnie zapisano!',
+                          'Pomyślnie zapisano dane o lokalu!',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
-                        duration: const Duration(milliseconds: 1000),
+                        duration: Duration(milliseconds: 1000),
                         backgroundColor: FlutterFlowTheme.of(context).secondary,
                       ),
                     );
-                    if (shouldSetState) safeSetState(() {});
-                    return;
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'Błąd w zapisie! ',
+                          'Błąd w zapisie lokalu (${ErrorDtoStruct.maybeFromMap((_model.saveResult?.jsonBody ?? ''))?.message})',
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
-                        duration: const Duration(milliseconds: 4000),
+                        duration: Duration(milliseconds: 4000),
                         backgroundColor: FlutterFlowTheme.of(context).secondary,
                       ),
                     );
-                    if (shouldSetState) safeSetState(() {});
-                    return;
                   }
 
-                  if (shouldSetState) safeSetState(() {});
+                  safeSetState(() {});
                 },
               ),
             ),
@@ -380,7 +376,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                 return Column(
                   children: [
                     Align(
-                      alignment: const Alignment(0.0, 0),
+                      alignment: Alignment(0.0, 0),
                       child: TabBar(
                         labelColor: FlutterFlowTheme.of(context).primaryText,
                         unselectedLabelColor:
@@ -396,7 +392,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                   letterSpacing: 0.0,
                                 ),
                         indicatorColor: FlutterFlowTheme.of(context).primary,
-                        tabs: const [
+                        tabs: [
                           Tab(
                             text: 'Podstawowe dane',
                           ),
@@ -410,6 +406,9 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                             text: 'Oferty menu',
                           ),
                           Tab(
+                            text: 'Automatyzacja',
+                          ),
+                          Tab(
                             text: 'Lokalizacja',
                           ),
                           Tab(
@@ -419,6 +418,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                         controller: _model.tabBarController,
                         onTap: (i) async {
                           [
+                            () async {},
                             () async {},
                             () async {},
                             () async {},
@@ -442,7 +442,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SizedBox(
+                                    Container(
                                       width: 350.0,
                                       child: TextFormField(
                                         controller:
@@ -469,7 +469,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -477,7 +477,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -524,7 +524,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                             .asValidator(context),
                                       ),
                                     ),
-                                    SizedBox(
+                                    Container(
                                       width: 350.0,
                                       child: TextFormField(
                                         controller:
@@ -552,7 +552,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -560,7 +560,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -699,7 +699,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                           borderWidth: 0.0,
                                           borderRadius: 8.0,
                                           margin:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   12.0, 0.0, 12.0, 0.0),
                                           hidesUnderline: true,
                                           isOverButton: false,
@@ -708,7 +708,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                         );
                                       },
                                     ),
-                                    SizedBox(
+                                    Container(
                                       width: 550.0,
                                       child: TextFormField(
                                         controller: _model
@@ -732,7 +732,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -740,7 +740,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -823,7 +823,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               FlutterFlowTheme.of(context)
                                                   .secondaryBackground,
                                         ),
-                                      ].divide(const SizedBox(width: 10.0)),
+                                      ].divide(SizedBox(width: 10.0)),
                                     ),
                                     Text(
                                       'Place ID: ${widget.placeId}',
@@ -834,7 +834,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                             letterSpacing: 0.0,
                                           ),
                                     ),
-                                  ].divide(const SizedBox(height: 15.0)),
+                                  ].divide(SizedBox(height: 15.0)),
                                 ),
                               ],
                             ),
@@ -845,13 +845,51 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, -1.0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 20.0, 20.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: Icon(
+                                              Icons.info_outlined,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 20.0,
+                                            ),
+                                          ),
+                                          Flexible(
+                                            child: Text(
+                                              'Podwójne kliknięcie na termin pozwala na zduplikowanie elementu.',
+                                              maxLines: 4,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   Container(
-                                    constraints: const BoxConstraints(
+                                    constraints: BoxConstraints(
                                       maxWidth: 700.0,
                                     ),
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 30.0, 0.0, 0.0),
                                       child: Builder(
                                         builder: (context) {
@@ -920,7 +958,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                             backgroundColor:
                                                                 Colors
                                                                     .transparent,
-                                                            alignment: const AlignmentDirectional(
+                                                            alignment: AlignmentDirectional(
                                                                     0.0, 0.0)
                                                                 .resolve(
                                                                     Directionality.of(
@@ -937,7 +975,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                     ?.unfocus();
                                                               },
                                                               child:
-                                                                  const WeekDayTimeRangeEditWidget(),
+                                                                  WeekDayTimeRangeEditWidget(),
                                                             ),
                                                           );
                                                         },
@@ -995,6 +1033,71 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                               .editedWeekDayTimeRangeAction =
                                                           null;
                                                     },
+                                                    onDoubleTap: () async {
+                                                      FFAppState()
+                                                              .editedWeekDayTimeRange =
+                                                          functions
+                                                              .cloneWeekDayTimeRange(
+                                                                  openingWindowsItem)!;
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (dialogContext) {
+                                                          return Dialog(
+                                                            elevation: 0,
+                                                            insetPadding:
+                                                                EdgeInsets.zero,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            alignment: AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        dialogContext)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
+                                                              child:
+                                                                  WeekDayTimeRangeEditWidget(
+                                                                isNew: true,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+
+                                                      if (FFAppState()
+                                                              .editedWeekDayTimeRangeAction ==
+                                                          ActionType.CREATE) {
+                                                        // Add new range
+                                                        _model
+                                                            .updatePlaceStruct(
+                                                          (e) => e
+                                                            ..updateOpeningWindows(
+                                                              (e) => e.add(
+                                                                  FFAppState()
+                                                                      .editedWeekDayTimeRange),
+                                                            ),
+                                                        );
+                                                        safeSetState(() {});
+                                                      }
+                                                      // Clear helper vars
+                                                      FFAppState()
+                                                              .editedWeekDayTimeRange =
+                                                          WeekDayTimeRangeStruct();
+                                                      FFAppState()
+                                                              .editedWeekDayTimeRangeAction =
+                                                          null;
+                                                    },
                                                     child: Material(
                                                       color: Colors.transparent,
                                                       child: ListTile(
@@ -1023,7 +1126,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                             .secondaryBackground,
                                                         dense: false,
                                                         contentPadding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     12.0,
                                                                     0.0,
@@ -1049,7 +1152,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                   ),
                                   Builder(
                                     builder: (context) => Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 30.0, 0.0, 0.0),
                                       child: FlutterFlowIconButton(
                                         borderColor:
@@ -1086,7 +1189,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 insetPadding: EdgeInsets.zero,
                                                 backgroundColor:
                                                     Colors.transparent,
-                                                alignment: const AlignmentDirectional(
+                                                alignment: AlignmentDirectional(
                                                         0.0, 0.0)
                                                     .resolve(Directionality.of(
                                                         context)),
@@ -1099,7 +1202,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         ?.unfocus();
                                                   },
                                                   child:
-                                                      const WeekDayTimeRangeEditWidget(
+                                                      WeekDayTimeRangeEditWidget(
                                                     isNew: true,
                                                   ),
                                                 ),
@@ -1142,7 +1245,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 20.0, 0.0, 0.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -1240,17 +1343,17 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                             safeSetState(() {});
                                           },
                                           text: 'Dodaj nowe zdjęcie',
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.upload_sharp,
                                             size: 15.0,
                                           ),
                                           options: FFButtonOptions(
                                             height: 40.0,
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 0.0, 16.0, 0.0),
                                             iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
@@ -1270,7 +1373,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                         if (_model.maxIter != 0)
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     20.0, 0.0, 0.0, 0.0),
                                             child: CircularPercentIndicator(
                                               percent: functions.divideDoubles(
@@ -1303,10 +1406,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                     ),
                                   ),
                                   Container(
-                                    constraints: const BoxConstraints(
+                                    constraints: BoxConstraints(
                                       maxWidth: 700.0,
                                     ),
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Builder(
                                       builder: (context) {
                                         final imageIdsIter =
@@ -1315,6 +1418,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
 
                                         return ReorderableListView.builder(
                                           padding: EdgeInsets.zero,
+                                          proxyDecorator: (Widget child,
+                                                  int index,
+                                                  Animation<double>
+                                                      animation) =>
+                                              Material(
+                                                  color: Colors.transparent,
+                                                  child: child),
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
                                           itemCount: imageIdsIter.length,
@@ -1324,11 +1434,12 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 imageIdsIter[imageIdsIterIndex];
                                             return Container(
                                               key: ValueKey(
-                                                  "ListView_0xzog8f3" '_' +
+                                                  "ListView_0xzog8f3" +
+                                                      '_' +
                                                       imageIdsIterIndex
                                                           .toString()),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 5.0),
                                                 child: Container(
@@ -1351,7 +1462,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       Expanded(
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       5.0,
                                                                       5.0,
@@ -1359,7 +1470,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                       5.0),
                                                           child: Container(
                                                             decoration:
-                                                                const BoxDecoration(),
+                                                                BoxDecoration(),
                                                             child: ClipRRect(
                                                               borderRadius:
                                                                   BorderRadius
@@ -1396,7 +1507,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     0.0,
@@ -1456,7 +1567,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                       },
                                     ),
                                   ),
-                                ].divide(const SizedBox(height: 20.0)),
+                                ].divide(SizedBox(height: 20.0)),
                               ),
                             ),
                           ),
@@ -1465,13 +1576,13 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 30.0, 0.0, 0.0),
                                   child: Container(
-                                    constraints: const BoxConstraints(
+                                    constraints: BoxConstraints(
                                       maxWidth: 700.0,
                                     ),
-                                    decoration: const BoxDecoration(),
+                                    decoration: BoxDecoration(),
                                     child: Builder(
                                       builder: (context) {
                                         final menuOffers = _model
@@ -1514,7 +1625,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         backgroundColor:
                                                             Colors.transparent,
                                                         alignment:
-                                                            const AlignmentDirectional(
+                                                            AlignmentDirectional(
                                                                     0.0, 0.0)
                                                                 .resolve(
                                                                     Directionality.of(
@@ -1530,7 +1641,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                 ?.unfocus();
                                                           },
                                                           child:
-                                                              const MenuOfferEditWidget(
+                                                              MenuOfferEditWidget(
                                                             isNew: false,
                                                           ),
                                                         ),
@@ -1639,7 +1750,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         .secondaryBackground,
                                                     dense: false,
                                                     contentPadding:
-                                                        const EdgeInsetsDirectional
+                                                        EdgeInsetsDirectional
                                                             .fromSTEB(12.0, 0.0,
                                                                 12.0, 0.0),
                                                     shape:
@@ -1660,7 +1771,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                 ),
                                 Builder(
                                   builder: (context) => Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 30.0, 0.0, 0.0),
                                     child: FlutterFlowIconButton(
                                       borderColor:
@@ -1689,7 +1800,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               backgroundColor:
                                                   Colors.transparent,
                                               alignment:
-                                                  const AlignmentDirectional(0.0, 0.0)
+                                                  AlignmentDirectional(0.0, 0.0)
                                                       .resolve(
                                                           Directionality.of(
                                                               context)),
@@ -1701,7 +1812,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       .instance.primaryFocus
                                                       ?.unfocus();
                                                 },
-                                                child: const MenuOfferEditWidget(
+                                                child: MenuOfferEditWidget(
                                                   isNew: true,
                                                 ),
                                               ),
@@ -1745,6 +1856,328 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                             ),
                           ),
                           KeepAliveWidgetWrapper(
+                            builder: (context) => Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0.0, -1.0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 20.0, 20.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 10.0, 0.0),
+                                          child: Icon(
+                                            Icons.info_outlined,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 20.0,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            'Dane na tej stronie zostaną zapisane od razu po zamknięciu okna edycji konkretnego schematu.',
+                                            maxLines: 4,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 30.0, 0.0, 0.0),
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: 700.0,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                    child: FutureBuilder<ApiCallResponse>(
+                                      future: (_model.apiRequestCompleter ??=
+                                              Completer<ApiCallResponse>()
+                                                ..complete(
+                                                    LuncherCoreAPIGETSchemaGroup
+                                                        .getAllForPlaceCall
+                                                        .call(
+                                                  authorization:
+                                                      currentAuthenticationToken,
+                                                  placeId: widget.placeId,
+                                                )))
+                                          .future,
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        final schemasListViewGetAllForPlaceResponse =
+                                            snapshot.data!;
+
+                                        return Builder(
+                                          builder: (context) {
+                                            final schemas = (schemasListViewGetAllForPlaceResponse
+                                                            .jsonBody
+                                                            .toList()
+                                                            .map<ImportSchemaDtoStruct?>(
+                                                                ImportSchemaDtoStruct
+                                                                    .maybeFromMap)
+                                                            .toList()
+                                                        as Iterable<
+                                                            ImportSchemaDtoStruct?>)
+                                                    .withoutNulls
+                                                    .toList() ??
+                                                [];
+
+                                            return RefreshIndicator(
+                                              key: Key(
+                                                  'RefreshIndicator_0iimem24'),
+                                              onRefresh: () async {
+                                                safeSetState(() =>
+                                                    _model.apiRequestCompleter =
+                                                        null);
+                                              },
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: schemas.length,
+                                                itemBuilder:
+                                                    (context, schemasIndex) {
+                                                  final schemasItem =
+                                                      schemas[schemasIndex];
+                                                  return Builder(
+                                                    builder: (context) =>
+                                                        InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        FFAppState()
+                                                                .editedImportSchema =
+                                                            functions
+                                                                .cloneImportSchemaObject(
+                                                                    schemasItem)!;
+                                                        FFAppState()
+                                                                .editedImportSchemaAction =
+                                                            null;
+                                                        safeSetState(() {});
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ImportDetailsWidgetWidget(
+                                                                  isNew: false,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        safeSetState(() => _model
+                                                                .apiRequestCompleter =
+                                                            null);
+                                                        FFAppState()
+                                                                .editedImportSchema =
+                                                            ImportSchemaDtoStruct();
+                                                        FFAppState()
+                                                                .editedImportSchemaAction =
+                                                            null;
+                                                        safeSetState(() {});
+                                                      },
+                                                      child: Material(
+                                                        color:
+                                                            Colors.transparent,
+                                                        child: ListTile(
+                                                          title: Text(
+                                                            schemasItem.name,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .titleLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                          subtitle: Text(
+                                                            '${schemasItem.importCronDescription} / ${schemasItem.schemaType}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                          trailing: Icon(
+                                                            Icons
+                                                                .arrow_forward_ios_rounded,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            size: 24.0,
+                                                          ),
+                                                          tileColor: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          dense: false,
+                                                          contentPadding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      12.0,
+                                                                      0.0,
+                                                                      12.0,
+                                                                      0.0),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Builder(
+                                  builder: (context) => Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 30.0, 0.0, 0.0),
+                                    child: FlutterFlowIconButton(
+                                      borderColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      borderRadius: 45.0,
+                                      borderWidth: 1.0,
+                                      buttonSize: 45.0,
+                                      fillColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () async {
+                                        FFAppState().editedImportSchema =
+                                            ImportSchemaDtoStruct(
+                                          name: '',
+                                          importCron: '0 0 10 * * ?',
+                                          enabled: true,
+                                          schemaType: 'FACEBOOK_TEXT',
+                                          id: '',
+                                          placeId: widget.placeId,
+                                        );
+                                        FFAppState().editedImportSchemaAction =
+                                            null;
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child:
+                                                    ImportDetailsWidgetWidget(
+                                                  isNew: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        safeSetState(() =>
+                                            _model.apiRequestCompleter = null);
+                                        // Clear helper vars
+                                        FFAppState().editedImportSchemaAction =
+                                            null;
+                                        FFAppState().editedImportSchema =
+                                            ImportSchemaDtoStruct();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          KeepAliveWidgetWrapper(
                             builder: (context) => Wrap(
                               spacing: 20.0,
                               runSpacing: 20.0,
@@ -1756,10 +2189,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                               clipBehavior: Clip.none,
                               children: [
                                 Container(
-                                  constraints: const BoxConstraints(
+                                  constraints: BoxConstraints(
                                     maxWidth: 350.0,
                                   ),
-                                  decoration: const BoxDecoration(),
+                                  decoration: BoxDecoration(),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -1767,7 +2200,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                       Builder(
                                         builder: (context) => FFButtonWidget(
                                           onPressed: () async {
-                                            var shouldSetState = false;
+                                            var _shouldSetState = false;
                                             _model.googleMapsApiCallResult =
                                                 await GooglePlacesAPIGroup
                                                     .textSearchCall
@@ -1776,7 +2209,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   '${_model.nameInputTextController.text} ${_model.addressCityTextController.text}',
                                             );
 
-                                            shouldSetState = true;
+                                            _shouldSetState = true;
                                             if ((_model.googleMapsApiCallResult
                                                     ?.succeeded ??
                                                 true)) {
@@ -1792,7 +2225,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     backgroundColor:
                                                         Colors.transparent,
                                                     alignment:
-                                                        const AlignmentDirectional(
+                                                        AlignmentDirectional(
                                                                 0.0, 0.0)
                                                             .resolve(
                                                                 Directionality.of(
@@ -1976,9 +2409,8 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                           .shortText;
                                                 });
                                               } else {
-                                                if (shouldSetState) {
+                                                if (_shouldSetState)
                                                   safeSetState(() {});
-                                                }
                                                 return;
                                               }
 
@@ -1997,7 +2429,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                               .primaryText,
                                                     ),
                                                   ),
-                                                  duration: const Duration(
+                                                  duration: Duration(
                                                       milliseconds: 4000),
                                                   backgroundColor:
                                                       FlutterFlowTheme.of(
@@ -2005,29 +2437,27 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                           .secondary,
                                                 ),
                                               );
-                                              if (shouldSetState) {
+                                              if (_shouldSetState)
                                                 safeSetState(() {});
-                                              }
                                               return;
                                             }
 
-                                            if (shouldSetState) {
+                                            if (_shouldSetState)
                                               safeSetState(() {});
-                                            }
                                           },
                                           text: 'Pobierz wg nazwy i miasta',
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.arrow_forward_ios,
                                             size: 14.0,
                                           ),
                                           options: FFButtonOptions(
                                             height: 40.0,
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 0.0, 16.0, 0.0),
                                             iconAlignment: IconAlignment.end,
                                             iconPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
@@ -2046,7 +2476,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 350.0,
                                         child: TextFormField(
                                           controller: _model
@@ -2074,7 +2504,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       letterSpacing: 0.0,
                                                     ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2082,7 +2512,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   BorderRadius.circular(8.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2129,7 +2559,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               .asValidator(context),
                                         ),
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 350.0,
                                         child: TextFormField(
                                           controller: _model
@@ -2157,7 +2587,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       letterSpacing: 0.0,
                                                     ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2165,7 +2595,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   BorderRadius.circular(8.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2246,7 +2676,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2256,7 +2686,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2339,7 +2769,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2349,7 +2779,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2401,9 +2831,9 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   .asValidator(context),
                                             ),
                                           ),
-                                        ].divide(const SizedBox(width: 20.0)),
+                                        ].divide(SizedBox(width: 20.0)),
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 350.0,
                                         child: TextFormField(
                                           controller: _model
@@ -2432,7 +2862,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       letterSpacing: 0.0,
                                                     ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2440,7 +2870,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   BorderRadius.circular(8.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2487,7 +2917,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               .asValidator(context),
                                         ),
                                       ),
-                                      SizedBox(
+                                      Container(
                                         width: 350.0,
                                         child: TextFormField(
                                           controller: _model
@@ -2515,7 +2945,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                       letterSpacing: 0.0,
                                                     ),
                                             enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2523,7 +2953,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   BorderRadius.circular(8.0),
                                             ),
                                             focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
+                                              borderSide: BorderSide(
                                                 color: Color(0x00000000),
                                                 width: 1.0,
                                               ),
@@ -2572,7 +3002,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                       ),
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(-1.0, 0.0),
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Text(
                                           'Lokalizacja - współrzędne:',
                                           style: FlutterFlowTheme.of(context)
@@ -2596,7 +3026,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               onChanged: (_) =>
                                                   EasyDebounce.debounce(
                                                 '_model.locationLatTextController',
-                                                const Duration(milliseconds: 1000),
+                                                Duration(milliseconds: 1000),
                                                 () async {
                                                   await _model
                                                       .googleMapsController
@@ -2646,7 +3076,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2656,7 +3086,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2718,7 +3148,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               onChanged: (_) =>
                                                   EasyDebounce.debounce(
                                                 '_model.locationLonTextController',
-                                                const Duration(milliseconds: 1000),
+                                                Duration(milliseconds: 1000),
                                                 () async {
                                                   await _model
                                                       .googleMapsController
@@ -2768,7 +3198,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         ),
                                                 enabledBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2778,7 +3208,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Color(0x00000000),
                                                     width: 1.0,
                                                   ),
@@ -2830,7 +3260,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                   .asValidator(context),
                                             ),
                                           ),
-                                        ].divide(const SizedBox(width: 20.0)),
+                                        ].divide(SizedBox(width: 20.0)),
                                       ),
                                       TextFormField(
                                         controller: _model
@@ -2859,7 +3289,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -2867,7 +3297,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -2913,16 +3343,16 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                             .googlePlaceIdInputTextControllerValidator
                                             .asValidator(context),
                                       ),
-                                    ].divide(const SizedBox(height: 15.0)),
+                                    ].divide(SizedBox(height: 15.0)),
                                   ),
                                 ),
                                 Container(
-                                  constraints: const BoxConstraints(
+                                  constraints: BoxConstraints(
                                     maxWidth: 400.0,
                                     maxHeight: 400.0,
                                   ),
                                   child: Builder(builder: (context) {
-                                    final googleMapMarker = functions
+                                    final _googleMapMarker = functions
                                         .locationToLatLng(LocationStruct(
                                       latitude: double.tryParse(_model
                                           .locationLatTextController.text),
@@ -2942,10 +3372,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                             .locationLonTextController.text),
                                       ))!,
                                       markers: [
-                                        if (googleMapMarker != null)
+                                        if (_googleMapMarker != null)
                                           FlutterFlowMarker(
-                                            googleMapMarker.serialize(),
-                                            googleMapMarker,
+                                            _googleMapMarker.serialize(),
+                                            _googleMapMarker,
                                           ),
                                       ],
                                       markerColor: GoogleMarkerColor.violet,
@@ -2968,12 +3398,12 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                           ),
                           KeepAliveWidgetWrapper(
                             builder: (context) => Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Container(
-                                constraints: const BoxConstraints(
+                                constraints: BoxConstraints(
                                   maxWidth: 400.0,
                                 ),
-                                decoration: const BoxDecoration(),
+                                decoration: BoxDecoration(),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -3001,7 +3431,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               letterSpacing: 0.0,
                                             ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
+                                          borderSide: BorderSide(
                                             color: Color(0x00000000),
                                             width: 1.0,
                                           ),
@@ -3009,7 +3439,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
+                                          borderSide: BorderSide(
                                             color: Color(0x00000000),
                                             width: 1.0,
                                           ),
@@ -3060,7 +3490,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                           ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 15.0, 0.0, 0.0),
                                       child: TextFormField(
                                         controller: _model
@@ -3088,7 +3518,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -3096,7 +3526,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -3153,7 +3583,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                           ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 15.0, 0.0, 0.0),
                                       child: TextFormField(
                                         controller:
@@ -3180,7 +3610,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -3188,7 +3618,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -3237,7 +3667,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 15.0, 0.0, 0.0),
                                       child: TextFormField(
                                         controller:
@@ -3264,7 +3694,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                     letterSpacing: 0.0,
                                                   ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -3272,7 +3702,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                 BorderRadius.circular(8.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
+                                            borderSide: BorderSide(
                                               color: Color(0x00000000),
                                               width: 1.0,
                                             ),
@@ -3332,14 +3762,14 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                 );
               } else {
                 return Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: SizedBox(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Container(
                           width: 505.0,
                           height: 50.0,
                           child: custom_widgets.MyCircularProgressIndicator(

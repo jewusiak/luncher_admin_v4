@@ -1,6 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'dart:async';
 import 'users_list_page_widget.dart' show UsersListPageWidget;
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class UsersListPageModel extends FlutterFlowModel<UsersListPageWidget> {
   }) async {
     final stopwatch = Stopwatch()..start();
     while (true) {
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future.delayed(Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
       final requestComplete =
           (usersListViewPagingController?.nextPageKey?.nextPageNumber ?? 0) > 0;
@@ -81,7 +82,7 @@ class UsersListPageModel extends FlutterFlowModel<UsersListPageWidget> {
         final newNumItems = nextPageMarker.numItems + pageItems.length;
         usersListViewPagingController?.appendPage(
           pageItems,
-          (pageItems.isNotEmpty)
+          (pageItems.length > 0)
               ? ApiPagingParams(
                   nextPageNumber: nextPageMarker.nextPageNumber + 1,
                   numItems: newNumItems,

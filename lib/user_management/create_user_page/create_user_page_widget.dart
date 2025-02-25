@@ -8,12 +8,16 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'create_user_page_model.dart';
 export 'create_user_page_model.dart';
 
 class CreateUserPageWidget extends StatefulWidget {
   const CreateUserPageWidget({super.key});
+
+  static String routeName = 'CreateUserPage';
+  static String routePath = 'createUser';
 
   @override
   State<CreateUserPageWidget> createState() => _CreateUserPageWidgetState();
@@ -69,7 +73,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -87,16 +91,16 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: const AlignmentDirectional(0.0, -1.0),
+            alignment: AlignmentDirectional(0.0, -1.0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -105,7 +109,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
                       child: Wrap(
                         spacing: 30.0,
                         runSpacing: 0.0,
@@ -117,9 +121,9 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 8.0, 0.0, 8.0, 0.0),
-                            child: SizedBox(
+                            child: Container(
                               width: 350.0,
                               child: TextFormField(
                                 controller: _model.firstnameInputTextController,
@@ -186,9 +190,9 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 8.0, 0.0, 8.0, 0.0),
-                            child: SizedBox(
+                            child: Container(
                               width: 350.0,
                               child: TextFormField(
                                 controller: _model.surnameInputTextController,
@@ -259,7 +263,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                       child: Wrap(
                         spacing: 30.0,
                         runSpacing: 0.0,
@@ -271,9 +275,9 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 8.0, 0.0, 8.0, 0.0),
-                            child: SizedBox(
+                            child: Container(
                               width: 350.0,
                               child: TextFormField(
                                 controller: _model.emailInputTextController,
@@ -407,7 +411,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                     FlutterFlowTheme.of(context).alternate,
                                 borderWidth: 2.0,
                                 borderRadius: 8.0,
-                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                margin: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 4.0, 16.0, 4.0),
                                 hidesUnderline: true,
                                 isOverButton: true,
@@ -421,7 +425,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                       child: Wrap(
                         spacing: 30.0,
                         runSpacing: 0.0,
@@ -433,9 +437,9 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                         clipBehavior: Clip.none,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 8.0, 0.0, 8.0, 0.0),
-                            child: SizedBox(
+                            child: Container(
                               width: 350.0,
                               child: TextFormField(
                                 controller:
@@ -529,11 +533,11 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             text: 'Wygeneruj hasło',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0x00FFFFFF),
+                              color: Color(0x00FFFFFF),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -542,7 +546,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 0.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),
@@ -554,7 +558,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -595,15 +599,15 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                           ),
-                        ].divide(const SizedBox(width: 5.0)),
+                        ].divide(SizedBox(width: 5.0)),
                       ),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          var shouldSetState = false;
+                          var _shouldSetState = false;
                           _model.createCallResult =
                               await LuncherCoreAPIPOSTUsersGroup.createUserCall
                                   .call(
@@ -617,13 +621,13 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                             enabled: _model.userEnabledCheckboxValue,
                           );
 
-                          shouldSetState = true;
+                          _shouldSetState = true;
                           if ((_model.createCallResult?.succeeded ?? true)) {
                             if (Navigator.of(context).canPop()) {
                               context.pop();
                             }
                             context.pushNamed(
-                              'UserDetailsPage',
+                              UserDetailsPageWidget.routeName,
                               queryParameters: {
                                 'userId': serializeParam(
                                   UserStruct.maybeFromMap(
@@ -644,12 +648,12 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                         .primaryText,
                                   ),
                                 ),
-                                duration: const Duration(milliseconds: 4000),
+                                duration: Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).secondary,
                               ),
                             );
-                            if (shouldSetState) safeSetState(() {});
+                            if (_shouldSetState) safeSetState(() {});
                             return;
                           } else {
                             if ((_model.createCallResult?.statusCode ?? 200) ==
@@ -663,7 +667,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                           .primaryText,
                                     ),
                                   ),
-                                  duration: const Duration(milliseconds: 4000),
+                                  duration: Duration(milliseconds: 4000),
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
@@ -678,25 +682,25 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                           .primaryText,
                                     ),
                                   ),
-                                  duration: const Duration(milliseconds: 4000),
+                                  duration: Duration(milliseconds: 4000),
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
                             }
 
-                            if (shouldSetState) safeSetState(() {});
+                            if (_shouldSetState) safeSetState(() {});
                             return;
                           }
 
-                          if (shouldSetState) safeSetState(() {});
+                          if (_shouldSetState) safeSetState(() {});
                         },
                         text: 'Stwórz użytkownika',
                         options: FFButtonOptions(
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -706,7 +710,7 @@ class _CreateUserPageWidgetState extends State<CreateUserPageWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 3.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),

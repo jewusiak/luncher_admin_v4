@@ -4,12 +4,16 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/backend/schema/structs/index.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'login_page_model.dart';
 export 'login_page_model.dart';
 
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({super.key});
+
+  static String routeName = 'LoginPage';
+  static String routePath = 'login';
 
   @override
   State<LoginPageWidget> createState() => _LoginPageWidgetState();
@@ -63,28 +67,28 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: const AlignmentDirectional(0.0, 0.0),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
               child: Container(
-                constraints: const BoxConstraints(
+                constraints: BoxConstraints(
                   maxWidth: 350.0,
                 ),
-                decoration: const BoxDecoration(),
+                decoration: BoxDecoration(),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                       child: TextFormField(
                         controller: _model.emailTextController,
                         focusNode: _model.emailFocusNode,
@@ -143,7 +147,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 8.0, 35.0),
+                          EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 8.0, 35.0),
                       child: TextFormField(
                         controller: _model.passwordTextController,
                         focusNode: _model.passwordFocusNode,
@@ -214,8 +218,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                     FFButtonWidget(
                       onPressed: () async {
-                        var shouldSetState = false;
-                        Function() navigate = () {};
+                        var _shouldSetState = false;
+                        Function() _navigate = () {};
                         // login call
                         _model.authResult =
                             await LuncherCoreAPIPOSTAuthLoginGroup.loginCall
@@ -224,7 +228,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           password: _model.passwordTextController.text,
                         );
 
-                        shouldSetState = true;
+                        _shouldSetState = true;
                         if ((_model.authResult?.succeeded ?? true)) {
                           // Pobranie user info
                           _model.profileOutput =
@@ -237,7 +241,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ),
                           );
 
-                          shouldSetState = true;
+                          _shouldSetState = true;
                           if ((_model.profileOutput?.succeeded ?? true)) {
                             GoRouter.of(context).prepareAuthEvent();
                             await authManager.signIn(
@@ -260,11 +264,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               userData: UserStruct.maybeFromMap(
                                   (_model.profileOutput?.jsonBody ?? '')),
                             );
-                            navigate = () => context.goNamedAuth(
-                                'HomePage', context.mounted);
+                            _navigate = () => context.goNamedAuth(
+                                HomePageWidget.routeName, context.mounted);
 
-                            navigate();
-                            if (shouldSetState) safeSetState(() {});
+                            _navigate();
+                            if (_shouldSetState) safeSetState(() {});
                             return;
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -276,12 +280,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         .primaryText,
                                   ),
                                 ),
-                                duration: const Duration(milliseconds: 4000),
+                                duration: Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).error,
                               ),
                             );
-                            if (shouldSetState) safeSetState(() {});
+                            if (_shouldSetState) safeSetState(() {});
                             return;
                           }
                         } else {
@@ -294,25 +298,25 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       FlutterFlowTheme.of(context).primaryText,
                                 ),
                               ),
-                              duration: const Duration(milliseconds: 4000),
+                              duration: Duration(milliseconds: 4000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).error,
                             ),
                           );
-                          if (shouldSetState) safeSetState(() {});
+                          if (_shouldSetState) safeSetState(() {});
                           return;
                         }
 
-                        navigate();
-                        if (shouldSetState) safeSetState(() {});
+                        _navigate();
+                        if (_shouldSetState) safeSetState(() {});
                       },
                       text: 'Zaloguj się',
                       options: FFButtonOptions(
                         height: 40.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -321,7 +325,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),

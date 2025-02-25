@@ -19,10 +19,22 @@ List<String> concatLists(
   return list1 + list2;
 }
 
+WeekDayTimeRangeStruct? cloneWeekDayTimeRange(WeekDayTimeRangeStruct? obj) {
+  return obj == null
+      ? null
+      : WeekDayTimeRangeStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+}
+
 SectionDtoStruct? cloneSectionObject(SectionDtoStruct? obj) {
   return obj == null
       ? null
       : SectionDtoStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
+}
+
+ImportSchemaDtoStruct? cloneImportSchemaObject(ImportSchemaDtoStruct? obj) {
+  return obj == null
+      ? null
+      : ImportSchemaDtoStruct.fromMap(jsonDecode(jsonEncode(obj.toMap())));
 }
 
 OptionStruct? cloneOptionObject(OptionStruct? obj) {
@@ -187,4 +199,33 @@ double? divideDoubles(
 ) {
   if (base == null || divider == null) return null;
   return base / divider;
+}
+
+String? joinString(
+  List<String>? list,
+  String? separator,
+) {
+  return list == null ? null : list.join(separator ?? '');
+}
+
+String? intsToTimeString(
+  String? hour,
+  String? minute,
+) {
+  return hour == null || minute == null
+      ? null
+      : (hour.padLeft(2) + ":" + minute.padLeft(2)).replaceAll(" ", "0");
+}
+
+List<String>? splitString(
+  String? str,
+  String? separator,
+) {
+  if (str == null || separator == null) {
+    return null;
+  } else {
+    var s = str.split(separator);
+    s.removeWhere((a) => a == '');
+    return s;
+  }
 }

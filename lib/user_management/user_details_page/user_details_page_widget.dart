@@ -20,6 +20,9 @@ class UserDetailsPageWidget extends StatefulWidget {
 
   final String? userId;
 
+  static String routeName = 'UserDetailsPage';
+  static String routePath = 'userDetailsPage';
+
   @override
   State<UserDetailsPageWidget> createState() => _UserDetailsPageWidgetState();
 }
@@ -98,7 +101,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                 borderRadius: 30.0,
                 borderWidth: 1.0,
                 buttonSize: 55.0,
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_rounded,
                   color: Colors.white,
                   size: 25.0,
@@ -116,16 +119,16 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                       letterSpacing: 0.0,
                     ),
               ),
-              actions: const [],
+              actions: [],
               centerTitle: false,
               elevation: 2.0,
             ),
             body: SafeArea(
               top: true,
               child: Align(
-                alignment: const AlignmentDirectional(0.0, -1.0),
+                alignment: AlignmentDirectional(0.0, -1.0),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -133,7 +136,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 50.0, 0.0, 0.0),
                           child: Wrap(
                             spacing: 30.0,
@@ -146,9 +149,9 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                             clipBehavior: Clip.none,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
-                                child: SizedBox(
+                                child: Container(
                                   width: 350.0,
                                   child: TextFormField(
                                     controller:
@@ -229,9 +232,9 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
-                                child: SizedBox(
+                                child: Container(
                                   width: 350.0,
                                   child: TextFormField(
                                     controller:
@@ -315,7 +318,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
                           child: Wrap(
                             spacing: 30.0,
@@ -328,9 +331,9 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                             clipBehavior: Clip.none,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
-                                child: SizedBox(
+                                child: Container(
                                   width: 350.0,
                                   child: TextFormField(
                                     controller:
@@ -477,7 +480,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                         FlutterFlowTheme.of(context).alternate,
                                     borderWidth: 2.0,
                                     borderRadius: 8.0,
-                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                    margin: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 4.0, 16.0, 4.0),
                                     hidesUnderline: true,
                                     isOverButton: true,
@@ -490,7 +493,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
                           child: Wrap(
                             spacing: 30.0,
@@ -503,9 +506,9 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                             clipBehavior: Clip.none,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     8.0, 0.0, 8.0, 0.0),
-                                child: SizedBox(
+                                child: Container(
                                   width: 350.0,
                                   child: TextFormField(
                                     controller:
@@ -597,7 +600,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -646,11 +649,11 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                            ].divide(const SizedBox(width: 5.0)),
+                            ].divide(SizedBox(width: 5.0)),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 50.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -658,7 +661,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  var shouldSetState = false;
+                                  var _shouldSetState = false;
                                   _model.updateCallResult =
                                       await LuncherCoreAPIPUTUsersUserIdGroup
                                           .updateUserCall
@@ -680,7 +683,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                     enabled: _model.userEnabledCheckboxValue,
                                   );
 
-                                  shouldSetState = true;
+                                  _shouldSetState = true;
                                   if ((_model.updateCallResult?.succeeded ??
                                       true)) {
                                     safeSetState(() =>
@@ -695,13 +698,13 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                                 .primaryText,
                                           ),
                                         ),
-                                        duration: const Duration(milliseconds: 4000),
+                                        duration: Duration(milliseconds: 4000),
                                         backgroundColor:
                                             FlutterFlowTheme.of(context)
                                                 .secondary,
                                       ),
                                     );
-                                    if (shouldSetState) safeSetState(() {});
+                                    if (_shouldSetState) safeSetState(() {});
                                     return;
                                   } else {
                                     if ((_model.updateCallResult?.statusCode ??
@@ -719,7 +722,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                             ),
                                           ),
                                           duration:
-                                              const Duration(milliseconds: 4000),
+                                              Duration(milliseconds: 4000),
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
                                                   .secondary,
@@ -738,7 +741,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                             ),
                                           ),
                                           duration:
-                                              const Duration(milliseconds: 4000),
+                                              Duration(milliseconds: 4000),
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
                                                   .secondary,
@@ -746,18 +749,18 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                       );
                                     }
 
-                                    if (shouldSetState) safeSetState(() {});
+                                    if (_shouldSetState) safeSetState(() {});
                                     return;
                                   }
 
-                                  if (shouldSetState) safeSetState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
                                 },
                                 text: 'Zapisz zmiany',
                                 options: FFButtonOptions(
                                   height: 40.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       24.0, 0.0, 24.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -768,7 +771,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   elevation: 3.0,
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),
@@ -776,7 +779,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     30.0, 0.0, 0.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
@@ -805,7 +808,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                             ),
                                           ),
                                           duration:
-                                              const Duration(milliseconds: 4000),
+                                              Duration(milliseconds: 4000),
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
                                                   .secondary,
@@ -826,7 +829,7 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                             ),
                                           ),
                                           duration:
-                                              const Duration(milliseconds: 4000),
+                                              Duration(milliseconds: 4000),
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
                                                   .error,
@@ -839,9 +842,9 @@ class _UserDetailsPageWidgetState extends State<UserDetailsPageWidget> {
                                   text: 'Usuń użytkownika',
                                   options: FFButtonOptions(
                                     height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context).error,
                                     textStyle: FlutterFlowTheme.of(context)

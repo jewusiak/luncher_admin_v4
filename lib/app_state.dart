@@ -145,4 +145,27 @@ class FFAppState extends ChangeNotifier {
   set editedSectionAction(ActionType? value) {
     _editedSectionAction = value;
   }
+
+  ImportSchemaDtoStruct _editedImportSchema = ImportSchemaDtoStruct();
+  ImportSchemaDtoStruct get editedImportSchema => _editedImportSchema;
+  set editedImportSchema(ImportSchemaDtoStruct value) {
+    _editedImportSchema = value;
+  }
+
+  void updateEditedImportSchemaStruct(
+      Function(ImportSchemaDtoStruct) updateFn) {
+    updateFn(_editedImportSchema);
+  }
+
+  ActionType? _editedImportSchemaAction;
+  ActionType? get editedImportSchemaAction => _editedImportSchemaAction;
+  set editedImportSchemaAction(ActionType? value) {
+    _editedImportSchemaAction = value;
+  }
+
+  int _gliter = 0;
+  int get gliter => _gliter;
+  set gliter(int value) {
+    _gliter = value;
+  }
 }

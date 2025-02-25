@@ -19,7 +19,7 @@ class MenuOfferEditWidget extends StatefulWidget {
   const MenuOfferEditWidget({
     super.key,
     bool? isNew,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
 
@@ -64,9 +64,9 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 1000.0,
         ),
         decoration: BoxDecoration(
@@ -74,14 +74,14 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                   child: Text(
                     'Edycja oferty menu',
                     style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -91,7 +91,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
                   child: Wrap(
                     spacing: 20.0,
                     runSpacing: 10.0,
@@ -103,10 +103,10 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                           maxWidth: 600.0,
                         ),
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: TextFormField(
                           controller: _model.nameInputTextController,
                           focusNode: _model.nameInputFocusNode,
@@ -129,14 +129,14 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                   letterSpacing: 0.0,
                                 ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
@@ -173,14 +173,14 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
+                          Container(
                             width: 150.0,
                             child: TextFormField(
                               controller: _model.basePriceInputTextController,
                               focusNode: _model.basePriceInputFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.basePriceInputTextController',
-                                const Duration(milliseconds: 2000),
+                                Duration(milliseconds: 2000),
                                 () async {
                                   safeSetState(() {
                                     _model.basePriceInputTextController?.text =
@@ -209,14 +209,14 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
@@ -268,7 +268,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                 'PLN',
                               ),
                             ),
-                            options: const ['PLN', 'EUR', 'CZK', 'USD'],
+                            options: ['PLN', 'EUR', 'CZK', 'USD'],
                             onChanged: (val) => safeSetState(
                                 () => _model.ccyDropDownValue = val),
                             width: 100.0,
@@ -291,20 +291,20 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                             borderColor: Colors.transparent,
                             borderWidth: 0.0,
                             borderRadius: 8.0,
-                            margin: const EdgeInsetsDirectional.fromSTEB(
+                            margin: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
                             isOverButton: false,
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
-                        ].divide(const SizedBox(width: 20.0)),
+                        ].divide(SizedBox(width: 20.0)),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -342,9 +342,9 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                       elevation: 0,
                                       insetPadding: EdgeInsets.zero,
                                       backgroundColor: Colors.transparent,
-                                      alignment: const AlignmentDirectional(0.0, 0.0)
+                                      alignment: AlignmentDirectional(0.0, 0.0)
                                           .resolve(Directionality.of(context)),
-                                      child: const PartEditWidget(
+                                      child: PartEditWidget(
                                         isNew: true,
                                       ),
                                     );
@@ -367,16 +367,16 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                 FFAppState().editedOfferPartAction = null;
                               },
                               text: 'Dodaj nową',
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.add,
                                 size: 15.0,
                               ),
                               options: FFButtonOptions(
                                 height: 18.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 0.0),
                                 iconAlignment: IconAlignment.end,
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).primary,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -405,7 +405,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: parts.length,
-                            separatorBuilder: (_, __) => const SizedBox(height: 1.0),
+                            separatorBuilder: (_, __) => SizedBox(height: 1.0),
                             itemBuilder: (context, partsIndex) {
                               final partsItem = parts[partsIndex];
                               return Visibility(
@@ -427,11 +427,11 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                             elevation: 0,
                                             insetPadding: EdgeInsets.zero,
                                             backgroundColor: Colors.transparent,
-                                            alignment: const AlignmentDirectional(
+                                            alignment: AlignmentDirectional(
                                                     0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                            child: const PartEditWidget(
+                                            child: PartEditWidget(
                                               isNew: false,
                                             ),
                                           );
@@ -517,7 +517,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                             .secondaryBackground,
                                         dense: true,
                                         contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
+                                            EdgeInsetsDirectional.fromSTEB(
                                                 12.0, 0.0, 12.0, 0.0),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
@@ -532,11 +532,11 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                           );
                         },
                       ),
-                    ].divide(const SizedBox(height: 5.0)),
+                    ].divide(SizedBox(height: 5.0)),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
                   child: Wrap(
                     spacing: 0.0,
                     runSpacing: 20.0,
@@ -548,10 +548,10 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                           maxWidth: 450.0,
                         ),
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -598,11 +598,11 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                             elevation: 0,
                                             insetPadding: EdgeInsets.zero,
                                             backgroundColor: Colors.transparent,
-                                            alignment: const AlignmentDirectional(
+                                            alignment: AlignmentDirectional(
                                                     0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                            child: const WeekDayTimeRangeEditWidget(
+                                            child: WeekDayTimeRangeEditWidget(
                                               isNew: true,
                                             ),
                                           );
@@ -630,17 +630,17 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                           .editedWeekDayTimeRangeAction = null;
                                     },
                                     text: 'Dodaj nowy',
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.add,
                                       size: 15.0,
                                     ),
                                     options: FFButtonOptions(
                                       height: 18.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 0.0, 16.0, 0.0),
                                       iconAlignment: IconAlignment.end,
                                       iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
                                       color:
                                           FlutterFlowTheme.of(context).primary,
@@ -673,7 +673,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                   scrollDirection: Axis.vertical,
                                   itemCount: openingWindows.length,
                                   separatorBuilder: (_, __) =>
-                                      const SizedBox(height: 1.0),
+                                      SizedBox(height: 1.0),
                                   itemBuilder: (context, openingWindowsIndex) {
                                     final openingWindowsItem =
                                         openingWindows[openingWindowsIndex];
@@ -715,13 +715,13 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                                   backgroundColor:
                                                       Colors.transparent,
                                                   alignment:
-                                                      const AlignmentDirectional(
+                                                      AlignmentDirectional(
                                                               0.0, 0.0)
                                                           .resolve(
                                                               Directionality.of(
                                                                   context)),
                                                   child:
-                                                      const WeekDayTimeRangeEditWidget(),
+                                                      WeekDayTimeRangeEditWidget(),
                                                 );
                                               },
                                             );
@@ -803,7 +803,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                                       .secondaryBackground,
                                               dense: true,
                                               contentPadding:
-                                                  const EdgeInsetsDirectional
+                                                  EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           12.0, 0.0, 12.0, 0.0),
                                               shape: RoundedRectangleBorder(
@@ -819,14 +819,14 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                 );
                               },
                             ),
-                          ].divide(const SizedBox(height: 5.0)),
+                          ].divide(SizedBox(height: 5.0)),
                         ),
                       ),
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                           maxWidth: 450.0,
                         ),
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -865,11 +865,11 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                             elevation: 0,
                                             insetPadding: EdgeInsets.zero,
                                             backgroundColor: Colors.transparent,
-                                            alignment: const AlignmentDirectional(
+                                            alignment: AlignmentDirectional(
                                                     0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                            child: const LocalDateTimeRangeEditWidget(
+                                            child: LocalDateTimeRangeEditWidget(
                                               isNew: true,
                                             ),
                                           );
@@ -898,17 +898,17 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                           null;
                                     },
                                     text: 'Dodaj nowy',
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.add,
                                       size: 15.0,
                                     ),
                                     options: FFButtonOptions(
                                       height: 18.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 0.0, 16.0, 0.0),
                                       iconAlignment: IconAlignment.end,
                                       iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
                                       color:
                                           FlutterFlowTheme.of(context).primary,
@@ -941,7 +941,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                   scrollDirection: Axis.vertical,
                                   itemCount: openingWindows.length,
                                   separatorBuilder: (_, __) =>
-                                      const SizedBox(height: 1.0),
+                                      SizedBox(height: 1.0),
                                   itemBuilder: (context, openingWindowsIndex) {
                                     final openingWindowsItem =
                                         openingWindows[openingWindowsIndex];
@@ -974,13 +974,13 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                                   backgroundColor:
                                                       Colors.transparent,
                                                   alignment:
-                                                      const AlignmentDirectional(
+                                                      AlignmentDirectional(
                                                               0.0, 0.0)
                                                           .resolve(
                                                               Directionality.of(
                                                                   context)),
                                                   child:
-                                                      const LocalDateTimeRangeEditWidget(
+                                                      LocalDateTimeRangeEditWidget(
                                                     isNew: false,
                                                   ),
                                                 );
@@ -1063,7 +1063,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                                       .secondaryBackground,
                                               dense: true,
                                               contentPadding:
-                                                  const EdgeInsetsDirectional
+                                                  EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           12.0, 0.0, 12.0, 0.0),
                                               shape: RoundedRectangleBorder(
@@ -1079,14 +1079,14 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                 );
                               },
                             ),
-                          ].divide(const SizedBox(height: 5.0)),
+                          ].divide(SizedBox(height: 5.0)),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                   child: Wrap(
                     spacing: 0.0,
                     runSpacing: 15.0,
@@ -1106,9 +1106,9 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -1139,9 +1139,9 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).error,
                           textStyle:
@@ -1151,12 +1151,12 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
-                          disabledColor: const Color(0xFFE9E9E9),
+                          disabledColor: Color(0xFFE9E9E9),
                           disabledTextColor:
                               FlutterFlowTheme.of(context).secondaryText,
                         ),
@@ -1187,9 +1187,9 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -1199,7 +1199,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -1209,7 +1209,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
                     ],
                   ),
                 ),
-              ].divide(const SizedBox(height: 0.0)),
+              ].divide(SizedBox(height: 0.0)),
             ),
           ),
         ),
