@@ -13,6 +13,9 @@ export 'place_types_list_page_model.dart';
 class PlaceTypesListPageWidget extends StatefulWidget {
   const PlaceTypesListPageWidget({super.key});
 
+  static String routeName = 'PlaceTypesListPage';
+  static String routePath = 'placeTypesListPage';
+
   @override
   State<PlaceTypesListPageWidget> createState() =>
       _PlaceTypesListPageWidgetState();
@@ -56,7 +59,7 @@ class _PlaceTypesListPageWidgetState extends State<PlaceTypesListPageWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -74,20 +77,20 @@ class _PlaceTypesListPageWidgetState extends State<PlaceTypesListPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +115,7 @@ class _PlaceTypesListPageWidgetState extends State<PlaceTypesListPageWidget> {
                                   elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
-                                  alignment: const AlignmentDirectional(0.0, 0.0)
+                                  alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
                                   child: GestureDetector(
                                     onTap: () {
@@ -120,7 +123,7 @@ class _PlaceTypesListPageWidgetState extends State<PlaceTypesListPageWidget> {
                                       FocusManager.instance.primaryFocus
                                           ?.unfocus();
                                     },
-                                    child: const PlaceTypeDetailsDialogWidget(
+                                    child: PlaceTypeDetailsDialogWidget(
                                       isNew: true,
                                     ),
                                   ),
@@ -204,7 +207,7 @@ class _PlaceTypesListPageWidgetState extends State<PlaceTypesListPageWidget> {
                                           elevation: 0,
                                           insetPadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
-                                          alignment: const AlignmentDirectional(
+                                          alignment: AlignmentDirectional(
                                                   0.0, 0.0)
                                               .resolve(
                                                   Directionality.of(context)),

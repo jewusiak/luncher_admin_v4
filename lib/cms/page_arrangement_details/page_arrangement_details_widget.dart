@@ -22,6 +22,9 @@ class PageArrangementDetailsWidget extends StatefulWidget {
 
   final String? arrangementId;
 
+  static String routeName = 'PageArrangementDetails';
+  static String routePath = 'pageArrangementDetails';
+
   @override
   State<PageArrangementDetailsWidget> createState() =>
       _PageArrangementDetailsWidgetState();
@@ -58,12 +61,12 @@ class _PageArrangementDetailsWidgetState
           context: context,
           builder: (alertDialogContext) {
             return AlertDialog(
-              title: const Text('Błąd'),
-              content: const Text('Nie udało się pobrać danych o układzie strony!'),
+              title: Text('Błąd'),
+              content: Text('Nie udało się pobrać danych o układzie strony!'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(alertDialogContext),
-                  child: const Text('Ok'),
+                  child: Text('Ok'),
                 ),
               ],
             );
@@ -103,7 +106,7 @@ class _PageArrangementDetailsWidgetState
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -123,7 +126,7 @@ class _PageArrangementDetailsWidgetState
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
               child: FlutterFlowIconButton(
                 borderRadius: 8.0,
                 buttonSize: 40.0,
@@ -148,7 +151,7 @@ class _PageArrangementDetailsWidgetState
                     Navigator.pop(context);
 
                     context.pushNamed(
-                      'PageArrangementDetails',
+                      PageArrangementDetailsWidget.routeName,
                       queryParameters: {
                         'arrangementId': serializeParam(
                           widget.arrangementId,
@@ -165,7 +168,7 @@ class _PageArrangementDetailsWidgetState
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
-                        duration: const Duration(milliseconds: 4000),
+                        duration: Duration(milliseconds: 4000),
                         backgroundColor: FlutterFlowTheme.of(context).secondary,
                       ),
                     );
@@ -178,7 +181,7 @@ class _PageArrangementDetailsWidgetState
                             color: FlutterFlowTheme.of(context).alternate,
                           ),
                         ),
-                        duration: const Duration(milliseconds: 4000),
+                        duration: Duration(milliseconds: 4000),
                         backgroundColor: FlutterFlowTheme.of(context).error,
                       ),
                     );
@@ -198,14 +201,14 @@ class _PageArrangementDetailsWidgetState
             builder: (context) {
               if (_model.shouldBuild) {
                 return Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 25.0, 0.0, 0.0),
                           child: Wrap(
                             spacing: 15.0,
@@ -248,7 +251,7 @@ class _PageArrangementDetailsWidgetState
                                                 ),
                                               ),
                                               duration:
-                                                  const Duration(milliseconds: 4000),
+                                                  Duration(milliseconds: 4000),
                                               backgroundColor:
                                                   FlutterFlowTheme.of(context)
                                                       .secondary,
@@ -267,7 +270,7 @@ class _PageArrangementDetailsWidgetState
                                                 ),
                                               ),
                                               duration:
-                                                  const Duration(milliseconds: 4000),
+                                                  Duration(milliseconds: 4000),
                                               backgroundColor:
                                                   FlutterFlowTheme.of(context)
                                                       .error,
@@ -280,9 +283,9 @@ class _PageArrangementDetailsWidgetState
                                 text: 'Uaktywnij stronę',
                                 options: FFButtonOptions(
                                   height: 40.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -313,7 +316,7 @@ class _PageArrangementDetailsWidgetState
                                           elevation: 0,
                                           insetPadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
-                                          alignment: const AlignmentDirectional(
+                                          alignment: AlignmentDirectional(
                                                   0.0, 0.0)
                                               .resolve(
                                                   Directionality.of(context)),
@@ -324,7 +327,7 @@ class _PageArrangementDetailsWidgetState
                                               FocusManager.instance.primaryFocus
                                                   ?.unfocus();
                                             },
-                                            child: const SectionEditWidget(
+                                            child: SectionEditWidget(
                                               isNew: true,
                                             ),
                                           ),
@@ -357,15 +360,15 @@ class _PageArrangementDetailsWidgetState
                                     FFAppState().editedSectionAction = null;
                                   },
                                   text: 'Dodaj sekcję',
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.add,
                                     size: 20.0,
                                   ),
                                   options: FFButtonOptions(
                                     height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context).primary,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -384,13 +387,13 @@ class _PageArrangementDetailsWidgetState
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 10.0, 0.0),
                           child: Container(
-                            constraints: const BoxConstraints(
+                            constraints: BoxConstraints(
                               maxWidth: 700.0,
                             ),
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: Builder(
                               builder: (context) {
                                 final sections =
@@ -399,6 +402,11 @@ class _PageArrangementDetailsWidgetState
 
                                 return ReorderableListView.builder(
                                   padding: EdgeInsets.zero,
+                                  proxyDecorator: (Widget child, int index,
+                                          Animation<double> animation) =>
+                                      Material(
+                                          color: Colors.transparent,
+                                          child: child),
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   itemCount: sections.length,
@@ -406,7 +414,8 @@ class _PageArrangementDetailsWidgetState
                                     final sectionsItem =
                                         sections[sectionsIndex];
                                     return Container(
-                                      key: ValueKey("ListView_3pf7zaa0" '_' +
+                                      key: ValueKey("ListView_3pf7zaa0" +
+                                          '_' +
                                           sectionsIndex.toString()),
                                       child: Visibility(
                                         visible: sectionsItem != null,
@@ -432,7 +441,7 @@ class _PageArrangementDetailsWidgetState
                                                     backgroundColor:
                                                         Colors.transparent,
                                                     alignment:
-                                                        const AlignmentDirectional(
+                                                        AlignmentDirectional(
                                                                 0.0, 0.0)
                                                             .resolve(
                                                                 Directionality.of(
@@ -446,7 +455,7 @@ class _PageArrangementDetailsWidgetState
                                                             .primaryFocus
                                                             ?.unfocus();
                                                       },
-                                                      child: const SectionEditWidget(
+                                                      child: SectionEditWidget(
                                                         isNew: false,
                                                       ),
                                                     ),
@@ -528,7 +537,7 @@ class _PageArrangementDetailsWidgetState
                                                         .secondaryBackground,
                                                 dense: false,
                                                 contentPadding:
-                                                    const EdgeInsetsDirectional
+                                                    EdgeInsetsDirectional
                                                         .fromSTEB(12.0, 0.0,
                                                             12.0, 0.0),
                                                 shape: RoundedRectangleBorder(
@@ -564,13 +573,13 @@ class _PageArrangementDetailsWidgetState
                             ),
                           ),
                         ),
-                      ].divide(const SizedBox(height: 20.0)),
+                      ].divide(SizedBox(height: 20.0)),
                     ),
                   ),
                 );
               } else {
                 return Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Text(
                     'Loading',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(

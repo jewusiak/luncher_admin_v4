@@ -3,6 +3,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -11,6 +12,9 @@ export 'users_list_page_model.dart';
 
 class UsersListPageWidget extends StatefulWidget {
   const UsersListPageWidget({super.key});
+
+  static String routeName = 'UsersListPage';
+  static String routePath = 'usersListPage';
 
   @override
   State<UsersListPageWidget> createState() => _UsersListPageWidgetState();
@@ -57,7 +61,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -75,35 +79,35 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 30.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
-                        child: SizedBox(
+                            EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                        child: Container(
                           width: 350.0,
                           child: TextFormField(
                             controller: _model.searchFieldTextController,
                             focusNode: _model.searchFieldFocusNode,
                             onChanged: (_) => EasyDebounce.debounce(
                               '_model.searchFieldTextController',
-                              const Duration(milliseconds: 2000),
+                              Duration(milliseconds: 2000),
                               () => safeSetState(() {}),
                             ),
                             autofocus: true,
@@ -158,7 +162,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                                             ?.clear();
                                         safeSetState(() {});
                                       },
-                                      child: const Icon(
+                                      child: Icon(
                                         Icons.clear,
                                         size: 20.0,
                                       ),
@@ -194,7 +198,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(50.0, 0.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(50.0, 0.0, 0.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor: FlutterFlowTheme.of(context).primary,
                           borderRadius: 45.0,
@@ -207,7 +211,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                             size: 24.0,
                           ),
                           onPressed: () async {
-                            context.pushNamed('CreateUserPage');
+                            context.pushNamed(CreateUserPageWidget.routeName);
                           },
                         ),
                       ),
@@ -272,7 +276,7 @@ class _UsersListPageWidgetState extends State<UsersListPageWidget> {
                           highlightColor: Colors.transparent,
                           onTap: () async {
                             context.pushNamed(
-                              'UserDetailsPage',
+                              UserDetailsPageWidget.routeName,
                               queryParameters: {
                                 'userId': serializeParam(
                                   usersListItem.uuid,

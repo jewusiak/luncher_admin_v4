@@ -17,7 +17,7 @@ class PartEditWidget extends StatefulWidget {
   const PartEditWidget({
     super.key,
     bool? isNew,
-  }) : isNew = isNew ?? false;
+  }) : this.isNew = isNew ?? false;
 
   final bool isNew;
 
@@ -63,9 +63,9 @@ class _PartEditWidgetState extends State<PartEditWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
@@ -73,14 +73,14 @@ class _PartEditWidgetState extends State<PartEditWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                   child: Text(
                     'Edycja części menu',
                     style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -90,7 +90,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Wrap(
                     spacing: 20.0,
                     runSpacing: 10.0,
@@ -102,10 +102,10 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                           maxWidth: 375.0,
                         ),
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: TextFormField(
                           controller: _model.nameInputTextController,
                           focusNode: _model.nameInputFocusNode,
@@ -128,14 +128,14 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                   letterSpacing: 0.0,
                                 ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x00000000),
                                 width: 1.0,
                               ),
@@ -172,14 +172,14 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
+                          Container(
                             width: 150.0,
                             child: TextFormField(
                               controller: _model.basePriceInputTextController,
                               focusNode: _model.basePriceInputFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.basePriceInputTextController',
-                                const Duration(milliseconds: 100),
+                                Duration(milliseconds: 100),
                                 () async {
                                   safeSetState(() {
                                     _model.basePriceInputTextController?.text =
@@ -209,14 +209,14 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                       letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
+                                  borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1.0,
                                   ),
@@ -264,7 +264,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                   .supplement
                                   .currencyCode,
                             ),
-                            options: const ['PLN', 'EUR', 'CZK', 'USD'],
+                            options: ['PLN', 'EUR', 'CZK', 'USD'],
                             onChanged: (val) => safeSetState(
                                 () => _model.ccyDropDownValue = val),
                             width: 100.0,
@@ -287,7 +287,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                             borderColor: Colors.transparent,
                             borderWidth: 0.0,
                             borderRadius: 8.0,
-                            margin: const EdgeInsetsDirectional.fromSTEB(
+                            margin: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
                             disabled: _model.requiredSwitchValue!,
@@ -295,13 +295,13 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
-                        ].divide(const SizedBox(width: 20.0)),
+                        ].divide(SizedBox(width: 20.0)),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -331,11 +331,11 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                         inactiveThumbColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
                       ),
-                    ].divide(const SizedBox(width: 15.0)),
+                    ].divide(SizedBox(width: 15.0)),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                   child: Wrap(
                     spacing: 5.0,
                     runSpacing: 2.0,
@@ -365,9 +365,9 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                   elevation: 0,
                                   insetPadding: EdgeInsets.zero,
                                   backgroundColor: Colors.transparent,
-                                  alignment: const AlignmentDirectional(0.0, 0.0)
+                                  alignment: AlignmentDirectional(0.0, 0.0)
                                       .resolve(Directionality.of(context)),
-                                  child: const OptionEditWidget(
+                                  child: OptionEditWidget(
                                     isNew: true,
                                   ),
                                 );
@@ -389,16 +389,16 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                             FFAppState().editedOptionAction = null;
                           },
                           text: 'Dodaj nową',
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.add,
                             size: 15.0,
                           ),
                           options: FFButtonOptions(
                             height: 18.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 0.0),
                             iconAlignment: IconAlignment.end,
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
@@ -419,7 +419,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Builder(
                     builder: (context) {
                       final options =
@@ -430,7 +430,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: options.length,
-                        separatorBuilder: (_, __) => const SizedBox(height: 1.0),
+                        separatorBuilder: (_, __) => SizedBox(height: 1.0),
                         itemBuilder: (context, optionsIndex) {
                           final optionsItem = options[optionsIndex];
                           return Visibility(
@@ -453,10 +453,10 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                         insetPadding: EdgeInsets.zero,
                                         backgroundColor: Colors.transparent,
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0)
+                                            AlignmentDirectional(0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                        child: const OptionEditWidget(
+                                        child: OptionEditWidget(
                                           isNew: false,
                                         ),
                                       );
@@ -536,7 +536,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                         .secondaryBackground,
                                     dense: true,
                                     contentPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(
+                                        EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 12.0, 0.0),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
@@ -552,7 +552,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                   child: Wrap(
                     spacing: 0.0,
                     runSpacing: 15.0,
@@ -572,9 +572,9 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -605,9 +605,9 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).error,
                           textStyle:
@@ -617,12 +617,12 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
-                          disabledColor: const Color(0xFFE9E9E9),
+                          disabledColor: Color(0xFFE9E9E9),
                           disabledTextColor:
                               FlutterFlowTheme.of(context).secondaryText,
                         ),
@@ -654,9 +654,9 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                         options: FFButtonOptions(
                           width: 100.0,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -666,7 +666,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 0.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -676,7 +676,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                     ],
                   ),
                 ),
-              ].divide(const SizedBox(height: 0.0)),
+              ].divide(SizedBox(height: 0.0)),
             ),
           ),
         ),

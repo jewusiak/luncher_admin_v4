@@ -47,10 +47,10 @@ class _SelectGooglePlacesApiAddressWidgetState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 0.9,
-        constraints: const BoxConstraints(
+        constraints: BoxConstraints(
           maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class _SelectGooglePlacesApiAddressWidgetState
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +124,7 @@ class _SelectGooglePlacesApiAddressWidgetState
                               tileColor: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
                               dense: false,
-                              contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 12.0, 0.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -150,9 +150,9 @@ class _SelectGooglePlacesApiAddressWidgetState
                       width: 100.0,
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyMedium.override(
@@ -170,7 +170,7 @@ class _SelectGooglePlacesApiAddressWidgetState
                   ),
                 ],
               ),
-            ].divide(const SizedBox(height: 24.0)),
+            ].divide(SizedBox(height: 24.0)),
           ),
         ),
       ),

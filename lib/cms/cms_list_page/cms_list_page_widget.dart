@@ -4,6 +4,7 @@ import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/index.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'cms_list_page_model.dart';
@@ -11,6 +12,9 @@ export 'cms_list_page_model.dart';
 
 class CmsListPageWidget extends StatefulWidget {
   const CmsListPageWidget({super.key});
+
+  static String routeName = 'CmsListPage';
+  static String routePath = 'cmsListPage';
 
   @override
   State<CmsListPageWidget> createState() => _CmsListPageWidgetState();
@@ -54,7 +58,7 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -72,14 +76,14 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: const AlignmentDirectional(0.0, 0.0),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -87,7 +91,7 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: FlutterFlowIconButton(
                       borderRadius: 40.0,
                       buttonSize: 40.0,
@@ -107,7 +111,7 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
 
                         if ((_model.createResult?.succeeded ?? true)) {
                           context.pushNamed(
-                            'PageArrangementDetails',
+                            PageArrangementDetailsWidget.routeName,
                             queryParameters: {
                               'arrangementId': serializeParam(
                                 PageArrangementDtoStruct.maybeFromMap(
@@ -129,7 +133,7 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                                   color: FlutterFlowTheme.of(context).alternate,
                                 ),
                               ),
-                              duration: const Duration(milliseconds: 4000),
+                              duration: Duration(milliseconds: 4000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).error,
                             ),
@@ -142,15 +146,15 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
                     child: Container(
-                      constraints: const BoxConstraints(
+                      constraints: BoxConstraints(
                         maxWidth: 700.0,
                       ),
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                         child: FutureBuilder<ApiCallResponse>(
                           future: (_model.apiRequestCompleter ??= Completer<
                                   ApiCallResponse>()
@@ -215,7 +219,8 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           context.pushNamed(
-                                            'PageArrangementDetails',
+                                            PageArrangementDetailsWidget
+                                                .routeName,
                                             queryParameters: {
                                               'arrangementId': serializeParam(
                                                 arrsItem.id,
@@ -235,7 +240,7 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                                             leading: Icon(
                                               Icons.check,
                                               color: arrsItem.primaryPage
-                                                  ? const Color(0xFF319624)
+                                                  ? Color(0xFF319624)
                                                   : Colors.transparent,
                                               size: 32.0,
                                             ),
@@ -261,7 +266,7 @@ class _CmsListPageWidgetState extends State<CmsListPageWidget> {
                                                     .secondaryBackground,
                                             dense: false,
                                             contentPadding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 12.0, 0.0),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:

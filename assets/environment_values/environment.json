@@ -1,4 +1,5 @@
 {
-  "backendurl": "https://api.luncher.pl",
-"mapsPlacesKey": "AIzaSyAdi5-YDfOFki2hiMzVi96mlDzD5udx_7M"
+  "backendurl": "https://api.pre.luncher.pl",
+"mapsPlacesKey": "AIzaSyAdi5-YDfOFki2hiMzVi96mlDzD5udx_7M",
+"importsbackendurl": "https://imports.api.pre.luncher.pl"
 }

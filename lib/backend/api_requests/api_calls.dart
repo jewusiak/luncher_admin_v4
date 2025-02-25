@@ -18,7 +18,7 @@ class LuncherCoreAPIPOSTAuthLoginGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -39,12 +39,12 @@ class LoginCall {
 
     final ffApiRequestBody = '''
 {
-  "email": "$email",
-  "password": "$password"
+  "email": "${email}",
+  "password": "${password}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login',
-      apiUrl: '$baseUrl/auth/login',
+      apiUrl: '${baseUrl}/auth/login',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -78,7 +78,7 @@ class LuncherCoreAPIGETProfileGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -97,10 +97,10 @@ class GetProfileCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getProfile',
-      apiUrl: '$baseUrl/profile',
+      apiUrl: '${baseUrl}/profile',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -122,7 +122,7 @@ class LuncherCoreAPIDELETEAuthLogoutGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -141,10 +141,10 @@ class LogoutCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'logout',
-      apiUrl: '$baseUrl/auth/logout',
+      apiUrl: '${baseUrl}/auth/logout',
       callType: ApiCallType.DELETE,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -166,7 +166,7 @@ class LuncherCoreAPIPOSTUsersGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -191,19 +191,19 @@ class CreateUserCall {
 
     final ffApiRequestBody = '''
 {
-  "email": "$email",
-  "firstName": "$firstName",
-  "surname": "$surname",
-  "password": "$password",
-  "role": "$role",
-  "enabled": $enabled
+  "email": "${email}",
+  "firstName": "${firstName}",
+  "surname": "${surname}",
+  "password": "${password}",
+  "role": "${role}",
+  "enabled": ${enabled}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'createUser',
-      apiUrl: '$baseUrl/users',
+      apiUrl: '${baseUrl}/users',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -227,7 +227,7 @@ class LuncherCoreAPIGETUsersAvailableRolesGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -246,10 +246,10 @@ class GetAvailableRolesCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAvailableRoles',
-      apiUrl: '$baseUrl/users/available_roles',
+      apiUrl: '${baseUrl}/users/available_roles',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -281,7 +281,7 @@ class LuncherCoreAPIPUTUsersUserIdGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -307,22 +307,25 @@ class UpdateUserCall {
 
     final ffApiRequestBody = '''
 {
-  "email": "$email",
-  "firstName": "$firstName",
-  "surname": "$surname",
-  "password": "$password",
-  "role": "$role",
-  "enabled": $enabled
+  "email": "${email}",
+  "firstName": "${firstName}",
+  "surname": "${surname}",
+  "password": "${password}",
+  "role": "${role}",
+  "enabled": ${enabled}
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'updateUser',
-        apiUrl: '$baseUrl/users/$userId',
+        apiUrl: '${baseUrl}/users/${userId}',
         callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -332,6 +335,7 @@ class UpdateUserCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -350,7 +354,7 @@ class LuncherCoreAPIGETUsersSearchGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -372,10 +376,10 @@ class AdminSearchUsersCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'adminSearchUsers',
-      apiUrl: '$baseUrl/users/search',
+      apiUrl: '${baseUrl}/users/search',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {
         'query': query,
@@ -401,7 +405,7 @@ class LuncherCoreAPIGETUsersUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -421,10 +425,10 @@ class GetUserByUuidCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getUserByUuid',
-      apiUrl: '$baseUrl/users/$uuid',
+      apiUrl: '${baseUrl}/users/${uuid}',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -446,7 +450,7 @@ class LuncherCoreAPIGETPlacetypeGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -465,10 +469,10 @@ class GetAllPlaceTypesCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAllPlaceTypes',
-      apiUrl: '$baseUrl/placetype',
+      apiUrl: '${baseUrl}/placetype',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -490,7 +494,7 @@ class LuncherCoreAPIDELETEPlacetypeIdentifierGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -510,10 +514,10 @@ class DeletePlaceTypeCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'deletePlaceType',
-      apiUrl: '$baseUrl/placetype/$identifier',
+      apiUrl: '${baseUrl}/placetype/${identifier}',
       callType: ApiCallType.DELETE,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -535,7 +539,7 @@ class LuncherCoreAPIPOSTPlacetypeGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -557,19 +561,22 @@ class CreatePlaceTypeCall {
 
     final ffApiRequestBody = '''
 {
-  "identifier": "$idenitifier",
-  "iconName": "$iconName",
-  "name": "$name"
+  "identifier": "${idenitifier}",
+  "iconName": "${iconName}",
+  "name": "${name}"
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'createPlaceType',
-        apiUrl: '$baseUrl/placetype',
+        apiUrl: '${baseUrl}/placetype',
         callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -579,6 +586,7 @@ class CreatePlaceTypeCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -597,7 +605,7 @@ class LuncherCoreAPIPUTPlacetypeIdentifierGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -623,19 +631,22 @@ class UpdatePlaceTypeCall {
 
     final ffApiRequestBody = '''
 {
-  "identifier": "$identifier",
-  "iconName": "$iconName",
-  "name": "$name"
+  "identifier": "${identifier}",
+  "iconName": "${iconName}",
+  "name": "${name}"
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'updatePlaceType',
-        apiUrl: '$baseUrl/placetype/$identifier',
+        apiUrl: '${baseUrl}/placetype/${identifier}',
         callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -645,6 +656,7 @@ class UpdatePlaceTypeCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       LuncherCoreAPIPUTPlacetypeIdentifierGroup.interceptors,
     );
   }
@@ -659,7 +671,7 @@ class LuncherCoreAPIGETPlacetypeIdentifierGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -679,10 +691,10 @@ class GetByIdentifierCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getByIdentifier',
-      apiUrl: '$baseUrl/placetype/$identifier',
+      apiUrl: '${baseUrl}/placetype/${identifier}',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -704,7 +716,7 @@ class LuncherCoreAPIPOSTPlaceSearchGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -741,23 +753,26 @@ class SearchQueryCall {
 
     final ffApiRequestBody = '''
 {
-  "textQuery": "$textQuery",
-  "placeTypeIdentifier": "$placeTypeIdentifier",
-  "hasLunchServedAt": "$hasLunchServedAt",
-  "ownerEmail": "$ownerEmail",
-  "enabled": "$enabled",
-  "page": $page,
-  "size": $size
+  "textQuery": "${textQuery}",
+  "placeTypeIdentifier": "${placeTypeIdentifier}",
+  "hasLunchServedAt": "${hasLunchServedAt}",
+  "ownerEmail": "${ownerEmail}",
+  "enabled": "${enabled}",
+  "page": ${page},
+  "size": ${size}
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'searchQuery',
-        apiUrl: '$baseUrl/place/search',
+        apiUrl: '${baseUrl}/place/search',
         callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -767,6 +782,7 @@ class SearchQueryCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -785,7 +801,7 @@ class LuncherCoreAPIGETPlaceUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -805,10 +821,10 @@ class GetByIdCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getById',
-      apiUrl: '$baseUrl/place/$uuid',
+      apiUrl: '${baseUrl}/place/${uuid}',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -830,7 +846,7 @@ class LuncherCoreAPIPOSTPlaceGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -855,19 +871,22 @@ class CreatePlaceCall {
 
     final ffApiRequestBody = '''
 {
-  "name": "$name",
-  "placeTypeIdentifier": "$placeTypeIdentifier",
-  "enabled": "$enabled"
+  "name": "${name}",
+  "placeTypeIdentifier": "${placeTypeIdentifier}",
+  "enabled": "${enabled}"
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'createPlace',
-        apiUrl: '$baseUrl/place',
+        apiUrl: '${baseUrl}/place',
         callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -877,6 +896,7 @@ class CreatePlaceCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -895,7 +915,7 @@ class LuncherCoreAPIPUTPlacePlaceUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -964,43 +984,46 @@ class UpdatePlaceCall {
     final menuOffers = _serializeJson(menuOffersJson, true);
     final ffApiRequestBody = '''
 {
-  "name": "$name",
-  "longName": "$longName",
-  "description": "$description",
-  "facebookPageId": "$facebookPageId",
-  "instagramHandle": "$instagramHandle",
-  "webpageUrl": "$webpageUrl",
-  "phoneNumber": "$phoneNumber",
+  "name": "${name}",
+  "longName": "${longName}",
+  "description": "${description}",
+  "facebookPageId": "${facebookPageId}",
+  "instagramHandle": "${instagramHandle}",
+  "webpageUrl": "${webpageUrl}",
+  "phoneNumber": "${phoneNumber}",
   "address": {
-    "firstLine": "$addressFirstLine",
-    "secondLine": "$addressSecondLine",
-    "zipCode": "$addressZipCode",
-    "city": "$addressCity",
-    "district": "$addressDistrict",
-    "description": "$addressDescription",
-    "country": "$addressCountry"
+    "firstLine": "${addressFirstLine}",
+    "secondLine": "${addressSecondLine}",
+    "zipCode": "${addressZipCode}",
+    "city": "${addressCity}",
+    "district": "${addressDistrict}",
+    "description": "${addressDescription}",
+    "country": "${addressCountry}"
   },
-  "googleMapsReference": "$googleMapsReference",
-  "openingWindows": $openingWindows,
-  "placeTypeIdentifier": "$placeTypeIdentifier",
+  "googleMapsReference": "${googleMapsReference}",
+  "openingWindows": ${openingWindows},
+  "placeTypeIdentifier": "${placeTypeIdentifier}",
   "location": {
-    "latitude": $locationLatitude,
-    "longitude": $locationLongitude
+    "latitude": ${locationLatitude},
+    "longitude": ${locationLongitude}
   },
-  "menuOffers": $menuOffers,
-  "ownerEmail": "$ownerEmail",
-  "imageIds": $imageIds,
-  "enabled": "$enabled"
+  "menuOffers": ${menuOffers},
+  "ownerEmail": "${ownerEmail}",
+  "imageIds": ${imageIds},
+  "enabled": "${enabled}"
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'updatePlace',
-        apiUrl: '$baseUrl/place/$placeUuid',
+        apiUrl: '${baseUrl}/place/${placeUuid}',
         callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -1010,6 +1033,7 @@ class UpdatePlaceCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -1032,7 +1056,7 @@ class GooglePlacesAPIGroup {
       FFDevEnvironmentValues().mapsPlacesKey,
       'AIzaSyAdi5-YDfOFki2hiMzVi96mlDzD5udx_7M',
     );
-    return 'https://places.googleapis.com/v$apiVersion';
+    return 'https://places.googleapis.com/v${apiVersion}';
   }
 
   static Map<String, String> headers = {
@@ -1062,20 +1086,23 @@ class TextSearchCall {
 
     final ffApiRequestBody = '''
 {
-  "textQuery": "$textQuery"
+  "textQuery": "${textQuery}"
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'TextSearch',
-        apiUrl: '$baseUrl/places:searchText',
+        apiUrl: '${baseUrl}/places:searchText',
         callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'X-Goog-Api-Key': googlePlacesApiKey,
+          'X-Goog-Api-Key': '${googlePlacesApiKey}',
           'X-Goog-FieldMask':
               'places.id,places.displayName,places.location,places.addressComponents,places.formattedAddress',
           'Content-Type': 'application/json',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -1085,6 +1112,7 @@ class TextSearchCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       GooglePlacesAPIGroup.interceptors,
     );
   }
@@ -1110,7 +1138,7 @@ class LuncherCoreAPIGETContentManagementArrangementsUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1135,14 +1163,18 @@ class GetArrangementByIdCall {
     );
 
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'getArrangementById',
-        apiUrl: '$baseUrl/content-management/arrangements/$uuid',
+        apiUrl: '${baseUrl}/content-management/arrangements/${uuid}',
         callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
         returnBody: true,
         encodeBodyUtf8: false,
         decodeUtf8: true,
@@ -1150,6 +1182,7 @@ class GetArrangementByIdCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -1168,7 +1201,7 @@ class LuncherCoreAPIPOSTAssetGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1189,10 +1222,10 @@ class UploadImageCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'uploadImage',
-      apiUrl: '$baseUrl/asset',
+      apiUrl: '${baseUrl}/asset',
       callType: ApiCallType.POST,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {
         'description': description,
@@ -1218,7 +1251,7 @@ class LuncherCoreAPIPUTContentManagementArrangementsUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1243,16 +1276,20 @@ class UpdateArrangementCall {
     );
 
     final pageArrangement = _serializeJson(pageArrangementJson);
-    final ffApiRequestBody = pageArrangement;
+    final ffApiRequestBody = '''
+${pageArrangement}''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'updateArrangement',
-        apiUrl: '$baseUrl/content-management/arrangements/$uuid',
+        apiUrl: '${baseUrl}/content-management/arrangements/${uuid}',
         callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -1262,6 +1299,7 @@ class UpdateArrangementCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -1280,7 +1318,7 @@ class LuncherCoreAPIPUTContentManagementArrangementsUuidPrimaryGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1306,14 +1344,18 @@ class MakeArrangementPrimaryCall {
     );
 
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'makeArrangementPrimary',
-        apiUrl: '$baseUrl/content-management/arrangements/$uuid/primary',
+        apiUrl: '${baseUrl}/content-management/arrangements/${uuid}/primary',
         callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+
         bodyType: BodyType.NONE,
         returnBody: true,
         encodeBodyUtf8: false,
@@ -1322,6 +1364,7 @@ class MakeArrangementPrimaryCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -1340,7 +1383,7 @@ class LuncherCoreAPIPOSTContentManagementArrangementsGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1362,19 +1405,22 @@ class CreateArrangementCall {
       backendurl: backendurl,
     );
 
-    const ffApiRequestBody = '''
+    final ffApiRequestBody = '''
 {
   
 }''';
     return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'createArrangement',
-        apiUrl: '$baseUrl/content-management/arrangements',
+        apiUrl: '${baseUrl}/content-management/arrangements',
         callType: ApiCallType.POST,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
         headers: {
-          'Authorization': 'Bearer $authorization',
+          'Authorization': 'Bearer ${authorization}',
         },
-        params: const {},
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
         body: ffApiRequestBody,
         bodyType: BodyType.JSON,
         returnBody: true,
@@ -1384,6 +1430,7 @@ class CreateArrangementCall {
         isStreamingApi: false,
         alwaysAllowBody: false,
       ),
+
       interceptors,
     );
   }
@@ -1402,7 +1449,7 @@ class LuncherCoreAPIGETContentManagementArrangementsGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1423,10 +1470,10 @@ class GetAllArrangementsCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'getAllArrangements',
-      apiUrl: '$baseUrl/content-management/arrangements',
+      apiUrl: '${baseUrl}/content-management/arrangements',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -1448,7 +1495,7 @@ class LuncherCoreAPIDELETEPlacePlaceUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1468,10 +1515,10 @@ class RemovePlaceCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'removePlace',
-      apiUrl: '$baseUrl/place/$placeUuid',
+      apiUrl: '${baseUrl}/place/${placeUuid}',
       callType: ApiCallType.DELETE,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -1493,7 +1540,7 @@ class LuncherCoreAPIDELETEUsersUuidGroup {
     String? backendurl,
   }) {
     backendurl ??= FFDevEnvironmentValues().backendurl;
-    return backendurl;
+    return '${backendurl}';
   }
 
   static Map<String, String> headers = {};
@@ -1513,10 +1560,10 @@ class DeleteUserCall {
 
     return ApiManager.instance.makeApiCall(
       callName: 'deleteUser',
-      apiUrl: '$baseUrl/users/$uuid',
+      apiUrl: '${baseUrl}/users/${uuid}',
       callType: ApiCallType.DELETE,
       headers: {
-        'Authorization': 'Bearer $authorization',
+        'Authorization': 'Bearer ${authorization}',
       },
       params: {},
       returnBody: true,
@@ -1530,6 +1577,273 @@ class DeleteUserCall {
 }
 
 /// End Luncher Core API (DELETE___users_uuid) Group Code
+
+/// Start Luncher Core API (GET___schema) Group Code
+
+class LuncherCoreAPIGETSchemaGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static GetAllForPlaceCall getAllForPlaceCall = GetAllForPlaceCall();
+}
+
+class GetAllForPlaceCall {
+  Future<ApiCallResponse> call({
+    String? placeId = '',
+    String? authorization = '',
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIGETSchemaGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getAllForPlace',
+      apiUrl: '${baseUrl}/schema',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {
+        'placeId': placeId,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___schema) Group Code
+
+/// Start Luncher Core API (PUT___schema_schemaId) Group Code
+
+class LuncherCoreAPIPUTSchemaSchemaIdGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static UpdateImportSchemaCall updateImportSchemaCall =
+      UpdateImportSchemaCall();
+}
+
+class UpdateImportSchemaCall {
+  Future<ApiCallResponse> call({
+    String? schemaId = '',
+    String? authorization = '',
+    dynamic schemaJson,
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIPUTSchemaSchemaIdGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    final schema = _serializeJson(schemaJson);
+    final ffApiRequestBody = '''
+${schema}''';
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'updateImportSchema',
+        apiUrl: '${baseUrl}/schema/${schemaId}',
+        callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Authorization': 'Bearer ${authorization}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (PUT___schema_schemaId) Group Code
+
+/// Start Luncher Core API (POST___schema) Group Code
+
+class LuncherCoreAPIPOSTSchemaGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static CreateImportSchemaCall createImportSchemaCall =
+      CreateImportSchemaCall();
+}
+
+class CreateImportSchemaCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+    dynamic schemaJson,
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIPOSTSchemaGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    final schema = _serializeJson(schemaJson);
+    final ffApiRequestBody = '''
+${schema}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'createImportSchema',
+      apiUrl: '${baseUrl}/schema',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: true,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (POST___schema) Group Code
+
+/// Start Luncher Core API (GET___utils_describe-cron) Group Code
+
+class LuncherCoreAPIGETUtilsDescribeCronGroup {
+  static String getBaseUrl({
+    String? importbackendurl,
+  }) {
+    importbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static GetCronDescriptionCall getCronDescriptionCall =
+      GetCronDescriptionCall();
+}
+
+class GetCronDescriptionCall {
+  Future<ApiCallResponse> call({
+    String? cron = '',
+    String? authorization = '',
+    String? importbackendurl,
+  }) async {
+    importbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIGETUtilsDescribeCronGroup.getBaseUrl(
+      importbackendurl: importbackendurl,
+    );
+
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'getCronDescription',
+        apiUrl: '${baseUrl}/utils/describe-cron',
+        callType: ApiCallType.GET,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Authorization': 'Bearer ${authorization}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {
+          'cron': cron,
+        },
+
+        returnBody: true,
+        encodeBodyUtf8: false,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+/// End Luncher Core API (GET___utils_describe-cron) Group Code
+
+/// Start Luncher Core API (DELETE___schema_schemaId) Group Code
+
+class LuncherCoreAPIDELETESchemaSchemaIdGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static DeleteImportSchemaCall deleteImportSchemaCall =
+      DeleteImportSchemaCall();
+}
+
+class DeleteImportSchemaCall {
+  Future<ApiCallResponse> call({
+    String? schemaId = '',
+    String? authorization = '',
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIDELETESchemaSchemaIdGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'deleteImportSchema',
+      apiUrl: '${baseUrl}/schema/${schemaId}',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (DELETE___schema_schemaId) Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

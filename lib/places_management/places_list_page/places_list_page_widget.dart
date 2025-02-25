@@ -9,6 +9,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/places_management/create_place_dialog/create_place_dialog_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -17,6 +18,9 @@ export 'places_list_page_model.dart';
 
 class PlacesListPageWidget extends StatefulWidget {
   const PlacesListPageWidget({super.key});
+
+  static String routeName = 'PlacesListPage';
+  static String routePath = 'placesListPage';
 
   @override
   State<PlacesListPageWidget> createState() => _PlacesListPageWidgetState();
@@ -65,7 +69,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 55.0,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_rounded,
               color: Colors.white,
               size: 25.0,
@@ -85,7 +89,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
               child: FlutterFlowIconButton(
                 borderRadius: 8.0,
                 buttonSize: 40.0,
@@ -108,7 +112,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
-                        duration: const Duration(milliseconds: 4000),
+                        duration: Duration(milliseconds: 4000),
                         backgroundColor: FlutterFlowTheme.of(context).secondary,
                       ),
                     );
@@ -117,19 +121,19 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
-                              title: const Text('Włączenie usuwania'),
-                              content: const Text(
+                              title: Text('Włączenie usuwania'),
+                              content: Text(
                                   'UWAGA - do usunięcia lokalu wystarczy jedno kliknięcie! '),
                               actions: [
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.pop(alertDialogContext, false),
-                                  child: const Text('Anuluj'),
+                                  child: Text('Anuluj'),
                                 ),
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.pop(alertDialogContext, true),
-                                  child: const Text('Kontynuuj'),
+                                  child: Text('Kontynuuj'),
                                 ),
                               ],
                             );
@@ -146,7 +150,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                               color: FlutterFlowTheme.of(context).primaryText,
                             ),
                           ),
-                          duration: const Duration(milliseconds: 4000),
+                          duration: Duration(milliseconds: 4000),
                           backgroundColor:
                               FlutterFlowTheme.of(context).secondary,
                         ),
@@ -168,9 +172,9 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: const AlignmentDirectional(0.0, 0.0),
+            alignment: AlignmentDirectional(0.0, 0.0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -178,7 +182,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),
                       child: Wrap(
                         spacing: 10.0,
                         runSpacing: 10.0,
@@ -189,14 +193,14 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                         verticalDirection: VerticalDirection.down,
                         clipBehavior: Clip.none,
                         children: [
-                          SizedBox(
+                          Container(
                             width: 350.0,
                             child: TextFormField(
                               controller: _model.searchFieldTextController,
                               focusNode: _model.searchFieldFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.searchFieldTextController',
-                                const Duration(milliseconds: 2000),
+                                Duration(milliseconds: 2000),
                                 () => safeSetState(() {}),
                               ),
                               autofocus: true,
@@ -252,7 +256,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                               ?.clear();
                                           safeSetState(() {});
                                         },
-                                        child: const Icon(
+                                        child: Icon(
                                           Icons.clear,
                                           size: 20.0,
                                         ),
@@ -352,7 +356,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                 borderColor: Colors.transparent,
                                 borderWidth: 0.0,
                                 borderRadius: 8.0,
-                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                margin: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 12.0, 0.0),
                                 hidesUnderline: true,
                                 isOverButton: false,
@@ -369,7 +373,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                             ),
                             options:
                                 List<String>.from(['null', 'true', 'false']),
-                            optionLabels: const ['Wł/wył', 'Włączone', 'Wyłączone'],
+                            optionLabels: ['Wł/wył', 'Włączone', 'Wyłączone'],
                             onChanged: (val) => safeSetState(
                                 () => _model.placeEnabledSelectorValue = val),
                             width: 200.0,
@@ -392,17 +396,17 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                             borderColor: Colors.transparent,
                             borderWidth: 0.0,
                             borderRadius: 8.0,
-                            margin: const EdgeInsetsDirectional.fromSTEB(
+                            margin: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
                             isOverButton: false,
                             isSearchable: false,
                             isMultiSelect: false,
                           ),
-                          SizedBox(
+                          Container(
                             width: 200.0,
                             child: Autocomplete<String>(
-                              initialValue: const TextEditingValue(),
+                              initialValue: TextEditingValue(),
                               optionsBuilder: (textEditingValue) {
                                 if (textEditingValue.text == '') {
                                   return const Iterable<String>.empty();
@@ -430,7 +434,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                         fontFamily: 'Readex Pro',
                                         letterSpacing: 0.0,
                                       ),
-                                  textHighlightStyle: const TextStyle(),
+                                  textHighlightStyle: TextStyle(),
                                   elevation: 4.0,
                                   optionBackgroundColor:
                                       FlutterFlowTheme.of(context)
@@ -463,9 +467,9 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                   onEditingComplete: onEditingComplete,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     '_model.ownerTextFieldTextController',
-                                    const Duration(milliseconds: 500),
+                                    Duration(milliseconds: 500),
                                     () async {
-                                      var shouldSetState = false;
+                                      var _shouldSetState = false;
                                       _model.ownersSearchResult =
                                           await LuncherCoreAPIGETUsersSearchGroup
                                               .adminSearchUsersCall
@@ -478,7 +482,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                         page: 0,
                                       );
 
-                                      shouldSetState = true;
+                                      _shouldSetState = true;
                                       if ((_model
                                               .ownersSearchResult?.succeeded ??
                                           true)) {
@@ -495,9 +499,8 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                             .toList()
                                             .cast<UserStruct>();
                                         safeSetState(() {});
-                                        if (shouldSetState) {
+                                        if (_shouldSetState)
                                           safeSetState(() {});
-                                        }
                                         return;
                                       } else {
                                         ScaffoldMessenger.of(context)
@@ -512,19 +515,18 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                               ),
                                             ),
                                             duration:
-                                                const Duration(milliseconds: 4000),
+                                                Duration(milliseconds: 4000),
                                             backgroundColor:
                                                 FlutterFlowTheme.of(context)
                                                     .tertiary,
                                           ),
                                         );
-                                        if (shouldSetState) {
+                                        if (_shouldSetState)
                                           safeSetState(() {});
-                                        }
                                         return;
                                       }
 
-                                      if (shouldSetState) safeSetState(() {});
+                                      if (_shouldSetState) safeSetState(() {});
                                     },
                                   ),
                                   autofocus: false,
@@ -545,14 +547,14 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1.0,
                                       ),
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1.0,
                                       ),
@@ -586,7 +588,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                               _model
                                                   .ownerTextFieldTextController
                                                   ?.clear();
-                                              var shouldSetState = false;
+                                              var _shouldSetState = false;
                                               _model.ownersSearchResult =
                                                   await LuncherCoreAPIGETUsersSearchGroup
                                                       .adminSearchUsersCall
@@ -600,7 +602,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                 page: 0,
                                               );
 
-                                              shouldSetState = true;
+                                              _shouldSetState = true;
                                               if ((_model.ownersSearchResult
                                                       ?.succeeded ??
                                                   true)) {
@@ -619,9 +621,8 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                     .toList()
                                                     .cast<UserStruct>();
                                                 safeSetState(() {});
-                                                if (shouldSetState) {
+                                                if (_shouldSetState)
                                                   safeSetState(() {});
-                                                }
                                                 return;
                                               } else {
                                                 ScaffoldMessenger.of(context)
@@ -636,7 +637,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                                 .primaryText,
                                                       ),
                                                     ),
-                                                    duration: const Duration(
+                                                    duration: Duration(
                                                         milliseconds: 4000),
                                                     backgroundColor:
                                                         FlutterFlowTheme.of(
@@ -644,18 +645,16 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                             .tertiary,
                                                   ),
                                                 );
-                                                if (shouldSetState) {
+                                                if (_shouldSetState)
                                                   safeSetState(() {});
-                                                }
                                                 return;
                                               }
 
-                                              if (shouldSetState) {
+                                              if (_shouldSetState)
                                                 safeSetState(() {});
-                                              }
                                               safeSetState(() {});
                                             },
-                                            child: const Icon(
+                                            child: Icon(
                                               Icons.clear,
                                               size: 15.0,
                                             ),
@@ -714,7 +713,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                       elevation: 0,
                                       insetPadding: EdgeInsets.zero,
                                       backgroundColor: Colors.transparent,
-                                      alignment: const AlignmentDirectional(0.0, 0.0)
+                                      alignment: AlignmentDirectional(0.0, 0.0)
                                           .resolve(Directionality.of(context)),
                                       child: GestureDetector(
                                         onTap: () {
@@ -723,7 +722,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                           FocusManager.instance.primaryFocus
                                               ?.unfocus();
                                         },
-                                        child: const CreatePlaceDialogWidget(),
+                                        child: CreatePlaceDialogWidget(),
                                       ),
                                     );
                                   },
@@ -735,10 +734,10 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                       ),
                     ),
                     Container(
-                      constraints: const BoxConstraints(
+                      constraints: BoxConstraints(
                         maxWidth: 1200.0,
                       ),
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: RefreshIndicator(
                         onRefresh: () async {
                           safeSetState(
@@ -816,7 +815,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
                                     context.pushNamed(
-                                      'PlaceDetailsPage',
+                                      PlaceDetailsPageWidget.routeName,
                                       queryParameters: {
                                         'placeId': serializeParam(
                                           placesListItem.id,
@@ -838,7 +837,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           20.0, 8.0, 20.0, 8.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -847,18 +846,18 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                         children: [
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                AlignmentDirectional(-1.0, 0.0),
                                             child: Icon(
                                               Icons.check,
                                               color: placesListItem.enabled
-                                                  ? const Color(0xFF29DF3F)
+                                                  ? Color(0xFF29DF3F)
                                                   : Colors.transparent,
                                               size: 30.0,
                                             ),
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     20.0, 0.0, 0.0, 0.0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -891,17 +890,17 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                               ],
                                             ),
                                           ),
-                                          const Spacer(),
+                                          Spacer(),
                                           if (_model.deletingEnabled)
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 0.0, 20.0, 0.0),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
                                                 borderRadius: 8.0,
                                                 buttonSize: 40.0,
-                                                fillColor: const Color(0xFFC51E34),
+                                                fillColor: Color(0xFFC51E34),
                                                 icon: Icon(
                                                   Icons.delete,
                                                   color: FlutterFlowTheme.of(
@@ -939,7 +938,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                                 .primaryText,
                                                           ),
                                                         ),
-                                                        duration: const Duration(
+                                                        duration: Duration(
                                                             milliseconds: 4000),
                                                         backgroundColor:
                                                             FlutterFlowTheme.of(
@@ -966,7 +965,7 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                                                                 .alternate,
                                                           ),
                                                         ),
-                                                        duration: const Duration(
+                                                        duration: Duration(
                                                             milliseconds: 4000),
                                                         backgroundColor:
                                                             FlutterFlowTheme.of(
@@ -998,10 +997,10 @@ class _PlacesListPageWidgetState extends State<PlacesListPageWidget> {
                       ),
                     ),
                     Container(
-                      constraints: const BoxConstraints(
+                      constraints: BoxConstraints(
                         maxWidth: 1200.0,
                       ),
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                     ),
                   ],
                 ),
