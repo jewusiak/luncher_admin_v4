@@ -10,6 +10,7 @@ class ImportSchemaDtoStruct extends BaseStruct {
     String? id,
     String? name,
     String? placeId,
+    String? placeTimeZone,
     String? importCron,
     bool? enabled,
     String? schemaType,
@@ -20,6 +21,7 @@ class ImportSchemaDtoStruct extends BaseStruct {
   })  : _id = id,
         _name = name,
         _placeId = placeId,
+        _placeTimeZone = placeTimeZone,
         _importCron = importCron,
         _enabled = enabled,
         _schemaType = schemaType,
@@ -48,6 +50,13 @@ class ImportSchemaDtoStruct extends BaseStruct {
   set placeId(String? val) => _placeId = val;
 
   bool hasPlaceId() => _placeId != null;
+
+  // "placeTimeZone" field.
+  String? _placeTimeZone;
+  String get placeTimeZone => _placeTimeZone ?? '';
+  set placeTimeZone(String? val) => _placeTimeZone = val;
+
+  bool hasPlaceTimeZone() => _placeTimeZone != null;
 
   // "importCron" field.
   String? _importCron;
@@ -104,6 +113,7 @@ class ImportSchemaDtoStruct extends BaseStruct {
         id: data['id'] as String?,
         name: data['name'] as String?,
         placeId: data['placeId'] as String?,
+        placeTimeZone: data['placeTimeZone'] as String?,
         importCron: data['importCron'] as String?,
         enabled: data['enabled'] as bool?,
         schemaType: data['schemaType'] as String?,
@@ -121,6 +131,7 @@ class ImportSchemaDtoStruct extends BaseStruct {
         'id': _id,
         'name': _name,
         'placeId': _placeId,
+        'placeTimeZone': _placeTimeZone,
         'importCron': _importCron,
         'enabled': _enabled,
         'schemaType': _schemaType,
@@ -142,6 +153,10 @@ class ImportSchemaDtoStruct extends BaseStruct {
         ),
         'placeId': serializeParam(
           _placeId,
+          ParamType.String,
+        ),
+        'placeTimeZone': serializeParam(
+          _placeTimeZone,
           ParamType.String,
         ),
         'importCron': serializeParam(
@@ -191,6 +206,11 @@ class ImportSchemaDtoStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        placeTimeZone: deserializeParam(
+          data['placeTimeZone'],
+          ParamType.String,
+          false,
+        ),
         importCron: deserializeParam(
           data['importCron'],
           ParamType.String,
@@ -237,6 +257,7 @@ class ImportSchemaDtoStruct extends BaseStruct {
         id == other.id &&
         name == other.name &&
         placeId == other.placeId &&
+        placeTimeZone == other.placeTimeZone &&
         importCron == other.importCron &&
         enabled == other.enabled &&
         schemaType == other.schemaType &&
@@ -251,6 +272,7 @@ class ImportSchemaDtoStruct extends BaseStruct {
         id,
         name,
         placeId,
+        placeTimeZone,
         importCron,
         enabled,
         schemaType,
@@ -265,6 +287,7 @@ ImportSchemaDtoStruct createImportSchemaDtoStruct({
   String? id,
   String? name,
   String? placeId,
+  String? placeTimeZone,
   String? importCron,
   bool? enabled,
   String? schemaType,
@@ -277,6 +300,7 @@ ImportSchemaDtoStruct createImportSchemaDtoStruct({
       id: id,
       name: name,
       placeId: placeId,
+      placeTimeZone: placeTimeZone,
       importCron: importCron,
       enabled: enabled,
       schemaType: schemaType,
