@@ -1,7 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import 'dart:async';
 import 'import_details_widget_widget.dart' show ImportDetailsWidgetWidget;
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class ImportDetailsWidgetModel
@@ -13,6 +15,8 @@ class ImportDetailsWidgetModel
   String? selectedHour;
 
   String selectedDays = '';
+
+  bool hasChanges = false;
 
   ///  State fields for stateful widgets in this component.
 
@@ -63,8 +67,14 @@ class ImportDetailsWidgetModel
       cronExpressionFieldTextControllerValidator;
   // Stores action output result for [Backend Call - API (getCronDescription)] action in CronExpressionField widget.
   ApiCallResponse? cronDescriptionResult2Copy;
+  // State field(s) for Expandable widget.
+  late ExpandableController expandableExpandableController;
+
   // Stores action output result for [Backend Call - API (deleteImportSchema)] action in Button widget.
   ApiCallResponse? deleteCallResult;
+  // Stores action output result for [Backend Call - API (dispatchJob)] action in Button widget.
+  ApiCallResponse? apiResult5sx;
+  Completer<ApiCallResponse>? apiRequestCompleter;
   // Stores action output result for [Backend Call - API (createImportSchema)] action in Button widget.
   ApiCallResponse? schemaCreateResult;
   // Stores action output result for [Backend Call - API (updateImportSchema)] action in Button widget.
@@ -89,5 +99,23 @@ class ImportDetailsWidgetModel
 
     cronExpressionFieldFocusNode?.dispose();
     cronExpressionFieldTextController?.dispose();
+
+    expandableExpandableController.dispose();
+  }
+
+  /// Additional helper methods.
+  Future waitForApiRequestCompleted({
+    double minWait = 0,
+    double maxWait = double.infinity,
+  }) async {
+    final stopwatch = Stopwatch()..start();
+    while (true) {
+      await Future.delayed(Duration(milliseconds: 50));
+      final timeElapsed = stopwatch.elapsedMilliseconds;
+      final requestComplete = apiRequestCompleter?.isCompleted ?? false;
+      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
+        break;
+      }
+    }
   }
 }

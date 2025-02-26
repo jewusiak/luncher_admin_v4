@@ -1845,6 +1845,189 @@ class DeleteImportSchemaCall {
 
 /// End Luncher Core API (DELETE___schema_schemaId) Group Code
 
+/// Start Luncher Core API (POST___schema_schemaId_job) Group Code
+
+class LuncherCoreAPIPOSTSchemaSchemaIdJobGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static DispatchJobCall dispatchJobCall = DispatchJobCall();
+}
+
+class DispatchJobCall {
+  Future<ApiCallResponse> call({
+    String? schemaId = '',
+    String? authorization = '',
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIPOSTSchemaSchemaIdJobGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'dispatchJob',
+      apiUrl: '${baseUrl}/schema/${schemaId}/job',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      bodyType: BodyType.NONE,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (POST___schema_schemaId_job) Group Code
+
+/// Start Luncher Core API (GET___schema_schemaId_job) Group Code
+
+class LuncherCoreAPIGETSchemaSchemaIdJobGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static GetSchemasJobsCall getSchemasJobsCall = GetSchemasJobsCall();
+}
+
+class GetSchemasJobsCall {
+  Future<ApiCallResponse> call({
+    String? schemaId = '',
+    String? authorization = '',
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIGETSchemaSchemaIdJobGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getSchemasJobs',
+      apiUrl: '${baseUrl}/schema/${schemaId}/job',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___schema_schemaId_job) Group Code
+
+/// Start Luncher Core API (GET___schema_schemaId_job_jobId) Group Code
+
+class LuncherCoreAPIGETSchemaSchemaIdJobJobIdGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static GetJobCall getJobCall = GetJobCall();
+}
+
+class GetJobCall {
+  Future<ApiCallResponse> call({
+    String? schemaId = '',
+    String? jobId = '',
+    String? authorization = '',
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIGETSchemaSchemaIdJobJobIdGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getJob',
+      apiUrl: '${baseUrl}/schema/${schemaId}/job/${jobId}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___schema_schemaId_job_jobId) Group Code
+
+/// Start Luncher Core API (DELETE___schema_schemaId_job_jobId) Group Code
+
+class LuncherCoreAPIDELETESchemaSchemaIdJobJobIdGroup {
+  static String getBaseUrl({
+    String? importsbackendurl,
+  }) {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    return '${importsbackendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static CancelJobCall cancelJobCall = CancelJobCall();
+}
+
+class CancelJobCall {
+  Future<ApiCallResponse> call({
+    String? schemaId = '',
+    String? jobId = '',
+    String? authorization = '',
+    String? importsbackendurl,
+  }) async {
+    importsbackendurl ??= FFDevEnvironmentValues().importsbackendurl;
+    final baseUrl = LuncherCoreAPIDELETESchemaSchemaIdJobJobIdGroup.getBaseUrl(
+      importsbackendurl: importsbackendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'cancelJob',
+      apiUrl: '${baseUrl}/schema/${schemaId}/job/${jobId}',
+      callType: ApiCallType.DELETE,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (DELETE___schema_schemaId_job_jobId) Group Code
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;
