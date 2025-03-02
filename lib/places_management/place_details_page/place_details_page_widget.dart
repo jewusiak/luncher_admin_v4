@@ -313,6 +313,10 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                     instagramHandle: _model.instagramHandleTextController.text,
                     webpageUrl: _model.websiteUrlTextController.text,
                     phoneNumber: _model.phoneNumberTextController.text,
+                    timeZone: valueOrDefault<String>(
+                      _model.timeZoneDropDownValue,
+                      'd6f35f82-da54-4473-b7a0-ab7b59cbafe7',
+                    ),
                   );
 
                   if ((_model.saveResult?.succeeded ?? true)) {
@@ -883,6 +887,103 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                       ),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 30.0, 0.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Builder(
+                                          builder: (context) =>
+                                              FlutterFlowIconButton(
+                                            borderColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                            borderRadius: 45.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 45.0,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .accent1,
+                                            icon: Icon(
+                                              Icons.add,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 24.0,
+                                            ),
+                                            onPressed: () async {
+                                              FFAppState()
+                                                      .editedWeekDayTimeRange =
+                                                  WeekDayTimeRangeStruct(
+                                                startTime: WeekDayTimeStruct(
+                                                  time: '12:00',
+                                                  day: 'MONDAY',
+                                                ),
+                                                endTime: WeekDayTimeStruct(
+                                                  time: '15:00',
+                                                  day: 'MONDAY',
+                                                ),
+                                              );
+                                              await showDialog(
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          WeekDayTimeRangeEditWidget(
+                                                        isNew: true,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (FFAppState()
+                                                      .editedWeekDayTimeRangeAction ==
+                                                  ActionType.CREATE) {
+                                                // Add new range
+                                                _model.updatePlaceStruct(
+                                                  (e) => e
+                                                    ..updateOpeningWindows(
+                                                      (e) => e.add(FFAppState()
+                                                          .editedWeekDayTimeRange),
+                                                    ),
+                                                );
+                                                safeSetState(() {});
+                                              }
+                                              // Clear helper vars
+                                              FFAppState()
+                                                      .editedWeekDayTimeRange =
+                                                  WeekDayTimeRangeStruct();
+                                              FFAppState()
+                                                      .editedWeekDayTimeRangeAction =
+                                                  null;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   Container(
                                     constraints: BoxConstraints(
                                       maxWidth: 700.0,
@@ -1146,89 +1247,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                               );
                                             },
                                           );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  Builder(
-                                    builder: (context) => Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 30.0, 0.0, 0.0),
-                                      child: FlutterFlowIconButton(
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                        borderRadius: 45.0,
-                                        borderWidth: 1.0,
-                                        buttonSize: 45.0,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .accent1,
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 24.0,
-                                        ),
-                                        onPressed: () async {
-                                          FFAppState().editedWeekDayTimeRange =
-                                              WeekDayTimeRangeStruct(
-                                            startTime: WeekDayTimeStruct(
-                                              time: '12:00',
-                                              day: 'MONDAY',
-                                            ),
-                                            endTime: WeekDayTimeStruct(
-                                              time: '15:00',
-                                              day: 'MONDAY',
-                                            ),
-                                          );
-                                          await showDialog(
-                                            context: context,
-                                            builder: (dialogContext) {
-                                              return Dialog(
-                                                elevation: 0,
-                                                insetPadding: EdgeInsets.zero,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                alignment: AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    FocusScope.of(dialogContext)
-                                                        .unfocus();
-                                                    FocusManager
-                                                        .instance.primaryFocus
-                                                        ?.unfocus();
-                                                  },
-                                                  child:
-                                                      WeekDayTimeRangeEditWidget(
-                                                    isNew: true,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
-
-                                          if (FFAppState()
-                                                  .editedWeekDayTimeRangeAction ==
-                                              ActionType.CREATE) {
-                                            // Add new range
-                                            _model.updatePlaceStruct(
-                                              (e) => e
-                                                ..updateOpeningWindows(
-                                                  (e) => e.add(FFAppState()
-                                                      .editedWeekDayTimeRange),
-                                                ),
-                                            );
-                                            safeSetState(() {});
-                                          }
-                                          // Clear helper vars
-                                          FFAppState().editedWeekDayTimeRange =
-                                              WeekDayTimeRangeStruct();
-                                          FFAppState()
-                                                  .editedWeekDayTimeRangeAction =
-                                              null;
                                         },
                                       ),
                                     ),
@@ -3342,6 +3360,275 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                         validator: _model
                                             .googlePlaceIdInputTextControllerValidator
                                             .asValidator(context),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
+                                        child: Text(
+                                          'Strefa czasowa:',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child:
+                                                FutureBuilder<ApiCallResponse>(
+                                              future: FFAppState().getTimezones(
+                                                requestFn: () =>
+                                                    LuncherCoreAPIGETUtilsTzGroup
+                                                        .getAvailableTimezonesCall
+                                                        .call(
+                                                  authorization:
+                                                      currentAuthenticationToken,
+                                                ),
+                                              ),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                final timeZoneDropDownGetAvailableTimezonesResponse =
+                                                    snapshot.data!;
+
+                                                return FlutterFlowDropDown<
+                                                    String>(
+                                                  controller: _model
+                                                          .timeZoneDropDownValueController ??=
+                                                      FormFieldController<
+                                                          String>(
+                                                    _model.timeZoneDropDownValue ??=
+                                                        _model.place?.timeZone,
+                                                  ),
+                                                  options:
+                                                      LuncherCoreAPIGETUtilsTzGroup
+                                                          .getAvailableTimezonesCall
+                                                          .timezones(
+                                                    timeZoneDropDownGetAvailableTimezonesResponse
+                                                        .jsonBody,
+                                                  )!,
+                                                  onChanged: (val) =>
+                                                      safeSetState(() => _model
+                                                              .timeZoneDropDownValue =
+                                                          val),
+                                                  height: 40.0,
+                                                  searchHintTextStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  searchTextStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  hintText: 'Wyszukaj...',
+                                                  searchHintText: 'Wyszukaj...',
+                                                  icon: Icon(
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    size: 24.0,
+                                                  ),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                  elevation: 2.0,
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  borderWidth: 0.0,
+                                                  borderRadius: 8.0,
+                                                  margin: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 0.0, 12.0, 0.0),
+                                                  hidesUnderline: true,
+                                                  isOverButton: false,
+                                                  isSearchable: true,
+                                                  isMultiSelect: false,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    5.0, 0.0, 0.0, 0.0),
+                                            child: FFButtonWidget(
+                                              onPressed: !((_model.locationLatTextController
+                                                                  .text !=
+                                                              '') &&
+                                                      (_model.locationLonTextController
+                                                                  .text !=
+                                                              ''))
+                                                  ? null
+                                                  : () async {
+                                                      _model.apiResult6g4 =
+                                                          await LuncherCoreAPIGETUtilsTzqueryGroup
+                                                              .getTimezoneCall
+                                                              .call(
+                                                        authorization:
+                                                            currentAuthenticationToken,
+                                                        lat: _model
+                                                            .locationLatTextController
+                                                            .text,
+                                                        lon: _model
+                                                            .locationLonTextController
+                                                            .text,
+                                                      );
+
+                                                      if ((_model.apiResult6g4
+                                                              ?.succeeded ??
+                                                          true)) {
+                                                        safeSetState(() {
+                                                          _model
+                                                              .timeZoneDropDownValueController
+                                                              ?.value = (_model
+                                                                  .apiResult6g4
+                                                                  ?.bodyText ??
+                                                              '');
+                                                        });
+                                                      } else {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Nie udało się pobrać strefy czasowej! ${ErrorDtoStruct.maybeFromMap((_model.apiResult6g4?.jsonBody ?? ''))?.message}',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      safeSetState(() {});
+                                                    },
+                                              text: 'Pobierz str. czas.',
+                                              icon: Icon(
+                                                Icons.replay,
+                                                size: 15.0,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 40.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          color: Colors.white,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                disabledColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                disabledTextColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, -1.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 0.0, 10.0, 0.0),
+                                              child: Icon(
+                                                Icons.info_outlined,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 20.0,
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                'Pobranie strefy czasowej jest możliwe po wypełnieniu współrzędnych - można je uzupełnić przyciskiem \'Pobierz wg...\' u góry strony.',
+                                                maxLines: 4,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ].divide(SizedBox(height: 15.0)),
                                   ),

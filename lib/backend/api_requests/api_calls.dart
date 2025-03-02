@@ -953,6 +953,7 @@ class UpdatePlaceCall {
     String? enabled,
     dynamic menuOffersJson,
     List<String>? imageIdsList,
+    String? timeZone,
     String? backendurl,
   }) async {
     name ??= FFAppConstants.nullvalue;
@@ -975,6 +976,7 @@ class UpdatePlaceCall {
     locationLongitude ??= FFAppConstants.nullvalueDOUBLE;
     ownerEmail ??= FFAppConstants.nullvalue;
     enabled ??= FFAppConstants.nullvalue;
+    timeZone ??= FFAppConstants.nullvalue;
     backendurl ??= FFDevEnvironmentValues().backendurl;
     final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl(
       backendurl: backendurl,
@@ -1010,7 +1012,8 @@ class UpdatePlaceCall {
   "menuOffers": ${menuOffers},
   "ownerEmail": "${ownerEmail}",
   "imageIds": ${imageIds},
-  "enabled": "${enabled}"
+  "enabled": "${enabled}",
+  "timeZone": "${timeZone}"
 }''';
     return FFApiInterceptor.makeApiCall(
       // ignore: prefer_const_constructors - can be mutated by interceptors
@@ -2027,6 +2030,110 @@ class CancelJobCall {
 }
 
 /// End Luncher Core API (DELETE___schema_schemaId_job_jobId) Group Code
+
+/// Start Luncher Core API (GET___utils_tz) Group Code
+
+class LuncherCoreAPIGETUtilsTzGroup {
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return '${backendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static GetAvailableTimezonesCall getAvailableTimezonesCall =
+      GetAvailableTimezonesCall();
+}
+
+class GetAvailableTimezonesCall {
+  Future<ApiCallResponse> call({
+    String? authorization = '',
+    String? backendurl,
+  }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETUtilsTzGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getAvailableTimezones',
+      apiUrl: '${baseUrl}/utils/tz',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? timezones(dynamic response) => (getJsonField(
+        response,
+        r'''$''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+/// End Luncher Core API (GET___utils_tz) Group Code
+
+/// Start Luncher Core API (GET___utils_tzquery) Group Code
+
+class LuncherCoreAPIGETUtilsTzqueryGroup {
+  static String getBaseUrl({
+    String? backendurl,
+  }) {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    return '${backendurl}';
+  }
+
+  static Map<String, String> headers = {};
+  static GetTimezoneCall getTimezoneCall = GetTimezoneCall();
+}
+
+class GetTimezoneCall {
+  Future<ApiCallResponse> call({
+    String? lat = '',
+    String? lon = '',
+    String? authorization = '',
+    String? backendurl,
+  }) async {
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIGETUtilsTzqueryGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getTimezone',
+      apiUrl: '${baseUrl}/utils/tzquery',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {
+        'lat': lat,
+        'lon': lon,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: true,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End Luncher Core API (GET___utils_tzquery) Group Code
 
 class ApiPagingParams {
   int nextPageNumber = 0;

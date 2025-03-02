@@ -500,7 +500,7 @@ class _ImportJobDetailsWidgetState extends State<ImportJobDetailsWidget> {
                                                                   ),
                                                             ),
                                                             Text(
-                                                              'Czasy serwowania...',
+                                                              'Najbliższy czas serwowania: ${functions.showDateAsPolishDaysOfWeek(menuOffersItem.thisOrNextServingRange.startTime, menuOffersItem.thisOrNextServingRange.endTime)}',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -517,21 +517,24 @@ class _ImportJobDetailsWidgetState extends State<ImportJobDetailsWidget> {
                                                           ],
                                                         ),
                                                       ),
-                                                      Text(
-                                                        '${menuOffersItem.basePrice.amount.toString()} ${menuOffersItem.basePrice.currencyCode}',
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelLarge
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Readex Pro',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
+                                                      if (menuOffersItem
+                                                              .basePrice
+                                                              .amount ==
+                                                          0.0)
+                                                        Text(
+                                                          '${menuOffersItem.basePrice.amount.toString()} ${menuOffersItem.basePrice.currencyCode}',
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
                                                     ],
                                                   ),
                                                 ),
@@ -551,211 +554,329 @@ class _ImportJobDetailsWidgetState extends State<ImportJobDetailsWidget> {
                                                             BorderRadius
                                                                 .circular(15.0),
                                                       ),
-                                                      child: Builder(
-                                                        builder: (context) {
-                                                          final offerParts =
-                                                              menuOffersItem
-                                                                  .parts
-                                                                  .toList();
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Builder(
+                                                            builder: (context) {
+                                                              final offerParts =
+                                                                  menuOffersItem
+                                                                      .parts
+                                                                      .toList();
 
-                                                          return Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: List.generate(
-                                                                offerParts
-                                                                    .length,
-                                                                (offerPartsIndex) {
-                                                              final offerPartsItem =
-                                                                  offerParts[
-                                                                      offerPartsIndex];
-                                                              return Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      blurRadius:
-                                                                          3.0,
-                                                                      color: Color(
-                                                                          0x33000000),
-                                                                      offset:
-                                                                          Offset(
-                                                                        0.0,
-                                                                        1.0,
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15.0),
-                                                                ),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15.0),
-                                                                  child:
-                                                                      Container(
+                                                              return Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: List.generate(
+                                                                    offerParts
+                                                                        .length,
+                                                                    (offerPartsIndex) {
+                                                                  final offerPartsItem =
+                                                                      offerParts[
+                                                                          offerPartsIndex];
+                                                                  return Container(
                                                                     decoration:
                                                                         BoxDecoration(
+                                                                      boxShadow: [
+                                                                        BoxShadow(
+                                                                          blurRadius:
+                                                                              3.0,
+                                                                          color:
+                                                                              Color(0x33000000),
+                                                                          offset:
+                                                                              Offset(
+                                                                            0.0,
+                                                                            1.0,
+                                                                          ),
+                                                                        )
+                                                                      ],
                                                                       borderRadius:
                                                                           BorderRadius.circular(
                                                                               15.0),
                                                                     ),
                                                                     child:
-                                                                        Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryBackground,
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              15.0),
                                                                       child:
-                                                                          ExpandableNotifier(
-                                                                        initialExpanded:
-                                                                            false,
+                                                                          Container(
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(15.0),
+                                                                        ),
                                                                         child:
-                                                                            ExpandablePanel(
-                                                                          header:
-                                                                              Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                10.0,
-                                                                                10.0,
-                                                                                10.0,
-                                                                                10.0),
+                                                                            Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          child:
+                                                                              ExpandableNotifier(
+                                                                            initialExpanded:
+                                                                                true,
                                                                             child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                AutoSizeText(
-                                                                                  offerPartsItem.name,
-                                                                                  minFontSize: 16.0,
-                                                                                  style: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                        fontFamily: 'Readex Pro',
-                                                                                        color: FlutterFlowTheme.of(context).primaryText,
-                                                                                        letterSpacing: 0.0,
-                                                                                      ),
-                                                                                ),
-                                                                                if ((offerPartsItem.supplement != null) && !offerPartsItem.required && (offerPartsItem.supplement.amount > 0.0))
-                                                                                  Text(
-                                                                                    '+${offerPartsItem.supplement.amount.toString()} ${offerPartsItem.supplement.currencyCode}',
-                                                                                    textAlign: TextAlign.end,
-                                                                                    style: FlutterFlowTheme.of(context).labelLarge.override(
-                                                                                          fontFamily: 'Readex Pro',
-                                                                                          letterSpacing: 0.0,
-                                                                                        ),
-                                                                                  ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                          collapsed:
-                                                                              Container(),
-                                                                          expanded:
-                                                                              Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                20.0,
-                                                                                0.0,
-                                                                                20.0,
-                                                                                10.0),
-                                                                            child:
-                                                                                Builder(
-                                                                              builder: (context) {
-                                                                                final partOptions = offerPartsItem.options.toList();
-
-                                                                                return Column(
-                                                                                  mainAxisSize: MainAxisSize.min,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: List.generate(partOptions.length, (partOptionsIndex) {
-                                                                                    final partOptionsItem = partOptions[partOptionsIndex];
-                                                                                    return Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      children: [
-                                                                                        Flexible(
-                                                                                          child: Column(
-                                                                                            mainAxisSize: MainAxisSize.min,
-                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                            children: [
-                                                                                              Text(
-                                                                                                partOptionsItem.name,
-                                                                                                style: FlutterFlowTheme.of(context).bodyLarge.override(
-                                                                                                      fontFamily: 'Readex Pro',
-                                                                                                      letterSpacing: 0.0,
-                                                                                                    ),
-                                                                                              ),
-                                                                                              if (partOptionsItem.description != '')
-                                                                                                Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                                  child: Text(
-                                                                                                    partOptionsItem.description,
-                                                                                                    textAlign: TextAlign.start,
-                                                                                                    maxLines: 10,
-                                                                                                    style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                                          fontFamily: 'Readex Pro',
-                                                                                                          letterSpacing: 0.0,
-                                                                                                        ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              if (partOptionsIndex < (offerPartsItem.options.length - 1))
-                                                                                                Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
-                                                                                                  child: Text(
-                                                                                                    'lub',
-                                                                                                    textAlign: TextAlign.start,
-                                                                                                    maxLines: 10,
-                                                                                                    style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                                          fontFamily: 'Readex Pro',
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                          letterSpacing: 0.0,
-                                                                                                        ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                            ],
+                                                                                ExpandablePanel(
+                                                                              header: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    AutoSizeText(
+                                                                                      offerPartsItem.name,
+                                                                                      minFontSize: 16.0,
+                                                                                      style: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                            fontFamily: 'Readex Pro',
+                                                                                            color: FlutterFlowTheme.of(context).primaryText,
+                                                                                            letterSpacing: 0.0,
                                                                                           ),
-                                                                                        ),
-                                                                                        if ((partOptionsItem.supplement != null) && (partOptionsItem.supplement.amount > 0.0))
-                                                                                          Flexible(
-                                                                                            child: Text(
-                                                                                              '+${partOptionsItem.supplement.amount.toString()} ${partOptionsItem.supplement.currencyCode}',
-                                                                                              textAlign: TextAlign.end,
-                                                                                              style: FlutterFlowTheme.of(context).labelMedium.override(
-                                                                                                    fontFamily: 'Readex Pro',
-                                                                                                    letterSpacing: 0.0,
-                                                                                                  ),
+                                                                                    ),
+                                                                                    if ((offerPartsItem.supplement != null) && !offerPartsItem.required && (offerPartsItem.supplement.amount > 0.0))
+                                                                                      Text(
+                                                                                        '+${offerPartsItem.supplement.amount.toString()} ${offerPartsItem.supplement.currencyCode}',
+                                                                                        textAlign: TextAlign.end,
+                                                                                        style: FlutterFlowTheme.of(context).labelLarge.override(
+                                                                                              fontFamily: 'Readex Pro',
+                                                                                              letterSpacing: 0.0,
                                                                                             ),
-                                                                                          ),
-                                                                                      ],
+                                                                                      ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              collapsed: Container(),
+                                                                              expanded: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 10.0),
+                                                                                child: Builder(
+                                                                                  builder: (context) {
+                                                                                    final partOptions = offerPartsItem.options.toList();
+
+                                                                                    return Column(
+                                                                                      mainAxisSize: MainAxisSize.min,
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: List.generate(partOptions.length, (partOptionsIndex) {
+                                                                                        final partOptionsItem = partOptions[partOptionsIndex];
+                                                                                        return Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: [
+                                                                                            Flexible(
+                                                                                              child: Column(
+                                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    partOptionsItem.name,
+                                                                                                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                                                          fontFamily: 'Readex Pro',
+                                                                                                          letterSpacing: 0.0,
+                                                                                                        ),
+                                                                                                  ),
+                                                                                                  if (partOptionsItem.description != '')
+                                                                                                    Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                                      child: Text(
+                                                                                                        partOptionsItem.description,
+                                                                                                        textAlign: TextAlign.start,
+                                                                                                        maxLines: 10,
+                                                                                                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                                              fontFamily: 'Readex Pro',
+                                                                                                              letterSpacing: 0.0,
+                                                                                                            ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  if (partOptionsIndex < (offerPartsItem.options.length - 1))
+                                                                                                    Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
+                                                                                                      child: Text(
+                                                                                                        'lub',
+                                                                                                        textAlign: TextAlign.start,
+                                                                                                        maxLines: 10,
+                                                                                                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                                              fontFamily: 'Readex Pro',
+                                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                              letterSpacing: 0.0,
+                                                                                                            ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                            if ((partOptionsItem.supplement != null) && (partOptionsItem.supplement.amount > 0.0))
+                                                                                              Flexible(
+                                                                                                child: Text(
+                                                                                                  '+${partOptionsItem.supplement.amount.toString()} ${partOptionsItem.supplement.currencyCode}',
+                                                                                                  textAlign: TextAlign.end,
+                                                                                                  style: FlutterFlowTheme.of(context).labelMedium.override(
+                                                                                                        fontFamily: 'Readex Pro',
+                                                                                                        letterSpacing: 0.0,
+                                                                                                      ),
+                                                                                                ),
+                                                                                              ),
+                                                                                          ],
+                                                                                        );
+                                                                                      }),
                                                                                     );
-                                                                                  }),
-                                                                                );
-                                                                              },
+                                                                                  },
+                                                                                ),
+                                                                              ),
+                                                                              theme: ExpandableThemeData(
+                                                                                tapHeaderToExpand: true,
+                                                                                tapBodyToExpand: false,
+                                                                                tapBodyToCollapse: false,
+                                                                                headerAlignment: ExpandablePanelHeaderAlignment.center,
+                                                                                hasIcon: true,
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                          theme:
-                                                                              ExpandableThemeData(
-                                                                            tapHeaderToExpand:
-                                                                                true,
-                                                                            tapBodyToExpand:
-                                                                                false,
-                                                                            tapBodyToCollapse:
-                                                                                false,
-                                                                            headerAlignment:
-                                                                                ExpandablePanelHeaderAlignment.center,
-                                                                            hasIcon:
-                                                                                true,
                                                                           ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                ),
+                                                                  );
+                                                                }).divide(
+                                                                    SizedBox(
+                                                                        height:
+                                                                            8.0)),
                                                               );
-                                                            }).divide(SizedBox(
-                                                                height: 8.0)),
-                                                          );
-                                                        },
+                                                            },
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        10.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              'Jednorazowe okresy serwowania:',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Builder(
+                                                              builder:
+                                                                  (context) {
+                                                                final oneTimeServingRanges =
+                                                                    menuOffersItem
+                                                                        .oneTimeServingRanges
+                                                                        .toList();
+
+                                                                return Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: List.generate(
+                                                                      oneTimeServingRanges
+                                                                          .length,
+                                                                      (oneTimeServingRangesIndex) {
+                                                                    final oneTimeServingRangesItem =
+                                                                        oneTimeServingRanges[
+                                                                            oneTimeServingRangesIndex];
+                                                                    return Text(
+                                                                      '${functions.dateTimeStringToString(oneTimeServingRangesItem.startTime)} - ${functions.dateTimeStringToString(oneTimeServingRangesItem.endTime)}',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Readex Pro',
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    );
+                                                                  }),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        10.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              'Cykliczne okresy serwowania:',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Builder(
+                                                              builder:
+                                                                  (context) {
+                                                                final recurringServingRanges =
+                                                                    menuOffersItem
+                                                                        .recurringServingRanges
+                                                                        .toList();
+
+                                                                return Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: List.generate(
+                                                                      recurringServingRanges
+                                                                          .length,
+                                                                      (recurringServingRangesIndex) {
+                                                                    final recurringServingRangesItem =
+                                                                        recurringServingRanges[
+                                                                            recurringServingRangesIndex];
+                                                                    return Text(
+                                                                      '${functions.dayOfWeekEnumToPolishName(recurringServingRangesItem.startTime.day)}, ${recurringServingRangesItem.startTime.time} - ${recurringServingRangesItem.startTime.day == recurringServingRangesItem.endTime.day ? '' : '${functions.dayOfWeekEnumToPolishName(recurringServingRangesItem.endTime.day)}, '}${recurringServingRangesItem.endTime.time}',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Readex Pro',
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    );
+                                                                  }),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),

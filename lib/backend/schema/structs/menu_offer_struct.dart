@@ -12,12 +12,14 @@ class MenuOfferStruct extends BaseStruct {
     List<PartStruct>? parts,
     List<WeekDayTimeRangeStruct>? recurringServingRanges,
     List<LocalDateTimeRangeStruct>? oneTimeServingRanges,
+    LocalDateTimeRangeStruct? thisOrNextServingRange,
   })  : _id = id,
         _name = name,
         _basePrice = basePrice,
         _parts = parts,
         _recurringServingRanges = recurringServingRanges,
-        _oneTimeServingRanges = oneTimeServingRanges;
+        _oneTimeServingRanges = oneTimeServingRanges,
+        _thisOrNextServingRange = thisOrNextServingRange;
 
   // "id" field.
   String? _id;
@@ -83,6 +85,20 @@ class MenuOfferStruct extends BaseStruct {
 
   bool hasOneTimeServingRanges() => _oneTimeServingRanges != null;
 
+  // "thisOrNextServingRange" field.
+  LocalDateTimeRangeStruct? _thisOrNextServingRange;
+  LocalDateTimeRangeStruct get thisOrNextServingRange =>
+      _thisOrNextServingRange ?? LocalDateTimeRangeStruct();
+  set thisOrNextServingRange(LocalDateTimeRangeStruct? val) =>
+      _thisOrNextServingRange = val;
+
+  void updateThisOrNextServingRange(
+      Function(LocalDateTimeRangeStruct) updateFn) {
+    updateFn(_thisOrNextServingRange ??= LocalDateTimeRangeStruct());
+  }
+
+  bool hasThisOrNextServingRange() => _thisOrNextServingRange != null;
+
   static MenuOfferStruct fromMap(Map<String, dynamic> data) => MenuOfferStruct(
         id: data['id'] as String?,
         name: data['name'] as String?,
@@ -101,6 +117,11 @@ class MenuOfferStruct extends BaseStruct {
           data['oneTimeServingRanges'],
           LocalDateTimeRangeStruct.fromMap,
         ),
+        thisOrNextServingRange:
+            data['thisOrNextServingRange'] is LocalDateTimeRangeStruct
+                ? data['thisOrNextServingRange']
+                : LocalDateTimeRangeStruct.maybeFromMap(
+                    data['thisOrNextServingRange']),
       );
 
   static MenuOfferStruct? maybeFromMap(dynamic data) => data is Map
@@ -116,6 +137,7 @@ class MenuOfferStruct extends BaseStruct {
             _recurringServingRanges?.map((e) => e.toMap()).toList(),
         'oneTimeServingRanges':
             _oneTimeServingRanges?.map((e) => e.toMap()).toList(),
+        'thisOrNextServingRange': _thisOrNextServingRange?.toMap(),
       }.withoutNulls;
 
   @override
@@ -146,6 +168,10 @@ class MenuOfferStruct extends BaseStruct {
           _oneTimeServingRanges,
           ParamType.DataStruct,
           isList: true,
+        ),
+        'thisOrNextServingRange': serializeParam(
+          _thisOrNextServingRange,
+          ParamType.DataStruct,
         ),
       }.withoutNulls;
 
@@ -185,6 +211,12 @@ class MenuOfferStruct extends BaseStruct {
           true,
           structBuilder: LocalDateTimeRangeStruct.fromSerializableMap,
         ),
+        thisOrNextServingRange: deserializeStructParam(
+          data['thisOrNextServingRange'],
+          ParamType.DataStruct,
+          false,
+          structBuilder: LocalDateTimeRangeStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -200,7 +232,8 @@ class MenuOfferStruct extends BaseStruct {
         listEquality.equals(parts, other.parts) &&
         listEquality.equals(
             recurringServingRanges, other.recurringServingRanges) &&
-        listEquality.equals(oneTimeServingRanges, other.oneTimeServingRanges);
+        listEquality.equals(oneTimeServingRanges, other.oneTimeServingRanges) &&
+        thisOrNextServingRange == other.thisOrNextServingRange;
   }
 
   @override
@@ -210,7 +243,8 @@ class MenuOfferStruct extends BaseStruct {
         basePrice,
         parts,
         recurringServingRanges,
-        oneTimeServingRanges
+        oneTimeServingRanges,
+        thisOrNextServingRange
       ]);
 }
 
@@ -218,9 +252,12 @@ MenuOfferStruct createMenuOfferStruct({
   String? id,
   String? name,
   MonetaryAmountStruct? basePrice,
+  LocalDateTimeRangeStruct? thisOrNextServingRange,
 }) =>
     MenuOfferStruct(
       id: id,
       name: name,
       basePrice: basePrice ?? MonetaryAmountStruct(),
+      thisOrNextServingRange:
+          thisOrNextServingRange ?? LocalDateTimeRangeStruct(),
     );
