@@ -229,3 +229,23 @@ List<String>? splitString(
     return s;
   }
 }
+
+String? showDateAsPolishDaysOfWeek(
+  String? startDate,
+  String? endDate,
+) {
+  if (startDate == null || endDate == null) return null;
+  DateTime? s = DateTime.tryParse(startDate);
+  DateTime? e = DateTime.tryParse(endDate);
+  if (s == null || e == null) return "";
+  var days = ['Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.', 'Nd.'];
+  var endDay = "";
+  if (!(s.day == e.day && s.month == e.month && s.year == e.year))
+    endDay = days[e.weekday - 1] + " ";
+  return days[s.weekday - 1] +
+      " " +
+      DateFormat.Hm().format(s) +
+      " - " +
+      endDay +
+      DateFormat.Hm().format(e);
+}

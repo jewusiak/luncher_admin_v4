@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'flutter_flow/request_manager.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/backend/api_requests/api_manager.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -168,4 +170,19 @@ class FFAppState extends ChangeNotifier {
   set gliter(int value) {
     _gliter = value;
   }
+
+  final _getTimezonesManager = FutureRequestManager<ApiCallResponse>();
+  Future<ApiCallResponse> getTimezones({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Future<ApiCallResponse> Function() requestFn,
+  }) =>
+      _getTimezonesManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearGetTimezonesCache() => _getTimezonesManager.clear();
+  void clearGetTimezonesCacheKey(String? uniqueKey) =>
+      _getTimezonesManager.clearRequest(uniqueKey);
 }
