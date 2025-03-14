@@ -1,3 +1,4 @@
+import '';
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
@@ -171,9 +172,16 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                           _model.schemaTypeDropDownValue ??=
                               FFAppState().editedImportSchema.schemaType,
                         ),
-                        options: List<String>.from(
-                            ['FACEBOOK_TEXT', 'INSTAGRAM_TEXT']),
-                        optionLabels: ['Facebook Text', 'Instagram Text'],
+                        options: List<String>.from([
+                          'FACEBOOK_TEXT',
+                          'FACEBOOK_IMAGE',
+                          'INSTAGRAM_TEXT'
+                        ]),
+                        optionLabels: [
+                          'Facebook Text',
+                          'Facebook Image',
+                          'Instagram Text'
+                        ],
                         onChanged: (val) async {
                           safeSetState(
                               () => _model.schemaTypeDropDownValue = val);

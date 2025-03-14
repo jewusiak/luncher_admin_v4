@@ -58,7 +58,7 @@ class _LocalDateTimeRangeEditWidgetState
           maxWidth: 350.0,
         ),
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
+          color: FlutterFlowTheme.of(context).alternate,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
