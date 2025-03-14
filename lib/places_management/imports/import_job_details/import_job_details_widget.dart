@@ -499,21 +499,6 @@ class _ImportJobDetailsWidgetState extends State<ImportJobDetailsWidget> {
                                                                         0.0,
                                                                   ),
                                                             ),
-                                                            Text(
-                                                              'Najbliższy czas serwowania: ${functions.showDateAsPolishDaysOfWeek(menuOffersItem.thisOrNextServingRange.startTime, menuOffersItem.thisOrNextServingRange.endTime)}',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Readex Pro',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
                                                           ],
                                                         ),
                                                       ),

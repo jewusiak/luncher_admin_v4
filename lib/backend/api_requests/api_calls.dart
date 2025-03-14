@@ -920,6 +920,7 @@ class LuncherCoreAPIPUTPlacePlaceUuidGroup {
 
   static Map<String, String> headers = {};
   static UpdatePlaceCall updatePlaceCall = UpdatePlaceCall();
+  static UpdatePlacesOwnerCall updatePlacesOwnerCall = UpdatePlacesOwnerCall();
 
   static final interceptors = [
     RemoveNullOrEmptyValues(),
@@ -1019,6 +1020,54 @@ class UpdatePlaceCall {
       // ignore: prefer_const_constructors - can be mutated by interceptors
       ApiCallOptions(
         callName: 'updatePlace',
+        apiUrl: '${baseUrl}/place/${placeUuid}',
+        callType: ApiCallType.PUT,
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        headers: {
+          'Authorization': 'Bearer ${authorization}',
+        },
+        // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
+        params: {},
+        body: ffApiRequestBody,
+        bodyType: BodyType.JSON,
+        returnBody: true,
+        encodeBodyUtf8: true,
+        decodeUtf8: true,
+        cache: false,
+        isStreamingApi: false,
+        alwaysAllowBody: false,
+      ),
+
+      interceptors,
+    );
+  }
+
+  static final interceptors = [
+    RemoveNullOrEmptyValues(),
+  ];
+}
+
+class UpdatePlacesOwnerCall {
+  Future<ApiCallResponse> call({
+    String? placeUuid = '',
+    String? authorization = '',
+    String? ownerEmail,
+    String? backendurl,
+  }) async {
+    ownerEmail ??= FFAppConstants.nullvalue;
+    backendurl ??= FFDevEnvironmentValues().backendurl;
+    final baseUrl = LuncherCoreAPIPUTPlacePlaceUuidGroup.getBaseUrl(
+      backendurl: backendurl,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "ownerEmail": "${ownerEmail}"
+}''';
+    return FFApiInterceptor.makeApiCall(
+      // ignore: prefer_const_constructors - can be mutated by interceptors
+      ApiCallOptions(
+        callName: 'updatePlacesOwner',
         apiUrl: '${baseUrl}/place/${placeUuid}',
         callType: ApiCallType.PUT,
         // ignore: prefer_const_literals_to_create_immutables - can be mutated by interceptors
