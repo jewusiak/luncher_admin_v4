@@ -427,6 +427,7 @@ class _PartEditWidgetState extends State<PartEditWidget> {
 
                       return ListView.separated(
                         padding: EdgeInsets.zero,
+                        primary: false,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: options.length,

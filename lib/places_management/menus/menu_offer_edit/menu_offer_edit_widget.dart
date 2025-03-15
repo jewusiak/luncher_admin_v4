@@ -402,6 +402,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
 
                           return ListView.separated(
                             padding: EdgeInsets.zero,
+                            primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: parts.length,
@@ -669,6 +670,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
 
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
+                                  primary: false,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   itemCount: openingWindows.length,
@@ -937,6 +939,7 @@ class _MenuOfferEditWidgetState extends State<MenuOfferEditWidget> {
 
                                 return ListView.separated(
                                   padding: EdgeInsets.zero,
+                                  primary: false,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   itemCount: openingWindows.length,

@@ -314,6 +314,7 @@ class _SectionEditWidgetState extends State<SectionEditWidget> {
 
                           return ReorderableListView.builder(
                             padding: EdgeInsets.zero,
+                            primary: false,
                             proxyDecorator: (Widget child, int index,
                                     Animation<double> animation) =>
                                 Material(
@@ -331,106 +332,116 @@ class _SectionEditWidgetState extends State<SectionEditWidget> {
                                 child: Visibility(
                                   visible: sectionElementsItem != null,
                                   child: Builder(
-                                    builder: (context) => InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        FFAppState().editedSectionElement =
-                                            functions.cloneSectionElementObject(
-                                                sectionElementsItem)!;
-                                        FFAppState()
-                                            .editedSectionElementAction = null;
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: SectionElementEditWidget(
-                                                isNew: false,
-                                              ),
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 5.0),
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          FFAppState().editedSectionElement =
+                                              functions
+                                                  .cloneSectionElementObject(
+                                                      sectionElementsItem)!;
+                                          FFAppState()
+                                                  .editedSectionElementAction =
+                                              null;
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: SectionElementEditWidget(
+                                                  isNew: false,
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          if (FFAppState()
+                                                  .editedSectionElementAction ==
+                                              ActionType.UPDATE) {
+                                            // Update selected range
+                                            FFAppState()
+                                                .updateEditedSectionStruct(
+                                              (e) => e
+                                                ..updateSectionElements(
+                                                  (e) => e[
+                                                          sectionElementsIndex] =
+                                                      FFAppState()
+                                                          .editedSectionElement,
+                                                ),
                                             );
-                                          },
-                                        );
-
-                                        if (FFAppState()
-                                                .editedSectionElementAction ==
-                                            ActionType.UPDATE) {
-                                          // Update selected range
-                                          FFAppState()
-                                              .updateEditedSectionStruct(
-                                            (e) => e
-                                              ..updateSectionElements(
-                                                (e) => e[sectionElementsIndex] =
-                                                    FFAppState()
-                                                        .editedSectionElement,
-                                              ),
-                                          );
-                                          safeSetState(() {});
-                                        } else if (FFAppState()
-                                                .editedSectionElementAction ==
-                                            ActionType.DELETE) {
-                                          // Delete selected range
-                                          FFAppState()
-                                              .updateEditedSectionStruct(
-                                            (e) => e
-                                              ..updateSectionElements(
-                                                (e) => e.removeAt(
-                                                    sectionElementsIndex),
-                                              ),
-                                          );
-                                          safeSetState(() {});
-                                        } else if (FFAppState()
-                                                .editedSectionElementAction ==
-                                            ActionType.CREATE) {}
-
-                                        // Clear helper vars
-                                        FFAppState().editedSectionElement =
-                                            SectionElementDtoStruct();
-                                        FFAppState()
-                                            .editedSectionElementAction = null;
-                                      },
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        child: ListTile(
-                                          title: Text(
-                                            sectionElementsItem.header,
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleLarge
-                                                .override(
-                                                  fontFamily: 'Outfit',
-                                                  fontSize: 18.0,
-                                                  letterSpacing: 0.0,
+                                            safeSetState(() {});
+                                          } else if (FFAppState()
+                                                  .editedSectionElementAction ==
+                                              ActionType.DELETE) {
+                                            // Delete selected range
+                                            FFAppState()
+                                                .updateEditedSectionStruct(
+                                              (e) => e
+                                                ..updateSectionElements(
+                                                  (e) => e.removeAt(
+                                                      sectionElementsIndex),
                                                 ),
-                                          ),
-                                          subtitle: Text(
-                                            '${sectionElementsItem.subheader} (${sectionElementsItem.elementType}: ${sectionElementsItem.sourceElementId})',
-                                            style: FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                          tileColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          dense: true,
-                                          contentPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 12.0, 0.0),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            );
+                                            safeSetState(() {});
+                                          } else if (FFAppState()
+                                                  .editedSectionElementAction ==
+                                              ActionType.CREATE) {}
+
+                                          // Clear helper vars
+                                          FFAppState().editedSectionElement =
+                                              SectionElementDtoStruct();
+                                          FFAppState()
+                                                  .editedSectionElementAction =
+                                              null;
+                                        },
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: ListTile(
+                                            title: Text(
+                                              sectionElementsItem.header,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleLarge
+                                                      .override(
+                                                        fontFamily: 'Outfit',
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                            subtitle: Text(
+                                              '${sectionElementsItem.subheader} (${sectionElementsItem.elementType}: ${sectionElementsItem.sourceElementId})',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                            tileColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                            dense: true,
+                                            contentPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 0.0, 12.0, 0.0),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
                                           ),
                                         ),
                                       ),

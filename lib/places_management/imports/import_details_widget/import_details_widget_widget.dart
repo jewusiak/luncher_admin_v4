@@ -1105,6 +1105,7 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
 
                                           return ListView.separated(
                                             padding: EdgeInsets.zero,
+                                            primary: false,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
                                             itemCount: imports.length,
