@@ -1002,6 +1002,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
 
                                           return ListView.builder(
                                             padding: EdgeInsets.zero,
+                                            primary: false,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.vertical,
                                             itemCount: openingWindows.length,
@@ -1258,7 +1259,6 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                           ),
                           KeepAliveWidgetWrapper(
                             builder: (context) => SingleChildScrollView(
-                              primary: false,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -1437,6 +1437,7 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
 
                                         return ReorderableListView.builder(
                                           padding: EdgeInsets.zero,
+                                          primary: false,
                                           proxyDecorator: (Widget child,
                                                   int index,
                                                   Animation<double>
@@ -1591,478 +1592,164 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                             ),
                           ),
                           KeepAliveWidgetWrapper(
-                            builder: (context) => Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 30.0, 0.0, 0.0),
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: 700.0,
-                                    ),
-                                    decoration: BoxDecoration(),
-                                    child: Builder(
-                                      builder: (context) {
-                                        final menuOffers = _model
-                                                .place?.menuOffers
-                                                .toList() ??
-                                            [];
-
-                                        return ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: menuOffers.length,
-                                          itemBuilder:
-                                              (context, menuOffersIndex) {
-                                            final menuOffersItem =
-                                                menuOffers[menuOffersIndex];
-                                            return Builder(
-                                              builder: (context) => InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  FFAppState().editedMenuOffer =
-                                                      functions
-                                                          .cloneMenuOfferObject(
-                                                              menuOffersItem)!;
-                                                  FFAppState()
-                                                          .editedMenuOfferAction =
-                                                      null;
-                                                  safeSetState(() {});
-                                                  await showDialog(
-                                                    context: context,
-                                                    builder: (dialogContext) {
-                                                      return Dialog(
-                                                        elevation: 0,
-                                                        insetPadding:
-                                                            EdgeInsets.zero,
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            FocusScope.of(
-                                                                    dialogContext)
-                                                                .unfocus();
-                                                            FocusManager
-                                                                .instance
-                                                                .primaryFocus
-                                                                ?.unfocus();
-                                                          },
-                                                          child:
-                                                              MenuOfferEditWidget(
-                                                            isNew: false,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-
-                                                  if (FFAppState()
-                                                          .editedMenuOfferAction ==
-                                                      ActionType.UPDATE) {
-                                                    // Update selected range
-                                                    _model.updatePlaceStruct(
-                                                      (e) => e
-                                                        ..updateMenuOffers(
-                                                          (e) => e[
-                                                                  menuOffersIndex] =
-                                                              FFAppState()
-                                                                  .editedMenuOffer,
-                                                        ),
-                                                    );
-                                                    safeSetState(() {});
-                                                  } else if (FFAppState()
-                                                          .editedMenuOfferAction ==
-                                                      ActionType.DELETE) {
-                                                    // Update selected range
-                                                    _model.updatePlaceStruct(
-                                                      (e) => e
-                                                        ..updateMenuOffers(
-                                                          (e) => e.removeAt(
-                                                              menuOffersIndex),
-                                                        ),
-                                                    );
-                                                    safeSetState(() {});
-                                                  } else if (FFAppState()
-                                                          .editedMenuOfferAction ==
-                                                      ActionType.CREATE) {
-                                                    // Update selected range
-                                                    _model.updatePlaceStruct(
-                                                      (e) => e
-                                                        ..updateMenuOffers(
-                                                          (e) => e.add(FFAppState()
-                                                              .editedMenuOffer),
-                                                        ),
-                                                    );
-                                                    safeSetState(() {});
-                                                  }
-
-                                                  // Clear helper vars
-                                                  FFAppState()
-                                                          .editedWeekDayTimeRange =
-                                                      WeekDayTimeRangeStruct();
-                                                  FFAppState()
-                                                          .editedWeekDayTimeRangeAction =
-                                                      null;
-                                                  FFAppState().editedMenuOffer =
-                                                      MenuOfferStruct();
-                                                  FFAppState()
-                                                          .editedMenuOfferAction =
-                                                      null;
-                                                  FFAppState()
-                                                          .editedLocalDateTimeRange =
-                                                      LocalDateTimeRangeStruct();
-                                                  FFAppState()
-                                                          .editedLocalDateTimeRangeAction =
-                                                      null;
-                                                },
-                                                child: Material(
-                                                  color: Colors.transparent,
-                                                  child: ListTile(
-                                                    title: Text(
-                                                      valueOrDefault<String>(
-                                                        menuOffersItem.name,
-                                                        '-',
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .titleLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Outfit',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                    subtitle: Text(
-                                                      'Cena bazowa: ${menuOffersItem.basePrice.amount.toString()} ${menuOffersItem.basePrice.currencyCode}',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Readex Pro',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                    trailing: Icon(
-                                                      Icons
-                                                          .arrow_forward_ios_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondaryText,
-                                                      size: 24.0,
-                                                    ),
-                                                    tileColor: FlutterFlowTheme
-                                                            .of(context)
-                                                        .secondaryBackground,
-                                                    dense: false,
-                                                    contentPadding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(12.0, 0.0,
-                                                                12.0, 0.0),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Builder(
-                                  builder: (context) => Padding(
+                            builder: (context) => SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 30.0, 0.0, 0.0),
-                                    child: FlutterFlowIconButton(
-                                      borderColor:
-                                          FlutterFlowTheme.of(context).primary,
-                                      borderRadius: 45.0,
-                                      borderWidth: 1.0,
-                                      buttonSize: 45.0,
-                                      fillColor:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: 700.0,
                                       ),
-                                      onPressed: () async {
-                                        FFAppState().editedMenuOffer =
-                                            MenuOfferStruct();
-                                        safeSetState(() {});
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  FocusScope.of(dialogContext)
-                                                      .unfocus();
-                                                  FocusManager
-                                                      .instance.primaryFocus
-                                                      ?.unfocus();
-                                                },
-                                                child: MenuOfferEditWidget(
-                                                  isNew: true,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
+                                      decoration: BoxDecoration(),
+                                      child: Builder(
+                                        builder: (context) {
+                                          final menuOffers = _model
+                                                  .place?.menuOffers
+                                                  .toList() ??
+                                              [];
 
-                                        if (FFAppState()
-                                                .editedMenuOfferAction ==
-                                            ActionType.CREATE) {
-                                          // Add new range
-                                          _model.updatePlaceStruct(
-                                            (e) => e
-                                              ..updateMenuOffers(
-                                                (e) => e.add(FFAppState()
-                                                    .editedMenuOffer),
-                                              ),
-                                          );
-                                          safeSetState(() {});
-                                        }
-                                        // Clear helper vars
-                                        FFAppState().editedWeekDayTimeRange =
-                                            WeekDayTimeRangeStruct();
-                                        FFAppState()
-                                                .editedWeekDayTimeRangeAction =
-                                            null;
-                                        FFAppState().editedMenuOffer =
-                                            MenuOfferStruct();
-                                        FFAppState().editedMenuOfferAction =
-                                            null;
-                                        FFAppState().editedLocalDateTimeRange =
-                                            LocalDateTimeRangeStruct();
-                                        FFAppState()
-                                                .editedLocalDateTimeRangeAction =
-                                            null;
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          KeepAliveWidgetWrapper(
-                            builder: (context) => Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0.0, -1.0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 20.0, 20.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 10.0, 0.0),
-                                          child: Icon(
-                                            Icons.info_outlined,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 20.0,
-                                          ),
-                                        ),
-                                        Flexible(
-                                          child: Text(
-                                            'Dane na tej stronie zostaną zapisane od razu po zamknięciu okna edycji konkretnego schematu.',
-                                            maxLines: 4,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 30.0, 0.0, 0.0),
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: 700.0,
-                                    ),
-                                    decoration: BoxDecoration(),
-                                    child: FutureBuilder<ApiCallResponse>(
-                                      future: (_model.apiRequestCompleter ??=
-                                              Completer<ApiCallResponse>()
-                                                ..complete(
-                                                    LuncherCoreAPIGETSchemaGroup
-                                                        .getAllForPlaceCall
-                                                        .call(
-                                                  authorization:
-                                                      currentAuthenticationToken,
-                                                  placeId: widget.placeId,
-                                                )))
-                                          .future,
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        final schemasListViewGetAllForPlaceResponse =
-                                            snapshot.data!;
-
-                                        return Builder(
-                                          builder: (context) {
-                                            final schemas = (schemasListViewGetAllForPlaceResponse
-                                                            .jsonBody
-                                                            .toList()
-                                                            .map<ImportSchemaDtoStruct?>(
-                                                                ImportSchemaDtoStruct
-                                                                    .maybeFromMap)
-                                                            .toList()
-                                                        as Iterable<
-                                                            ImportSchemaDtoStruct?>)
-                                                    .withoutNulls
-                                                    .toList() ??
-                                                [];
-
-                                            return RefreshIndicator(
-                                              key: Key(
-                                                  'RefreshIndicator_0iimem24'),
-                                              onRefresh: () async {
-                                                safeSetState(() =>
-                                                    _model.apiRequestCompleter =
-                                                        null);
-                                              },
-                                              child: ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: schemas.length,
-                                                itemBuilder:
-                                                    (context, schemasIndex) {
-                                                  final schemasItem =
-                                                      schemas[schemasIndex];
-                                                  return Builder(
-                                                    builder: (context) =>
-                                                        InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        FFAppState()
-                                                                .editedImportSchema =
-                                                            functions
-                                                                .cloneImportSchemaObject(
-                                                                    schemasItem)!;
-                                                        FFAppState()
-                                                                .editedImportSchemaAction =
-                                                            null;
-                                                        safeSetState(() {});
-                                                        await showDialog(
-                                                          context: context,
-                                                          builder:
-                                                              (dialogContext) {
-                                                            return Dialog(
-                                                              elevation: 0,
-                                                              insetPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              alignment: AlignmentDirectional(
-                                                                      0.0, 0.0)
-                                                                  .resolve(
-                                                                      Directionality.of(
-                                                                          context)),
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  FocusScope.of(
-                                                                          dialogContext)
-                                                                      .unfocus();
-                                                                  FocusManager
-                                                                      .instance
-                                                                      .primaryFocus
-                                                                      ?.unfocus();
-                                                                },
-                                                                child:
-                                                                    ImportDetailsWidgetWidget(
-                                                                  isNew: false,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
+                                          return ListView.separated(
+                                            padding: EdgeInsets.zero,
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: menuOffers.length,
+                                            separatorBuilder: (_, __) =>
+                                                SizedBox(height: 5.0),
+                                            itemBuilder:
+                                                (context, menuOffersIndex) {
+                                              final menuOffersItem =
+                                                  menuOffers[menuOffersIndex];
+                                              return Builder(
+                                                builder: (context) => InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    FFAppState()
+                                                            .editedMenuOffer =
+                                                        functions
+                                                            .cloneMenuOfferObject(
+                                                                menuOffersItem)!;
+                                                    FFAppState()
+                                                            .editedMenuOfferAction =
+                                                        null;
+                                                    safeSetState(() {});
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              FocusScope.of(
+                                                                      dialogContext)
+                                                                  .unfocus();
+                                                              FocusManager
+                                                                  .instance
+                                                                  .primaryFocus
+                                                                  ?.unfocus();
+                                                            },
+                                                            child:
+                                                                MenuOfferEditWidget(
+                                                              isNew: false,
+                                                            ),
+                                                          ),
                                                         );
-
-                                                        safeSetState(() => _model
-                                                                .apiRequestCompleter =
-                                                            null);
-                                                        FFAppState()
-                                                                .editedImportSchema =
-                                                            ImportSchemaDtoStruct();
-                                                        FFAppState()
-                                                                .editedImportSchemaAction =
-                                                            null;
-                                                        safeSetState(() {});
                                                       },
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        child: ListTile(
-                                                          title: Text(
-                                                            schemasItem.name,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
+                                                    );
+
+                                                    if (FFAppState()
+                                                            .editedMenuOfferAction ==
+                                                        ActionType.UPDATE) {
+                                                      // Update selected range
+                                                      _model.updatePlaceStruct(
+                                                        (e) => e
+                                                          ..updateMenuOffers(
+                                                            (e) => e[
+                                                                    menuOffersIndex] =
+                                                                FFAppState()
+                                                                    .editedMenuOffer,
+                                                          ),
+                                                      );
+                                                      safeSetState(() {});
+                                                    } else if (FFAppState()
+                                                            .editedMenuOfferAction ==
+                                                        ActionType.DELETE) {
+                                                      // Update selected range
+                                                      _model.updatePlaceStruct(
+                                                        (e) => e
+                                                          ..updateMenuOffers(
+                                                            (e) => e.removeAt(
+                                                                menuOffersIndex),
+                                                          ),
+                                                      );
+                                                      safeSetState(() {});
+                                                    } else if (FFAppState()
+                                                            .editedMenuOfferAction ==
+                                                        ActionType.CREATE) {
+                                                      // Update selected range
+                                                      _model.updatePlaceStruct(
+                                                        (e) => e
+                                                          ..updateMenuOffers(
+                                                            (e) => e.add(
+                                                                FFAppState()
+                                                                    .editedMenuOffer),
+                                                          ),
+                                                      );
+                                                      safeSetState(() {});
+                                                    }
+
+                                                    // Clear helper vars
+                                                    FFAppState()
+                                                            .editedWeekDayTimeRange =
+                                                        WeekDayTimeRangeStruct();
+                                                    FFAppState()
+                                                            .editedWeekDayTimeRangeAction =
+                                                        null;
+                                                    FFAppState()
+                                                            .editedMenuOffer =
+                                                        MenuOfferStruct();
+                                                    FFAppState()
+                                                            .editedMenuOfferAction =
+                                                        null;
+                                                    FFAppState()
+                                                            .editedLocalDateTimeRange =
+                                                        LocalDateTimeRangeStruct();
+                                                    FFAppState()
+                                                            .editedLocalDateTimeRangeAction =
+                                                        null;
+                                                  },
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    child: ListTile(
+                                                      title: Text(
+                                                        valueOrDefault<String>(
+                                                          menuOffersItem.name,
+                                                          '-',
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .titleLarge
                                                                 .override(
                                                                   fontFamily:
@@ -2070,11 +1757,12 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   letterSpacing:
                                                                       0.0,
                                                                 ),
-                                                          ),
-                                                          subtitle: Text(
-                                                            '${schemasItem.importCronDescription} / ${schemasItem.schemaType}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
+                                                      ),
+                                                      subtitle: Text(
+                                                        'Cena bazowa: ${menuOffersItem.basePrice.amount.toString()} ${menuOffersItem.basePrice.currencyCode}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .labelMedium
                                                                 .override(
                                                                   fontFamily:
@@ -2082,1359 +1770,790 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                   letterSpacing:
                                                                       0.0,
                                                                 ),
-                                                          ),
-                                                          trailing: Icon(
-                                                            Icons
-                                                                .arrow_forward_ios_rounded,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
+                                                      ),
+                                                      trailing: Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .secondaryText,
-                                                            size: 24.0,
-                                                          ),
-                                                          tileColor: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          dense: false,
-                                                          contentPadding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      12.0,
-                                                                      0.0,
-                                                                      12.0,
-                                                                      0.0),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                          ),
-                                                        ),
+                                                        size: 24.0,
+                                                      ),
+                                                      tileColor: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      dense: false,
+                                                      contentPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12.0,
+                                                                  0.0,
+                                                                  12.0,
+                                                                  0.0),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Builder(
-                                  builder: (context) => Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 30.0, 0.0, 0.0),
-                                    child: FlutterFlowIconButton(
-                                      borderColor:
-                                          FlutterFlowTheme.of(context).primary,
-                                      borderRadius: 45.0,
-                                      borderWidth: 1.0,
-                                      buttonSize: 45.0,
-                                      fillColor:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () async {
-                                        FFAppState().editedImportSchema =
-                                            ImportSchemaDtoStruct(
-                                          name: '',
-                                          importCron: '0 0 10 * * ?',
-                                          enabled: true,
-                                          schemaType: 'FACEBOOK_TEXT',
-                                          id: '',
-                                          placeId: widget.placeId,
-                                        );
-                                        FFAppState().editedImportSchemaAction =
-                                            null;
-                                        await showDialog(
-                                          context: context,
-                                          builder: (dialogContext) {
-                                            return Dialog(
-                                              elevation: 0,
-                                              insetPadding: EdgeInsets.zero,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              alignment:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  FocusScope.of(dialogContext)
-                                                      .unfocus();
-                                                  FocusManager
-                                                      .instance.primaryFocus
-                                                      ?.unfocus();
-                                                },
-                                                child:
-                                                    ImportDetailsWidgetWidget(
-                                                  isNew: true,
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                        );
-
-                                        safeSetState(() =>
-                                            _model.apiRequestCompleter = null);
-                                        // Clear helper vars
-                                        FFAppState().editedImportSchemaAction =
-                                            null;
-                                        FFAppState().editedImportSchema =
-                                            ImportSchemaDtoStruct();
-                                      },
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Builder(
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 30.0, 0.0, 0.0),
+                                      child: FlutterFlowIconButton(
+                                        borderColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                        borderRadius: 45.0,
+                                        borderWidth: 1.0,
+                                        buttonSize: 45.0,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .accent1,
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 24.0,
+                                        ),
+                                        onPressed: () async {
+                                          FFAppState().editedMenuOffer =
+                                              MenuOfferStruct();
+                                          safeSetState(() {});
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: MenuOfferEditWidget(
+                                                    isNew: true,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          if (FFAppState()
+                                                  .editedMenuOfferAction ==
+                                              ActionType.CREATE) {
+                                            // Add new range
+                                            _model.updatePlaceStruct(
+                                              (e) => e
+                                                ..updateMenuOffers(
+                                                  (e) => e.add(FFAppState()
+                                                      .editedMenuOffer),
+                                                ),
+                                            );
+                                            safeSetState(() {});
+                                          }
+                                          // Clear helper vars
+                                          FFAppState().editedWeekDayTimeRange =
+                                              WeekDayTimeRangeStruct();
+                                          FFAppState()
+                                                  .editedWeekDayTimeRangeAction =
+                                              null;
+                                          FFAppState().editedMenuOffer =
+                                              MenuOfferStruct();
+                                          FFAppState().editedMenuOfferAction =
+                                              null;
+                                          FFAppState()
+                                                  .editedLocalDateTimeRange =
+                                              LocalDateTimeRangeStruct();
+                                          FFAppState()
+                                                  .editedLocalDateTimeRangeAction =
+                                              null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           KeepAliveWidgetWrapper(
-                            builder: (context) => Wrap(
-                              spacing: 20.0,
-                              runSpacing: 20.0,
-                              alignment: WrapAlignment.center,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              direction: Axis.horizontal,
-                              runAlignment: WrapAlignment.center,
-                              verticalDirection: VerticalDirection.down,
-                              clipBehavior: Clip.none,
-                              children: [
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: 350.0,
-                                  ),
-                                  decoration: BoxDecoration(),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Builder(
-                                        builder: (context) => FFButtonWidget(
-                                          onPressed: () async {
-                                            var _shouldSetState = false;
-                                            _model.googleMapsApiCallResult =
-                                                await GooglePlacesAPIGroup
-                                                    .textSearchCall
-                                                    .call(
-                                              textQuery:
-                                                  '${_model.nameInputTextController.text} ${_model.addressCityTextController.text}',
-                                            );
-
-                                            _shouldSetState = true;
-                                            if ((_model.googleMapsApiCallResult
-                                                    ?.succeeded ??
-                                                true)) {
-                                              FFAppState()
-                                                  .selectedGoogleMapPlacesApiIndex = -1;
-                                              await showDialog(
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        FocusScope.of(
-                                                                dialogContext)
-                                                            .unfocus();
-                                                        FocusManager.instance
-                                                            .primaryFocus
-                                                            ?.unfocus();
-                                                      },
-                                                      child:
-                                                          SelectGooglePlacesApiAddressWidget(
-                                                        places:
-                                                            GooglePlacesAPIGroup
-                                                                .textSearchCall
-                                                                .places(
-                                                          (_model.googleMapsApiCallResult
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                        )!,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-
-                                              if (FFAppState()
-                                                      .selectedGoogleMapPlacesApiIndex >=
-                                                  0) {
-                                                safeSetState(() {
-                                                  _model
-                                                      .locationLatTextController
-                                                      ?.text = (GooglePlacesAPIGroup
-                                                          .textSearchCall
-                                                          .places(
-                                                            (_model.googleMapsApiCallResult
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                          )!
-                                                          .elementAtOrNull(
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex))!
-                                                      .location
-                                                      .latitude
-                                                      .toString();
-                                                });
-                                                safeSetState(() {
-                                                  _model
-                                                      .locationLonTextController
-                                                      ?.text = (GooglePlacesAPIGroup
-                                                          .textSearchCall
-                                                          .places(
-                                                            (_model.googleMapsApiCallResult
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                          )!
-                                                          .elementAtOrNull(
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex))!
-                                                      .location
-                                                      .longitude
-                                                      .toString();
-                                                });
-                                                await _model
-                                                    .googleMapsController.future
-                                                    .then(
-                                                  (c) => c.animateCamera(
-                                                    CameraUpdate.newLatLng(
-                                                        functions
-                                                            .locationToLatLng(
-                                                                LocationStruct(
-                                                              latitude: double
-                                                                  .tryParse(_model
-                                                                      .locationLatTextController
-                                                                      .text),
-                                                              longitude: double
-                                                                  .tryParse(_model
-                                                                      .locationLonTextController
-                                                                      .text),
-                                                            ))!
-                                                            .toGoogleMaps()),
-                                                  ),
-                                                );
-                                                safeSetState(() {
-                                                  _model
-                                                      .googlePlaceIdInputTextController
-                                                      ?.text = (GooglePlacesAPIGroup
-                                                          .textSearchCall
-                                                          .places(
-                                                            (_model.googleMapsApiCallResult
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                          )!
-                                                          .elementAtOrNull(
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex))!
-                                                      .id;
-                                                });
-                                                safeSetState(() {
-                                                  _model.address1stLineTextController
-                                                          ?.text =
-                                                      '${functions.getGoogleAddressComponent(GooglePlacesAPIGroup.textSearchCall.places(
-                                                            (_model.googleMapsApiCallResult
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                          )?.toList(), FFAppState().selectedGoogleMapPlacesApiIndex, 'route').longText} ${functions.getGoogleAddressComponent(GooglePlacesAPIGroup.textSearchCall.places(
-                                                            (_model.googleMapsApiCallResult
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                          )?.toList(), FFAppState().selectedGoogleMapPlacesApiIndex, 'street_number').longText}';
-                                                });
-                                                safeSetState(() {
-                                                  _model.addressZipCodeTextController?.text =
-                                                      functions
-                                                          .getGoogleAddressComponent(
-                                                              GooglePlacesAPIGroup
-                                                                  .textSearchCall
-                                                                  .places(
-                                                                    (_model.googleMapsApiCallResult
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                  )
-                                                                  ?.toList(),
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex,
-                                                              'postal_code')
-                                                          .longText;
-                                                });
-                                                safeSetState(() {
-                                                  _model.addressCityTextController?.text =
-                                                      functions
-                                                          .getGoogleAddressComponent(
-                                                              GooglePlacesAPIGroup
-                                                                  .textSearchCall
-                                                                  .places(
-                                                                    (_model.googleMapsApiCallResult
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                  )
-                                                                  ?.toList(),
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex,
-                                                              'locality')
-                                                          .longText;
-                                                });
-                                                safeSetState(() {
-                                                  _model.addressDistrictTextController?.text =
-                                                      functions
-                                                          .getGoogleAddressComponent(
-                                                              GooglePlacesAPIGroup
-                                                                  .textSearchCall
-                                                                  .places(
-                                                                    (_model.googleMapsApiCallResult
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                  )
-                                                                  ?.toList(),
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex,
-                                                              'sublocality')
-                                                          .longText;
-                                                });
-                                                safeSetState(() {
-                                                  _model.addressCountryTextController?.text =
-                                                      functions
-                                                          .getGoogleAddressComponent(
-                                                              GooglePlacesAPIGroup
-                                                                  .textSearchCall
-                                                                  .places(
-                                                                    (_model.googleMapsApiCallResult
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                  )
-                                                                  ?.toList(),
-                                                              FFAppState()
-                                                                  .selectedGoogleMapPlacesApiIndex,
-                                                              'country')
-                                                          .shortText;
-                                                });
-                                              } else {
-                                                if (_shouldSetState)
-                                                  safeSetState(() {});
-                                                return;
-                                              }
-
-                                              FFAppState()
-                                                  .selectedGoogleMapPlacesApiIndex = -1;
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    'Niepowodzenie zapytania do Google Maps. Sporóbuj ponownie!',
-                                                    style: TextStyle(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                    ),
-                                                  ),
-                                                  duration: Duration(
-                                                      milliseconds: 4000),
-                                                  backgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondary,
-                                                ),
-                                              );
-                                              if (_shouldSetState)
-                                                safeSetState(() {});
-                                              return;
-                                            }
-
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                          },
-                                          text: 'Pobierz wg nazwy i miasta',
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 14.0,
-                                          ),
-                                          options: FFButtonOptions(
-                                            height: 40.0,
+                            builder: (context) => SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, -1.0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          20.0, 20.0, 20.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconAlignment: IconAlignment.end,
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color: Colors.white,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 350.0,
-                                        child: TextFormField(
-                                          controller: _model
-                                              .address1stLineTextController,
-                                          focusNode:
-                                              _model.address1stLineFocusNode,
-                                          autofocus: false,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            labelText: '1-sza linia',
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            alignLabelWithHint: true,
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            filled: true,
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                          cursorColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          validator: _model
-                                              .address1stLineTextControllerValidator
-                                              .asValidator(context),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 350.0,
-                                        child: TextFormField(
-                                          controller: _model
-                                              .address2ndLineTextController,
-                                          focusNode:
-                                              _model.address2ndLineFocusNode,
-                                          autofocus: false,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            labelText: '2-ga linia',
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            alignLabelWithHint: true,
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            filled: true,
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                          cursorColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          validator: _model
-                                              .address2ndLineTextControllerValidator
-                                              .asValidator(context),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: TextFormField(
-                                              controller: _model
-                                                  .addressZipCodeTextController,
-                                              focusNode: _model
-                                                  .addressZipCodeFocusNode,
-                                              autofocus: false,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                labelText: 'Kod pocztowy',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                alignLabelWithHint: true,
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              cursorColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              validator: _model
-                                                  .addressZipCodeTextControllerValidator
-                                                  .asValidator(context),
-                                            ),
-                                          ),
-                                          Flexible(
-                                            flex: 2,
-                                            child: TextFormField(
-                                              controller: _model
-                                                  .addressCityTextController,
-                                              focusNode:
-                                                  _model.addressCityFocusNode,
-                                              autofocus: false,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                labelText: 'Miasto',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                alignLabelWithHint: true,
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              cursorColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              validator: _model
-                                                  .addressCityTextControllerValidator
-                                                  .asValidator(context),
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 20.0)),
-                                      ),
-                                      Container(
-                                        width: 350.0,
-                                        child: TextFormField(
-                                          controller: _model
-                                              .addressDistrictTextController,
-                                          focusNode:
-                                              _model.addressDistrictFocusNode,
-                                          autofocus: false,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            labelText:
-                                                'Dzielnica/Region miasta',
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            alignLabelWithHint: true,
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            filled: true,
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                          cursorColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          validator: _model
-                                              .addressDistrictTextControllerValidator
-                                              .asValidator(context),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 350.0,
-                                        child: TextFormField(
-                                          controller: _model
-                                              .addressCountryTextController,
-                                          focusNode:
-                                              _model.addressCountryFocusNode,
-                                          autofocus: false,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: true,
-                                            labelText: 'Kraj',
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            alignLabelWithHint: true,
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            filled: true,
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                          cursorColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          validator: _model
-                                              .addressCountryTextControllerValidator
-                                              .asValidator(context),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(-1.0, 0.0),
-                                        child: Text(
-                                          'Lokalizacja - współrzędne:',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Flexible(
-                                            flex: 1,
-                                            child: TextFormField(
-                                              controller: _model
-                                                  .locationLatTextController,
-                                              focusNode:
-                                                  _model.locationLatFocusNode,
-                                              onChanged: (_) =>
-                                                  EasyDebounce.debounce(
-                                                '_model.locationLatTextController',
-                                                Duration(milliseconds: 1000),
-                                                () async {
-                                                  await _model
-                                                      .googleMapsController
-                                                      .future
-                                                      .then(
-                                                    (c) => c.animateCamera(
-                                                      CameraUpdate.newLatLng(
-                                                          functions
-                                                              .locationToLatLng(
-                                                                  LocationStruct(
-                                                                latitude: double
-                                                                    .tryParse(_model
-                                                                        .locationLatTextController
-                                                                        .text),
-                                                                longitude: double
-                                                                    .tryParse(_model
-                                                                        .locationLonTextController
-                                                                        .text),
-                                                              ))!
-                                                              .toGoogleMaps()),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                              autofocus: false,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                labelText: 'Szerokość (N/S)',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                alignLabelWithHint: true,
-                                                hintText: 'N -> +  / S -> -',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              cursorColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              validator: _model
-                                                  .locationLatTextControllerValidator
-                                                  .asValidator(context),
-                                            ),
-                                          ),
-                                          Flexible(
-                                            flex: 1,
-                                            child: TextFormField(
-                                              controller: _model
-                                                  .locationLonTextController,
-                                              focusNode:
-                                                  _model.locationLonFocusNode,
-                                              onChanged: (_) =>
-                                                  EasyDebounce.debounce(
-                                                '_model.locationLonTextController',
-                                                Duration(milliseconds: 1000),
-                                                () async {
-                                                  await _model
-                                                      .googleMapsController
-                                                      .future
-                                                      .then(
-                                                    (c) => c.animateCamera(
-                                                      CameraUpdate.newLatLng(
-                                                          functions
-                                                              .locationToLatLng(
-                                                                  LocationStruct(
-                                                                latitude: double
-                                                                    .tryParse(_model
-                                                                        .locationLatTextController
-                                                                        .text),
-                                                                longitude: double
-                                                                    .tryParse(_model
-                                                                        .locationLonTextController
-                                                                        .text),
-                                                              ))!
-                                                              .toGoogleMaps()),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                              autofocus: false,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                labelText: 'Długość (E/W)',
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                alignLabelWithHint: true,
-                                                hintText: 'E -> +  / W -> -',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Readex Pro',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              cursorColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              validator: _model
-                                                  .locationLonTextControllerValidator
-                                                  .asValidator(context),
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 20.0)),
-                                      ),
-                                      TextFormField(
-                                        controller: _model
-                                            .googlePlaceIdInputTextController,
-                                        focusNode:
-                                            _model.googlePlaceIdInputFocusNode,
-                                        autofocus: false,
-                                        readOnly: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          labelText: 'Google Place ID',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          alignLabelWithHint: true,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
+                                                    0.0, 0.0, 10.0, 0.0),
+                                            child: Icon(
+                                              Icons.info_outlined,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
+                                                      .primaryText,
+                                              size: 20.0,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
                                           ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
+                                          Flexible(
+                                            child: Text(
+                                              'Dane na tej stronie zostaną zapisane od razu po zamknięciu okna edycji konkretnego schematu.',
+                                              maxLines: 4,
+                                              style:
                                                   FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
                                           ),
-                                          filled: true,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                        cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        validator: _model
-                                            .googlePlaceIdInputTextControllerValidator
-                                            .asValidator(context),
+                                        ],
                                       ),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(-1.0, 0.0),
-                                        child: Text(
-                                          'Strefa czasowa:',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 30.0, 0.0, 0.0),
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                        maxWidth: 700.0,
                                       ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child:
-                                                FutureBuilder<ApiCallResponse>(
-                                              future: FFAppState().getTimezones(
-                                                requestFn: () =>
-                                                    LuncherCoreAPIGETUtilsTzGroup
-                                                        .getAvailableTimezonesCall
-                                                        .call(
-                                                  authorization:
-                                                      currentAuthenticationToken,
+                                      decoration: BoxDecoration(),
+                                      child: FutureBuilder<ApiCallResponse>(
+                                        future: (_model.apiRequestCompleter ??=
+                                                Completer<ApiCallResponse>()
+                                                  ..complete(
+                                                      LuncherCoreAPIGETSchemaGroup
+                                                          .getAllForPlaceCall
+                                                          .call(
+                                                    authorization:
+                                                        currentAuthenticationToken,
+                                                    placeId: widget.placeId,
+                                                  )))
+                                            .future,
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                  ),
                                                 ),
                                               ),
-                                              builder: (context, snapshot) {
-                                                // Customize what your widget looks like when it's loading.
-                                                if (!snapshot.hasData) {
-                                                  return Center(
-                                                    child: SizedBox(
-                                                      width: 50.0,
-                                                      height: 50.0,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                                final timeZoneDropDownGetAvailableTimezonesResponse =
-                                                    snapshot.data!;
+                                            );
+                                          }
+                                          final schemasListViewGetAllForPlaceResponse =
+                                              snapshot.data!;
 
-                                                return FlutterFlowDropDown<
-                                                    String>(
-                                                  controller: _model
-                                                          .timeZoneDropDownValueController ??=
-                                                      FormFieldController<
-                                                          String>(
-                                                    _model.timeZoneDropDownValue ??=
-                                                        _model.place?.timeZone,
+                                          return Builder(
+                                            builder: (context) {
+                                              final schemas = (schemasListViewGetAllForPlaceResponse
+                                                              .jsonBody
+                                                              .toList()
+                                                              .map<ImportSchemaDtoStruct?>(
+                                                                  ImportSchemaDtoStruct
+                                                                      .maybeFromMap)
+                                                              .toList()
+                                                          as Iterable<
+                                                              ImportSchemaDtoStruct?>)
+                                                      .withoutNulls
+                                                      .toList() ??
+                                                  [];
+
+                                              return RefreshIndicator(
+                                                key: Key(
+                                                    'RefreshIndicator_0iimem24'),
+                                                onRefresh: () async {
+                                                  safeSetState(() => _model
+                                                          .apiRequestCompleter =
+                                                      null);
+                                                },
+                                                child: ListView.separated(
+                                                  padding: EdgeInsets.zero,
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: schemas.length,
+                                                  separatorBuilder: (_, __) =>
+                                                      SizedBox(height: 5.0),
+                                                  itemBuilder:
+                                                      (context, schemasIndex) {
+                                                    final schemasItem =
+                                                        schemas[schemasIndex];
+                                                    return Builder(
+                                                      builder: (context) =>
+                                                          InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          FFAppState()
+                                                                  .editedImportSchema =
+                                                              functions
+                                                                  .cloneImportSchemaObject(
+                                                                      schemasItem)!;
+                                                          FFAppState()
+                                                                  .editedImportSchemaAction =
+                                                              null;
+                                                          safeSetState(() {});
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ImportDetailsWidgetWidget(
+                                                                    isNew:
+                                                                        false,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+
+                                                          safeSetState(() =>
+                                                              _model.apiRequestCompleter =
+                                                                  null);
+                                                          FFAppState()
+                                                                  .editedImportSchema =
+                                                              ImportSchemaDtoStruct();
+                                                          FFAppState()
+                                                                  .editedImportSchemaAction =
+                                                              null;
+                                                          safeSetState(() {});
+                                                        },
+                                                        child: Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: ListTile(
+                                                            title: Text(
+                                                              schemasItem.name,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleLarge
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Outfit',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                            subtitle: Text(
+                                                              '${schemasItem.importCronDescription} / ${schemasItem.schemaType}',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                            trailing: Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios_rounded,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              size: 24.0,
+                                                            ),
+                                                            tileColor: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            dense: false,
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        0.0,
+                                                                        12.0,
+                                                                        0.0),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Builder(
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 30.0, 0.0, 0.0),
+                                      child: FlutterFlowIconButton(
+                                        borderColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                        borderRadius: 45.0,
+                                        borderWidth: 1.0,
+                                        buttonSize: 45.0,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .accent1,
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 24.0,
+                                        ),
+                                        onPressed: () async {
+                                          FFAppState().editedImportSchema =
+                                              ImportSchemaDtoStruct(
+                                            name: '',
+                                            importCron: '0 0 10 * * ?',
+                                            enabled: true,
+                                            schemaType: 'FACEBOOK_TEXT',
+                                            id: '',
+                                            placeId: widget.placeId,
+                                          );
+                                          FFAppState()
+                                              .editedImportSchemaAction = null;
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ImportDetailsWidgetWidget(
+                                                    isNew: true,
                                                   ),
-                                                  options:
-                                                      LuncherCoreAPIGETUtilsTzGroup
-                                                          .getAvailableTimezonesCall
-                                                          .timezones(
-                                                    timeZoneDropDownGetAvailableTimezonesResponse
-                                                        .jsonBody,
-                                                  )!,
-                                                  onChanged: (val) =>
-                                                      safeSetState(() => _model
-                                                              .timeZoneDropDownValue =
-                                                          val),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          safeSetState(() => _model
+                                              .apiRequestCompleter = null);
+                                          // Clear helper vars
+                                          FFAppState()
+                                              .editedImportSchemaAction = null;
+                                          FFAppState().editedImportSchema =
+                                              ImportSchemaDtoStruct();
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          KeepAliveWidgetWrapper(
+                            builder: (context) => SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Wrap(
+                                    spacing: 20.0,
+                                    runSpacing: 20.0,
+                                    alignment: WrapAlignment.center,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    direction: Axis.horizontal,
+                                    runAlignment: WrapAlignment.center,
+                                    verticalDirection: VerticalDirection.down,
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 350.0,
+                                        ),
+                                        decoration: BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Builder(
+                                              builder: (context) =>
+                                                  FFButtonWidget(
+                                                onPressed: () async {
+                                                  var _shouldSetState = false;
+                                                  _model.googleMapsApiCallResult =
+                                                      await GooglePlacesAPIGroup
+                                                          .textSearchCall
+                                                          .call(
+                                                    textQuery:
+                                                        '${_model.nameInputTextController.text} ${_model.addressCityTextController.text}',
+                                                  );
+
+                                                  _shouldSetState = true;
+                                                  if ((_model
+                                                          .googleMapsApiCallResult
+                                                          ?.succeeded ??
+                                                      true)) {
+                                                    FFAppState()
+                                                        .selectedGoogleMapPlacesApiIndex = -1;
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              FocusScope.of(
+                                                                      dialogContext)
+                                                                  .unfocus();
+                                                              FocusManager
+                                                                  .instance
+                                                                  .primaryFocus
+                                                                  ?.unfocus();
+                                                            },
+                                                            child:
+                                                                SelectGooglePlacesApiAddressWidget(
+                                                              places: GooglePlacesAPIGroup
+                                                                  .textSearchCall
+                                                                  .places(
+                                                                (_model.googleMapsApiCallResult
+                                                                        ?.jsonBody ??
+                                                                    ''),
+                                                              )!,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+
+                                                    if (FFAppState()
+                                                            .selectedGoogleMapPlacesApiIndex >=
+                                                        0) {
+                                                      safeSetState(() {
+                                                        _model
+                                                            .locationLatTextController
+                                                            ?.text = (GooglePlacesAPIGroup
+                                                                .textSearchCall
+                                                                .places(
+                                                                  (_model.googleMapsApiCallResult
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                )!
+                                                                .elementAtOrNull(
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex))!
+                                                            .location
+                                                            .latitude
+                                                            .toString();
+                                                      });
+                                                      safeSetState(() {
+                                                        _model
+                                                            .locationLonTextController
+                                                            ?.text = (GooglePlacesAPIGroup
+                                                                .textSearchCall
+                                                                .places(
+                                                                  (_model.googleMapsApiCallResult
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                )!
+                                                                .elementAtOrNull(
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex))!
+                                                            .location
+                                                            .longitude
+                                                            .toString();
+                                                      });
+                                                      await _model
+                                                          .googleMapsController
+                                                          .future
+                                                          .then(
+                                                        (c) => c.animateCamera(
+                                                          CameraUpdate.newLatLng(
+                                                              functions
+                                                                  .locationToLatLng(
+                                                                      LocationStruct(
+                                                                    latitude: double
+                                                                        .tryParse(_model
+                                                                            .locationLatTextController
+                                                                            .text),
+                                                                    longitude: double
+                                                                        .tryParse(_model
+                                                                            .locationLonTextController
+                                                                            .text),
+                                                                  ))!
+                                                                  .toGoogleMaps()),
+                                                        ),
+                                                      );
+                                                      safeSetState(() {
+                                                        _model
+                                                            .googlePlaceIdInputTextController
+                                                            ?.text = (GooglePlacesAPIGroup
+                                                                .textSearchCall
+                                                                .places(
+                                                                  (_model.googleMapsApiCallResult
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                )!
+                                                                .elementAtOrNull(
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex))!
+                                                            .id;
+                                                      });
+                                                      safeSetState(() {
+                                                        _model.address1stLineTextController
+                                                                ?.text =
+                                                            '${functions.getGoogleAddressComponent(GooglePlacesAPIGroup.textSearchCall.places(
+                                                                  (_model.googleMapsApiCallResult
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                )?.toList(), FFAppState().selectedGoogleMapPlacesApiIndex, 'route').longText} ${functions.getGoogleAddressComponent(GooglePlacesAPIGroup.textSearchCall.places(
+                                                                  (_model.googleMapsApiCallResult
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                )?.toList(), FFAppState().selectedGoogleMapPlacesApiIndex, 'street_number').longText}';
+                                                      });
+                                                      safeSetState(() {
+                                                        _model.addressZipCodeTextController?.text =
+                                                            functions
+                                                                .getGoogleAddressComponent(
+                                                                    GooglePlacesAPIGroup
+                                                                        .textSearchCall
+                                                                        .places(
+                                                                          (_model.googleMapsApiCallResult?.jsonBody ??
+                                                                              ''),
+                                                                        )
+                                                                        ?.toList(),
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex,
+                                                                    'postal_code')
+                                                                .longText;
+                                                      });
+                                                      safeSetState(() {
+                                                        _model.addressCityTextController?.text =
+                                                            functions
+                                                                .getGoogleAddressComponent(
+                                                                    GooglePlacesAPIGroup
+                                                                        .textSearchCall
+                                                                        .places(
+                                                                          (_model.googleMapsApiCallResult?.jsonBody ??
+                                                                              ''),
+                                                                        )
+                                                                        ?.toList(),
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex,
+                                                                    'locality')
+                                                                .longText;
+                                                      });
+                                                      safeSetState(() {
+                                                        _model.addressDistrictTextController?.text =
+                                                            functions
+                                                                .getGoogleAddressComponent(
+                                                                    GooglePlacesAPIGroup
+                                                                        .textSearchCall
+                                                                        .places(
+                                                                          (_model.googleMapsApiCallResult?.jsonBody ??
+                                                                              ''),
+                                                                        )
+                                                                        ?.toList(),
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex,
+                                                                    'sublocality')
+                                                                .longText;
+                                                      });
+                                                      safeSetState(() {
+                                                        _model.addressCountryTextController?.text =
+                                                            functions
+                                                                .getGoogleAddressComponent(
+                                                                    GooglePlacesAPIGroup
+                                                                        .textSearchCall
+                                                                        .places(
+                                                                          (_model.googleMapsApiCallResult?.jsonBody ??
+                                                                              ''),
+                                                                        )
+                                                                        ?.toList(),
+                                                                    FFAppState()
+                                                                        .selectedGoogleMapPlacesApiIndex,
+                                                                    'country')
+                                                                .shortText;
+                                                      });
+                                                    } else {
+                                                      if (_shouldSetState)
+                                                        safeSetState(() {});
+                                                      return;
+                                                    }
+
+                                                    FFAppState()
+                                                        .selectedGoogleMapPlacesApiIndex = -1;
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Niepowodzenie zapytania do Google Maps. Sporóbuj ponownie!',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                          ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 4000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                    if (_shouldSetState)
+                                                      safeSetState(() {});
+                                                    return;
+                                                  }
+
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                },
+                                                text:
+                                                    'Pobierz wg nazwy i miasta',
+                                                icon: Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  size: 14.0,
+                                                ),
+                                                options: FFButtonOptions(
                                                   height: 40.0,
-                                                  searchHintTextStyle:
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 16.0, 0.0),
+                                                  iconAlignment:
+                                                      IconAlignment.end,
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            color: Colors.white,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  elevation: 0.0,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 350.0,
+                                              child: TextFormField(
+                                                controller: _model
+                                                    .address1stLineTextController,
+                                                focusNode: _model
+                                                    .address1stLineFocusNode,
+                                                autofocus: false,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  labelText: '1-sza linia',
+                                                  labelStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
                                                           .labelMedium
@@ -3443,181 +2562,594 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                                 'Readex Pro',
                                                             letterSpacing: 0.0,
                                                           ),
-                                                  searchTextStyle:
+                                                  alignLabelWithHint: true,
+                                                  hintStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyMedium
+                                                          .labelMedium
                                                           .override(
                                                             fontFamily:
                                                                 'Readex Pro',
                                                             letterSpacing: 0.0,
                                                           ),
-                                                  textStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Readex Pro',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  hintText: 'Wyszukaj...',
-                                                  searchHintText: 'Wyszukaj...',
-                                                  icon: Icon(
-                                                    Icons
-                                                        .keyboard_arrow_down_rounded,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 24.0,
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
                                                   ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
                                                   fillColor:
                                                       FlutterFlowTheme.of(
                                                               context)
                                                           .secondaryBackground,
-                                                  elevation: 2.0,
-                                                  borderColor:
-                                                      Colors.transparent,
-                                                  borderWidth: 0.0,
-                                                  borderRadius: 8.0,
-                                                  margin: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          12.0, 0.0, 12.0, 0.0),
-                                                  hidesUnderline: true,
-                                                  isOverButton: false,
-                                                  isSearchable: true,
-                                                  isMultiSelect: false,
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    5.0, 0.0, 0.0, 0.0),
-                                            child: FFButtonWidget(
-                                              onPressed: !((_model.locationLatTextController
-                                                                  .text !=
-                                                              '') &&
-                                                      (_model.locationLonTextController
-                                                                  .text !=
-                                                              ''))
-                                                  ? null
-                                                  : () async {
-                                                      _model.apiResult6g4 =
-                                                          await LuncherCoreAPIGETUtilsTzqueryGroup
-                                                              .getTimezoneCall
-                                                              .call(
-                                                        authorization:
-                                                            currentAuthenticationToken,
-                                                        lat: _model
-                                                            .locationLatTextController
-                                                            .text,
-                                                        lon: _model
-                                                            .locationLonTextController
-                                                            .text,
-                                                      );
-
-                                                      if ((_model.apiResult6g4
-                                                              ?.succeeded ??
-                                                          true)) {
-                                                        safeSetState(() {
-                                                          _model
-                                                              .timeZoneDropDownValueController
-                                                              ?.value = (_model
-                                                                  .apiResult6g4
-                                                                  ?.bodyText ??
-                                                              '');
-                                                        });
-                                                      } else {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Nie udało się pobrać strefy czasowej! ${ErrorDtoStruct.maybeFromMap((_model.apiResult6g4?.jsonBody ?? ''))?.message}',
-                                                              style: TextStyle(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                              ),
-                                                            ),
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                            backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondary,
-                                                          ),
-                                                        );
-                                                      }
-
-                                                      safeSetState(() {});
-                                                    },
-                                              text: 'Pobierz str. czas.',
-                                              icon: Icon(
-                                                Icons.replay,
-                                                size: 15.0,
-                                              ),
-                                              options: FFButtonOptions(
-                                                height: 40.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 16.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
+                                                ),
+                                                style:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Readex Pro',
-                                                          color: Colors.white,
-                                                          fontSize: 12.0,
                                                           letterSpacing: 0.0,
                                                         ),
-                                                elevation: 0.0,
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                disabledColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                disabledTextColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, -1.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 10.0, 0.0),
-                                              child: Icon(
-                                                Icons.info_outlined,
-                                                color:
+                                                cursorColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 20.0,
+                                                validator: _model
+                                                    .address1stLineTextControllerValidator
+                                                    .asValidator(context),
                                               ),
                                             ),
-                                            Flexible(
+                                            Container(
+                                              width: 350.0,
+                                              child: TextFormField(
+                                                controller: _model
+                                                    .address2ndLineTextController,
+                                                focusNode: _model
+                                                    .address2ndLineFocusNode,
+                                                autofocus: false,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  labelText: '2-ga linia',
+                                                  labelStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  alignLabelWithHint: true,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                cursorColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                validator: _model
+                                                    .address2ndLineTextControllerValidator
+                                                    .asValidator(context),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: TextFormField(
+                                                    controller: _model
+                                                        .addressZipCodeTextController,
+                                                    focusNode: _model
+                                                        .addressZipCodeFocusNode,
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelText: 'Kod pocztowy',
+                                                      labelStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      alignLabelWithHint: true,
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .addressZipCodeTextControllerValidator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: TextFormField(
+                                                    controller: _model
+                                                        .addressCityTextController,
+                                                    focusNode: _model
+                                                        .addressCityFocusNode,
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelText: 'Miasto',
+                                                      labelStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      alignLabelWithHint: true,
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .addressCityTextControllerValidator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
+                                              ].divide(SizedBox(width: 20.0)),
+                                            ),
+                                            Container(
+                                              width: 350.0,
+                                              child: TextFormField(
+                                                controller: _model
+                                                    .addressDistrictTextController,
+                                                focusNode: _model
+                                                    .addressDistrictFocusNode,
+                                                autofocus: false,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  labelText:
+                                                      'Dzielnica/Region miasta',
+                                                  labelStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  alignLabelWithHint: true,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                cursorColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                validator: _model
+                                                    .addressDistrictTextControllerValidator
+                                                    .asValidator(context),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 350.0,
+                                              child: TextFormField(
+                                                controller: _model
+                                                    .addressCountryTextController,
+                                                focusNode: _model
+                                                    .addressCountryFocusNode,
+                                                autofocus: false,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  isDense: true,
+                                                  labelText: 'Kraj',
+                                                  labelStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  alignLabelWithHint: true,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 1.0,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                cursorColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                validator: _model
+                                                    .addressCountryTextControllerValidator
+                                                    .asValidator(context),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  -1.0, 0.0),
                                               child: Text(
-                                                'Pobranie strefy czasowej jest możliwe po wypełnieniu współrzędnych - można je uzupełnić przyciskiem \'Pobierz wg...\' u góry strony.',
-                                                maxLines: 4,
+                                                'Lokalizacja - współrzędne:',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -3628,60 +3160,726 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                                         ),
                                               ),
                                             ),
-                                          ],
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: TextFormField(
+                                                    controller: _model
+                                                        .locationLatTextController,
+                                                    focusNode: _model
+                                                        .locationLatFocusNode,
+                                                    onChanged: (_) =>
+                                                        EasyDebounce.debounce(
+                                                      '_model.locationLatTextController',
+                                                      Duration(
+                                                          milliseconds: 1000),
+                                                      () async {
+                                                        await _model
+                                                            .googleMapsController
+                                                            .future
+                                                            .then(
+                                                          (c) =>
+                                                              c.animateCamera(
+                                                            CameraUpdate.newLatLng(
+                                                                functions
+                                                                    .locationToLatLng(
+                                                                        LocationStruct(
+                                                                      latitude: double.tryParse(_model
+                                                                          .locationLatTextController
+                                                                          .text),
+                                                                      longitude: double.tryParse(_model
+                                                                          .locationLonTextController
+                                                                          .text),
+                                                                    ))!
+                                                                    .toGoogleMaps()),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelText:
+                                                          'Szerokość (N/S)',
+                                                      labelStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      alignLabelWithHint: true,
+                                                      hintText:
+                                                          'N -> +  / S -> -',
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .locationLatTextControllerValidator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: TextFormField(
+                                                    controller: _model
+                                                        .locationLonTextController,
+                                                    focusNode: _model
+                                                        .locationLonFocusNode,
+                                                    onChanged: (_) =>
+                                                        EasyDebounce.debounce(
+                                                      '_model.locationLonTextController',
+                                                      Duration(
+                                                          milliseconds: 1000),
+                                                      () async {
+                                                        await _model
+                                                            .googleMapsController
+                                                            .future
+                                                            .then(
+                                                          (c) =>
+                                                              c.animateCamera(
+                                                            CameraUpdate.newLatLng(
+                                                                functions
+                                                                    .locationToLatLng(
+                                                                        LocationStruct(
+                                                                      latitude: double.tryParse(_model
+                                                                          .locationLatTextController
+                                                                          .text),
+                                                                      longitude: double.tryParse(_model
+                                                                          .locationLonTextController
+                                                                          .text),
+                                                                    ))!
+                                                                    .toGoogleMaps()),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelText:
+                                                          'Długość (E/W)',
+                                                      labelStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      alignLabelWithHint: true,
+                                                      hintText:
+                                                          'E -> +  / W -> -',
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1.0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .locationLonTextControllerValidator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
+                                              ].divide(SizedBox(width: 20.0)),
+                                            ),
+                                            TextFormField(
+                                              controller: _model
+                                                  .googlePlaceIdInputTextController,
+                                              focusNode: _model
+                                                  .googlePlaceIdInputFocusNode,
+                                              autofocus: false,
+                                              readOnly: true,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                isDense: true,
+                                                labelText: 'Google Place ID',
+                                                labelStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                alignLabelWithHint: true,
+                                                hintStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              cursorColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              validator: _model
+                                                  .googlePlaceIdInputTextControllerValidator
+                                                  .asValidator(context),
+                                            ),
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  -1.0, 0.0),
+                                              child: Text(
+                                                'Strefa czasowa:',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: FutureBuilder<
+                                                      ApiCallResponse>(
+                                                    future: FFAppState()
+                                                        .getTimezones(
+                                                      requestFn: () =>
+                                                          LuncherCoreAPIGETUtilsTzGroup
+                                                              .getAvailableTimezonesCall
+                                                              .call(
+                                                        authorization:
+                                                            currentAuthenticationToken,
+                                                      ),
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 50.0,
+                                                            height: 50.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              valueColor:
+                                                                  AlwaysStoppedAnimation<
+                                                                      Color>(
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      final timeZoneDropDownGetAvailableTimezonesResponse =
+                                                          snapshot.data!;
+
+                                                      return FlutterFlowDropDown<
+                                                          String>(
+                                                        controller: _model
+                                                                .timeZoneDropDownValueController ??=
+                                                            FormFieldController<
+                                                                String>(
+                                                          _model.timeZoneDropDownValue ??=
+                                                              _model.place
+                                                                  ?.timeZone,
+                                                        ),
+                                                        options:
+                                                            LuncherCoreAPIGETUtilsTzGroup
+                                                                .getAvailableTimezonesCall
+                                                                .timezones(
+                                                          timeZoneDropDownGetAvailableTimezonesResponse
+                                                              .jsonBody,
+                                                        )!,
+                                                        onChanged: (val) =>
+                                                            safeSetState(() =>
+                                                                _model.timeZoneDropDownValue =
+                                                                    val),
+                                                        height: 40.0,
+                                                        searchHintTextStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        searchTextStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        hintText: 'Wyszukaj...',
+                                                        searchHintText:
+                                                            'Wyszukaj...',
+                                                        icon: Icon(
+                                                          Icons
+                                                              .keyboard_arrow_down_rounded,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          size: 24.0,
+                                                        ),
+                                                        fillColor: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                        elevation: 2.0,
+                                                        borderColor:
+                                                            Colors.transparent,
+                                                        borderWidth: 0.0,
+                                                        borderRadius: 8.0,
+                                                        margin:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    0.0,
+                                                                    12.0,
+                                                                    0.0),
+                                                        hidesUnderline: true,
+                                                        isOverButton: false,
+                                                        isSearchable: true,
+                                                        isMultiSelect: false,
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          5.0, 0.0, 0.0, 0.0),
+                                                  child: FFButtonWidget(
+                                                    onPressed: !((_model.locationLatTextController
+                                                                        .text !=
+                                                                    '') &&
+                                                            (_model.locationLonTextController
+                                                                        .text !=
+                                                                    ''))
+                                                        ? null
+                                                        : () async {
+                                                            _model.apiResult6g4 =
+                                                                await LuncherCoreAPIGETUtilsTzqueryGroup
+                                                                    .getTimezoneCall
+                                                                    .call(
+                                                              authorization:
+                                                                  currentAuthenticationToken,
+                                                              lat: _model
+                                                                  .locationLatTextController
+                                                                  .text,
+                                                              lon: _model
+                                                                  .locationLonTextController
+                                                                  .text,
+                                                            );
+
+                                                            if ((_model
+                                                                    .apiResult6g4
+                                                                    ?.succeeded ??
+                                                                true)) {
+                                                              safeSetState(() {
+                                                                _model
+                                                                    .timeZoneDropDownValueController
+                                                                    ?.value = (_model
+                                                                        .apiResult6g4
+                                                                        ?.bodyText ??
+                                                                    '');
+                                                              });
+                                                            } else {
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                SnackBar(
+                                                                  content: Text(
+                                                                    'Nie udało się pobrać strefy czasowej! ${ErrorDtoStruct.maybeFromMap((_model.apiResult6g4?.jsonBody ?? ''))?.message}',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                    ),
+                                                                  ),
+                                                                  duration: Duration(
+                                                                      milliseconds:
+                                                                          4000),
+                                                                  backgroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondary,
+                                                                ),
+                                                              );
+                                                            }
+
+                                                            safeSetState(() {});
+                                                          },
+                                                    text: 'Pobierz str. czas.',
+                                                    icon: Icon(
+                                                      Icons.replay,
+                                                      size: 15.0,
+                                                    ),
+                                                    options: FFButtonOptions(
+                                                      height: 40.0,
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  0.0,
+                                                                  16.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 12.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      elevation: 0.0,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                      disabledColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      disabledTextColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  0.0, -1.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                10.0, 0.0),
+                                                    child: Icon(
+                                                      Icons.info_outlined,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      size: 20.0,
+                                                    ),
+                                                  ),
+                                                  Flexible(
+                                                    child: Text(
+                                                      'Pobranie strefy czasowej jest możliwe po wypełnieniu współrzędnych - można je uzupełnić przyciskiem \'Pobierz wg...\' u góry strony.',
+                                                      maxLines: 4,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Readex Pro',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ].divide(SizedBox(height: 15.0)),
                                         ),
                                       ),
-                                    ].divide(SizedBox(height: 15.0)),
-                                  ),
-                                ),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: 400.0,
-                                    maxHeight: 400.0,
-                                  ),
-                                  child: Builder(builder: (context) {
-                                    final _googleMapMarker = functions
-                                        .locationToLatLng(LocationStruct(
-                                      latitude: double.tryParse(_model
-                                          .locationLatTextController.text),
-                                      longitude: double.tryParse(_model
-                                          .locationLonTextController.text),
-                                    ));
-                                    return FlutterFlowGoogleMap(
-                                      controller: _model.googleMapsController,
-                                      onCameraIdle: (latLng) =>
-                                          _model.googleMapsCenter = latLng,
-                                      initialLocation:
-                                          _model.googleMapsCenter ??= functions
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 400.0,
+                                          maxHeight: 400.0,
+                                        ),
+                                        child: Builder(builder: (context) {
+                                          final _googleMapMarker = functions
                                               .locationToLatLng(LocationStruct(
-                                        latitude: double.tryParse(_model
-                                            .locationLatTextController.text),
-                                        longitude: double.tryParse(_model
-                                            .locationLonTextController.text),
-                                      ))!,
-                                      markers: [
-                                        if (_googleMapMarker != null)
-                                          FlutterFlowMarker(
-                                            _googleMapMarker.serialize(),
-                                            _googleMapMarker,
-                                          ),
-                                      ],
-                                      markerColor: GoogleMarkerColor.violet,
-                                      mapType: MapType.normal,
-                                      style: GoogleMapStyle.standard,
-                                      initialZoom: 15.0,
-                                      allowInteraction: true,
-                                      allowZoom: true,
-                                      showZoomControls: true,
-                                      showLocation: true,
-                                      showCompass: false,
-                                      showMapToolbar: false,
-                                      showTraffic: false,
-                                      centerMapOnMarkerTap: true,
-                                    );
-                                  }),
-                                ),
-                              ],
+                                            latitude: double.tryParse(_model
+                                                .locationLatTextController
+                                                .text),
+                                            longitude: double.tryParse(_model
+                                                .locationLonTextController
+                                                .text),
+                                          ));
+                                          return FlutterFlowGoogleMap(
+                                            controller:
+                                                _model.googleMapsController,
+                                            onCameraIdle: (latLng) => _model
+                                                .googleMapsCenter = latLng,
+                                            initialLocation:
+                                                _model.googleMapsCenter ??=
+                                                    functions.locationToLatLng(
+                                                        LocationStruct(
+                                              latitude: double.tryParse(_model
+                                                  .locationLatTextController
+                                                  .text),
+                                              longitude: double.tryParse(_model
+                                                  .locationLonTextController
+                                                  .text),
+                                            ))!,
+                                            markers: [
+                                              if (_googleMapMarker != null)
+                                                FlutterFlowMarker(
+                                                  _googleMapMarker.serialize(),
+                                                  _googleMapMarker,
+                                                ),
+                                            ],
+                                            markerColor:
+                                                GoogleMarkerColor.violet,
+                                            mapType: MapType.normal,
+                                            style: GoogleMapStyle.standard,
+                                            initialZoom: 15.0,
+                                            allowInteraction: true,
+                                            allowZoom: true,
+                                            showZoomControls: true,
+                                            showLocation: true,
+                                            showCompass: false,
+                                            showMapToolbar: false,
+                                            showTraffic: false,
+                                            centerMapOnMarkerTap: true,
+                                          );
+                                        }),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           KeepAliveWidgetWrapper(
@@ -3692,104 +3890,22 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                   maxWidth: 400.0,
                                 ),
                                 decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextFormField(
-                                      controller:
-                                          _model.facebookPageIdTextController,
-                                      focusNode: _model.facebookPageIdFocusNode,
-                                      autofocus: false,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        labelText: 'Facebook Page ID',
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                        alignLabelWithHint: true,
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        filled: true,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      cursorColor: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      validator: _model
-                                          .facebookPageIdTextControllerValidator
-                                          .asValidator(context),
-                                    ),
-                                    Text(
-                                      'ID strony z końca linku: np. \'moja strona\' z: \nfacebook.com/mojastrona',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
-                                      child: TextFormField(
-                                        controller: _model
-                                            .instagramHandleTextController,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextFormField(
+                                        controller:
+                                            _model.facebookPageIdTextController,
                                         focusNode:
-                                            _model.instagramHandleFocusNode,
+                                            _model.facebookPageIdFocusNode,
                                         autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
-                                          labelText: 'Instagram Handle',
+                                          labelText: 'Facebook Page ID',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -3857,188 +3973,282 @@ class _PlaceDetailsPageWidgetState extends State<PlaceDetailsPageWidget>
                                             FlutterFlowTheme.of(context)
                                                 .primaryText,
                                         validator: _model
-                                            .instagramHandleTextControllerValidator
+                                            .facebookPageIdTextControllerValidator
                                             .asValidator(context),
                                       ),
-                                    ),
-                                    Text(
-                                      'Instagram Handle (np. @abcdef)',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
-                                      child: TextFormField(
-                                        controller:
-                                            _model.websiteUrlTextController,
-                                        focusNode: _model.websiteUrlFocusNode,
-                                        autofocus: false,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          labelText: 'Strona WWW',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          alignLabelWithHint: true,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          filled: true,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                        ),
+                                      Text(
+                                        'ID strony z końca linku: np. \'moja strona\' z: \nfacebook.com/mojastrona',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Readex Pro',
                                               letterSpacing: 0.0,
                                             ),
-                                        keyboardType: TextInputType.url,
-                                        cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        validator: _model
-                                            .websiteUrlTextControllerValidator
-                                            .asValidator(context),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
-                                      child: TextFormField(
-                                        controller:
-                                            _model.phoneNumberTextController,
-                                        focusNode: _model.phoneNumberFocusNode,
-                                        autofocus: false,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          labelText: 'Nr telefonu',
-                                          labelStyle:
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 15.0, 0.0, 0.0),
+                                        child: TextFormField(
+                                          controller: _model
+                                              .instagramHandleTextController,
+                                          focusNode:
+                                              _model.instagramHandleFocusNode,
+                                          autofocus: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            labelText: 'Instagram Handle',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            alignLabelWithHint: true,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            filled: true,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                          cursorColor:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          alignLabelWithHint: true,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          filled: true,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
+                                                  .primaryText,
+                                          validator: _model
+                                              .instagramHandleTextControllerValidator
+                                              .asValidator(context),
                                         ),
+                                      ),
+                                      Text(
+                                        'Instagram Handle (np. @abcdef)',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Readex Pro',
                                               letterSpacing: 0.0,
                                             ),
-                                        keyboardType: TextInputType.phone,
-                                        cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        validator: _model
-                                            .phoneNumberTextControllerValidator
-                                            .asValidator(context),
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 15.0, 0.0, 0.0),
+                                        child: TextFormField(
+                                          controller:
+                                              _model.websiteUrlTextController,
+                                          focusNode: _model.websiteUrlFocusNode,
+                                          autofocus: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            labelText: 'Strona WWW',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            alignLabelWithHint: true,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            filled: true,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                          keyboardType: TextInputType.url,
+                                          cursorColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          validator: _model
+                                              .websiteUrlTextControllerValidator
+                                              .asValidator(context),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 15.0, 0.0, 0.0),
+                                        child: TextFormField(
+                                          controller:
+                                              _model.phoneNumberTextController,
+                                          focusNode:
+                                              _model.phoneNumberFocusNode,
+                                          autofocus: false,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            labelText: 'Nr telefonu',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            alignLabelWithHint: true,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            filled: true,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                          keyboardType: TextInputType.phone,
+                                          cursorColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          validator: _model
+                                              .phoneNumberTextControllerValidator
+                                              .asValidator(context),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
