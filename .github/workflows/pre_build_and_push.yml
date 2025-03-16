@@ -6,7 +6,7 @@ on:
     branches: [ "development" ]
 
 env:
-  APP_NAME: "luncher_admin_v4"
+  APP_NAME: "luncher-admin"
   ENV_SUFFIX: "-pre"
 
 
