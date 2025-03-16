@@ -201,6 +201,40 @@ double? divideDoubles(
   return base / divider;
 }
 
+List<PartStruct>? swapItemsOfPartsList(
+  List<PartStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
+}
+
+List<OptionStruct>? swapItemsOfOptionsList(
+  List<OptionStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
+}
+
 String? joinString(
   List<String>? list,
   String? separator,
