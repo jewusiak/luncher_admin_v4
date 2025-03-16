@@ -1,3 +1,4 @@
+import '';
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
@@ -402,6 +403,7 @@ class _PageArrangementDetailsWidgetState
 
                                 return ReorderableListView.builder(
                                   padding: EdgeInsets.zero,
+                                  primary: false,
                                   proxyDecorator: (Widget child, int index,
                                           Animation<double> animation) =>
                                       Material(
@@ -420,130 +422,144 @@ class _PageArrangementDetailsWidgetState
                                       child: Visibility(
                                         visible: sectionsItem != null,
                                         child: Builder(
-                                          builder: (context) => InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              FFAppState().editedSection =
-                                                  functions.cloneSectionObject(
-                                                      sectionsItem)!;
-                                              FFAppState().editedSectionAction =
-                                                  null;
-                                              await showDialog(
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        FocusScope.of(
-                                                                dialogContext)
-                                                            .unfocus();
-                                                        FocusManager.instance
-                                                            .primaryFocus
-                                                            ?.unfocus();
-                                                      },
-                                                      child: SectionEditWidget(
-                                                        isNew: false,
+                                          builder: (context) => Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 5.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                FFAppState().editedSection =
+                                                    functions
+                                                        .cloneSectionObject(
+                                                            sectionsItem)!;
+                                                FFAppState()
+                                                    .editedSectionAction = null;
+                                                await showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child:
+                                                            SectionEditWidget(
+                                                          isNew: false,
+                                                        ),
                                                       ),
-                                                    ),
+                                                    );
+                                                  },
+                                                );
+
+                                                if (FFAppState()
+                                                        .editedSectionAction ==
+                                                    ActionType.UPDATE) {
+                                                  // Update selected range
+                                                  _model
+                                                      .updateArrangementStruct(
+                                                    (e) => e
+                                                      ..updateSections(
+                                                        (e) => e[
+                                                                sectionsIndex] =
+                                                            FFAppState()
+                                                                .editedSection,
+                                                      ),
                                                   );
-                                                },
-                                              );
-
-                                              if (FFAppState()
-                                                      .editedSectionAction ==
-                                                  ActionType.UPDATE) {
-                                                // Update selected range
-                                                _model.updateArrangementStruct(
-                                                  (e) => e
-                                                    ..updateSections(
-                                                      (e) => e[sectionsIndex] =
-                                                          FFAppState()
-                                                              .editedSection,
-                                                    ),
-                                                );
-                                                safeSetState(() {});
-                                              } else if (FFAppState()
-                                                      .editedSectionAction ==
-                                                  ActionType.DELETE) {
-                                                // Delete selected range
-                                                _model.updateArrangementStruct(
-                                                  (e) => e
-                                                    ..updateSections(
-                                                      (e) => e.removeAt(
-                                                          sectionsIndex),
-                                                    ),
-                                                );
-                                                safeSetState(() {});
-                                              } else if (FFAppState()
-                                                      .editedSectionAction ==
-                                                  ActionType.CREATE) {
-                                                // Add new range
-                                                _model.updateArrangementStruct(
-                                                  (e) => e
-                                                    ..updateSections(
-                                                      (e) => e.add(FFAppState()
-                                                          .editedSection),
-                                                    ),
-                                                );
-                                                safeSetState(() {});
-                                              }
-
-                                              // Clear helper vars
-                                              FFAppState().editedSection =
-                                                  SectionDtoStruct();
-                                              FFAppState().editedSectionAction =
-                                                  null;
-                                            },
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              child: ListTile(
-                                                title: Text(
-                                                  sectionsItem.sectionHeader,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleLarge
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        letterSpacing: 0.0,
+                                                  safeSetState(() {});
+                                                } else if (FFAppState()
+                                                        .editedSectionAction ==
+                                                    ActionType.DELETE) {
+                                                  // Delete selected range
+                                                  _model
+                                                      .updateArrangementStruct(
+                                                    (e) => e
+                                                      ..updateSections(
+                                                        (e) => e.removeAt(
+                                                            sectionsIndex),
                                                       ),
-                                                ),
-                                                subtitle: Text(
-                                                  '${sectionsItem.sectionSubheader} (${sectionsItem.sectionElements.length.toString()} elem.)',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
+                                                  );
+                                                  safeSetState(() {});
+                                                } else if (FFAppState()
+                                                        .editedSectionAction ==
+                                                    ActionType.CREATE) {
+                                                  // Add new range
+                                                  _model
+                                                      .updateArrangementStruct(
+                                                    (e) => e
+                                                      ..updateSections(
+                                                        (e) => e.add(
+                                                            FFAppState()
+                                                                .editedSection),
                                                       ),
-                                                ),
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                dense: false,
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 0.0,
-                                                            12.0, 0.0),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
+                                                  );
+                                                  safeSetState(() {});
+                                                }
+
+                                                // Clear helper vars
+                                                FFAppState().editedSection =
+                                                    SectionDtoStruct();
+                                                FFAppState()
+                                                    .editedSectionAction = null;
+                                              },
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: ListTile(
+                                                  title: Text(
+                                                    sectionsItem.sectionHeader,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleLarge
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  subtitle: Text(
+                                                    '${sectionsItem.sectionSubheader} (${sectionsItem.sectionElements.length.toString()} elem.)',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  tileColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                  dense: false,
+                                                  contentPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(12.0, 0.0,
+                                                              12.0, 0.0),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
                                                 ),
                                               ),
                                             ),

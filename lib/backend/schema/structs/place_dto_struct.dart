@@ -23,6 +23,7 @@ class PlaceDtoStruct extends BaseStruct {
     List<AssetStruct>? images,
     List<MenuOfferStruct>? menuOffers,
     bool? enabled,
+    String? timeZone,
   })  : _id = id,
         _name = name,
         _longName = longName,
@@ -39,7 +40,8 @@ class PlaceDtoStruct extends BaseStruct {
         _owner = owner,
         _images = images,
         _menuOffers = menuOffers,
-        _enabled = enabled;
+        _enabled = enabled,
+        _timeZone = timeZone;
 
   // "id" field.
   String? _id;
@@ -190,6 +192,13 @@ class PlaceDtoStruct extends BaseStruct {
 
   bool hasEnabled() => _enabled != null;
 
+  // "timeZone" field.
+  String? _timeZone;
+  String get timeZone => _timeZone ?? '';
+  set timeZone(String? val) => _timeZone = val;
+
+  bool hasTimeZone() => _timeZone != null;
+
   static PlaceDtoStruct fromMap(Map<String, dynamic> data) => PlaceDtoStruct(
         id: data['id'] as String?,
         name: data['name'] as String?,
@@ -225,6 +234,7 @@ class PlaceDtoStruct extends BaseStruct {
           MenuOfferStruct.fromMap,
         ),
         enabled: data['enabled'] as bool?,
+        timeZone: data['timeZone'] as String?,
       );
 
   static PlaceDtoStruct? maybeFromMap(dynamic data) =>
@@ -248,6 +258,7 @@ class PlaceDtoStruct extends BaseStruct {
         'images': _images?.map((e) => e.toMap()).toList(),
         'menuOffers': _menuOffers?.map((e) => e.toMap()).toList(),
         'enabled': _enabled,
+        'timeZone': _timeZone,
       }.withoutNulls;
 
   @override
@@ -322,6 +333,10 @@ class PlaceDtoStruct extends BaseStruct {
         'enabled': serializeParam(
           _enabled,
           ParamType.bool,
+        ),
+        'timeZone': serializeParam(
+          _timeZone,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -419,6 +434,11 @@ class PlaceDtoStruct extends BaseStruct {
           ParamType.bool,
           false,
         ),
+        timeZone: deserializeParam(
+          data['timeZone'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -444,7 +464,8 @@ class PlaceDtoStruct extends BaseStruct {
         owner == other.owner &&
         listEquality.equals(images, other.images) &&
         listEquality.equals(menuOffers, other.menuOffers) &&
-        enabled == other.enabled;
+        enabled == other.enabled &&
+        timeZone == other.timeZone;
   }
 
   @override
@@ -465,7 +486,8 @@ class PlaceDtoStruct extends BaseStruct {
         owner,
         images,
         menuOffers,
-        enabled
+        enabled,
+        timeZone
       ]);
 }
 
@@ -484,6 +506,7 @@ PlaceDtoStruct createPlaceDtoStruct({
   LocationStruct? location,
   UserIdDtoStruct? owner,
   bool? enabled,
+  String? timeZone,
 }) =>
     PlaceDtoStruct(
       id: id,
@@ -500,4 +523,5 @@ PlaceDtoStruct createPlaceDtoStruct({
       location: location ?? LocationStruct(),
       owner: owner ?? UserIdDtoStruct(),
       enabled: enabled,
+      timeZone: timeZone,
     );

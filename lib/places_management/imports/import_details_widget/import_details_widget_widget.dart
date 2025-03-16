@@ -1,3 +1,4 @@
+import '';
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/enums/enums.dart';
@@ -8,9 +9,12 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/places_management/imports/import_job_details/import_job_details_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -107,6 +111,8 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
         TextEditingController(text: FFAppState().editedImportSchema.importCron);
     _model.cronExpressionFieldFocusNode ??= FocusNode();
 
+    _model.expandableExpandableController =
+        ExpandableController(initialExpanded: false);
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -166,11 +172,22 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                           _model.schemaTypeDropDownValue ??=
                               FFAppState().editedImportSchema.schemaType,
                         ),
-                        options: List<String>.from(
-                            ['FACEBOOK_TEXT', 'INSTAGRAM_TEXT']),
-                        optionLabels: ['Facebook Text', 'Instagram Text'],
-                        onChanged: (val) => safeSetState(
-                            () => _model.schemaTypeDropDownValue = val),
+                        options: List<String>.from([
+                          'FACEBOOK_TEXT',
+                          'FACEBOOK_IMAGE',
+                          'INSTAGRAM_TEXT'
+                        ]),
+                        optionLabels: [
+                          'Facebook Text',
+                          'Facebook Image',
+                          'Instagram Text'
+                        ],
+                        onChanged: (val) async {
+                          safeSetState(
+                              () => _model.schemaTypeDropDownValue = val);
+                          _model.hasChanges = true;
+                          safeSetState(() {});
+                        },
                         width: 300.0,
                         height: 40.0,
                         textStyle:
@@ -206,6 +223,14 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                         child: TextFormField(
                           controller: _model.nameTextFieldTextController,
                           focusNode: _model.nameTextFieldFocusNode,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            '_model.nameTextFieldTextController',
+                            Duration(milliseconds: 2000),
+                            () async {
+                              _model.hasChanges = true;
+                              safeSetState(() {});
+                            },
+                          ),
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -275,6 +300,14 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                         child: TextFormField(
                           controller: _model.urlTextFieldTextController,
                           focusNode: _model.urlTextFieldFocusNode,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            '_model.urlTextFieldTextController',
+                            Duration(milliseconds: 2000),
+                            () async {
+                              _model.hasChanges = true;
+                              safeSetState(() {});
+                            },
+                          ),
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -363,6 +396,14 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                                 .postSelectionPromptTextFieldTextController,
                             focusNode:
                                 _model.postSelectionPromptTextFieldFocusNode,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.postSelectionPromptTextFieldTextController',
+                              Duration(milliseconds: 2000),
+                              () async {
+                                _model.hasChanges = true;
+                                safeSetState(() {});
+                              },
+                            ),
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -438,6 +479,14 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                                 .importCustomPromptTextFieldTextController,
                             focusNode:
                                 _model.importCustomPromptTextFieldFocusNode,
+                            onChanged: (_) => EasyDebounce.debounce(
+                              '_model.importCustomPromptTextFieldTextController',
+                              Duration(milliseconds: 2000),
+                              () async {
+                                _model.hasChanges = true;
+                                safeSetState(() {});
+                              },
+                            ),
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -613,6 +662,9 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                                     safeSetState(() {});
                                   }
 
+                                  _model.hasChanges = true;
+                                  safeSetState(() {});
+
                                   safeSetState(() {});
                                 },
                           text: functions.intsToTimeString(
@@ -727,6 +779,9 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                                           );
                                           safeSetState(() {});
                                         }
+
+                                        _model.hasChanges = true;
+                                        safeSetState(() {});
 
                                         safeSetState(() {});
                                       },
@@ -868,6 +923,9 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                                       safeSetState(() {});
                                     }
 
+                                    _model.hasChanges = true;
+                                    safeSetState(() {});
+
                                     safeSetState(() {});
                                   },
                                 ),
@@ -956,258 +1014,693 @@ class _ImportDetailsWidgetWidgetState extends State<ImportDetailsWidgetWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 5.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      FFButtonWidget(
-                        onPressed: () async {
-                          FFAppState().editedImportSchemaAction = null;
-                          Navigator.pop(context);
-                        },
-                        text: 'Anuluj',
-                        options: FFButtonOptions(
-                          width: 100.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                                fontFamily: 'Readex Pro',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                letterSpacing: 0.0,
-                              ),
-                          elevation: 0.0,
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 1.0,
+                if (!widget.isNew)
+                  Align(
+                    alignment: AlignmentDirectional(0.0, 0.0),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 750.0,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      FFButtonWidget(
-                        onPressed: widget.isNew
-                            ? null
-                            : () async {
-                                var confirmDialogResponse =
-                                    await showDialog<bool>(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Czy na pewno chcesz usunąć?'),
-                                              content: Text(
-                                                  'Usunięcie chematu importu jest nieodwracalne!'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('Anuluj'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('Usuń'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ) ??
-                                        false;
-                                if (confirmDialogResponse) {
-                                  _model.deleteCallResult =
-                                      await LuncherCoreAPIDELETESchemaSchemaIdGroup
-                                          .deleteImportSchemaCall
-                                          .call(
-                                    authorization: currentAuthenticationToken,
-                                    schemaId:
-                                        FFAppState().editedImportSchema.id,
-                                  );
-
-                                  if ((_model.deleteCallResult?.succeeded ??
-                                      true)) {
-                                    Navigator.pop(context);
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Błąd usuwania'),
-                                          content: Text(
-                                              ErrorDtoStruct.maybeFromMap(
-                                                      (_model.deleteCallResult
-                                                              ?.jsonBody ??
-                                                          ''))!
-                                                  .message),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            child: ExpandableNotifier(
+                              controller: _model.expandableExpandableController,
+                              child: ExpandablePanel(
+                                header: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Historia importów',
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleLarge
+                                        .override(
+                                          fontFamily: 'Outfit',
+                                          color: Colors.black,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ),
+                                collapsed: Container(),
+                                expanded: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 10.0, 10.0, 10.0),
+                                  child: FutureBuilder<ApiCallResponse>(
+                                    future: (_model.apiRequestCompleter ??=
+                                            Completer<ApiCallResponse>()
+                                              ..complete(
+                                                  LuncherCoreAPIGETSchemaSchemaIdJobGroup
+                                                      .getSchemasJobsCall
+                                                      .call(
+                                                schemaId: FFAppState()
+                                                    .editedImportSchema
+                                                    .id,
+                                                authorization:
+                                                    currentAuthenticationToken,
+                                              )))
+                                        .future,
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
                                             ),
-                                          ],
+                                          ),
                                         );
-                                      },
+                                      }
+                                      final listViewGetSchemasJobsResponse =
+                                          snapshot.data!;
+
+                                      return Builder(
+                                        builder: (context) {
+                                          final imports = (listViewGetSchemasJobsResponse
+                                                          .jsonBody
+                                                          .toList()
+                                                          .map<ImportJobDtoStruct?>(
+                                                              ImportJobDtoStruct
+                                                                  .maybeFromMap)
+                                                          .toList()
+                                                      as Iterable<
+                                                          ImportJobDtoStruct?>)
+                                                  .withoutNulls
+                                                  .toList() ??
+                                              [];
+
+                                          return ListView.separated(
+                                            padding: EdgeInsets.zero,
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: imports.length,
+                                            separatorBuilder: (_, __) =>
+                                                SizedBox(height: 15.0),
+                                            itemBuilder:
+                                                (context, importsIndex) {
+                                              final importsItem =
+                                                  imports[importsIndex];
+                                              return Builder(
+                                                builder: (context) => InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder: (dialogContext) {
+                                                        return Dialog(
+                                                          elevation: 0,
+                                                          insetPadding:
+                                                              EdgeInsets.zero,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          alignment: AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                          child:
+                                                              ImportJobDetailsWidget(
+                                                            jobId:
+                                                                importsItem.id,
+                                                            schemaId: FFAppState()
+                                                                .editedImportSchema
+                                                                .id,
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      if (importsItem.status ==
+                                                          'NEW')
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .pending_outlined,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .warning,
+                                                            size: 32.0,
+                                                          ),
+                                                        ),
+                                                      if (importsItem.status ==
+                                                          'IN_PROGRESS')
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0),
+                                                          child: Icon(
+                                                            Icons.downloading,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .warning,
+                                                            size: 32.0,
+                                                          ),
+                                                        ),
+                                                      if (importsItem.status ==
+                                                          'SUCCESSFUL')
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0),
+                                                          child: Icon(
+                                                            Icons.done,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .success,
+                                                            size: 32.0,
+                                                          ),
+                                                        ),
+                                                      if (importsItem.status ==
+                                                          'ERROR')
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0),
+                                                          child: Icon(
+                                                            Icons.error_outline,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            size: 32.0,
+                                                          ),
+                                                        ),
+                                                      if (importsItem.status ==
+                                                          'CANCELLED')
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      10.0,
+                                                                      0.0),
+                                                          child: Icon(
+                                                            Icons.event_busy,
+                                                            color: Color(
+                                                                0xFF6F7B83),
+                                                            size: 32.0,
+                                                          ),
+                                                        ),
+                                                      Text(
+                                                        'Import utworzony ${functions.dateTimeStringToString(importsItem.dateCreated)}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                      Flexible(
+                                                        child: Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  1.0, 0.0),
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_forward_ios,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            size: 28.0,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                theme: ExpandableThemeData(
+                                  tapHeaderToExpand: true,
+                                  tapBodyToExpand: false,
+                                  tapBodyToCollapse: false,
+                                  headerAlignment:
+                                      ExpandablePanelHeaderAlignment.center,
+                                  hasIcon: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 1.0,
+                  decoration: BoxDecoration(),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 5.0),
+                    child: Wrap(
+                      spacing: 0.0,
+                      runSpacing: 10.0,
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      direction: Axis.horizontal,
+                      runAlignment: WrapAlignment.start,
+                      verticalDirection: VerticalDirection.down,
+                      clipBehavior: Clip.none,
+                      children: [
+                        FFButtonWidget(
+                          onPressed: () async {
+                            FFAppState().editedImportSchemaAction = null;
+                            Navigator.pop(context);
+                          },
+                          text: 'Anuluj',
+                          options: FFButtonOptions(
+                            width: 100.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 0.0,
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        FFButtonWidget(
+                          onPressed: widget.isNew
+                              ? null
+                              : () async {
+                                  var confirmDialogResponse =
+                                      await showDialog<bool>(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Czy na pewno chcesz usunąć?'),
+                                                content: Text(
+                                                    'Usunięcie chematu importu jest nieodwracalne!'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('Anuluj'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('Usuń'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          ) ??
+                                          false;
+                                  if (confirmDialogResponse) {
+                                    _model.deleteCallResult =
+                                        await LuncherCoreAPIDELETESchemaSchemaIdGroup
+                                            .deleteImportSchemaCall
+                                            .call(
+                                      authorization: currentAuthenticationToken,
+                                      schemaId:
+                                          FFAppState().editedImportSchema.id,
                                     );
+
+                                    if ((_model.deleteCallResult?.succeeded ??
+                                        true)) {
+                                      Navigator.pop(context);
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Błąd usuwania'),
+                                            content: Text(
+                                                ErrorDtoStruct.maybeFromMap(
+                                                        (_model.deleteCallResult
+                                                                ?.jsonBody ??
+                                                            ''))!
+                                                    .message),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   }
-                                }
 
-                                safeSetState(() {});
-                              },
-                        text: 'Usuń',
-                        options: FFButtonOptions(
-                          width: 100.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).error,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    letterSpacing: 0.0,
-                                  ),
-                          elevation: 0.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                                  safeSetState(() {});
+                                },
+                          text: 'Usuń',
+                          options: FFButtonOptions(
+                            width: 100.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).error,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context).info,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 0.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                            disabledColor: Color(0xFFE9E9E9),
+                            disabledTextColor:
+                                FlutterFlowTheme.of(context).secondaryText,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
-                          disabledColor: Color(0xFFE9E9E9),
-                          disabledTextColor:
-                              FlutterFlowTheme.of(context).secondaryText,
                         ),
-                      ),
-                      FFButtonWidget(
-                        onPressed: () async {
-                          FFAppState().updateEditedImportSchemaStruct(
-                            (e) => e
-                              ..name = _model.nameTextFieldTextController.text
-                              ..importCron =
-                                  _model.cronExpressionFieldTextController.text
-                              ..enabled = _model.importEnabledSwitchValue
-                              ..schemaType = _model.schemaTypeDropDownValue
-                              ..pageUrl = _model.urlTextFieldTextController.text
-                              ..postSelectionCustomPrompt = _model
-                                  .postSelectionPromptTextFieldTextController
-                                  .text
-                              ..importCustomPrompt = _model
-                                  .importCustomPromptTextFieldTextController
-                                  .text,
-                          );
-                          if (widget.isNew) {
-                            // schema create
-                            _model.schemaCreateResult =
-                                await LuncherCoreAPIPOSTSchemaGroup
-                                    .createImportSchemaCall
-                                    .call(
-                              authorization: currentAuthenticationToken,
-                              schemaJson:
-                                  FFAppState().editedImportSchema.toMap(),
-                            );
+                        if (!widget.isNew)
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              FFButtonWidget(
+                                onPressed: _model.hasChanges
+                                    ? null
+                                    : () async {
+                                        _model.apiResult5sx =
+                                            await LuncherCoreAPIPOSTSchemaSchemaIdJobGroup
+                                                .dispatchJobCall
+                                                .call(
+                                          authorization:
+                                              currentAuthenticationToken,
+                                          schemaId: FFAppState()
+                                              .editedImportSchema
+                                              .id,
+                                        );
 
-                            if ((_model.schemaCreateResult?.succeeded ??
-                                true)) {
-                              FFAppState().editedImportSchemaAction =
-                                  ActionType.CREATE;
-                              context.safePop();
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Błąd w tworzeniu importu!'),
-                                    content: Text(
-                                        '${ErrorDtoStruct.maybeFromMap((_model.schemaCreateResult?.jsonBody ?? ''))?.message}'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Ok'),
+                                        safeSetState(() =>
+                                            _model.apiRequestCompleter = null);
+                                        if ((_model.apiResult5sx?.succeeded ??
+                                            true)) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Powodzenie'),
+                                                content: Text(
+                                                    'Zakolejkowano import do wykonania'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Nie udało się uruchomić importu'),
+                                                content: Text(ErrorDtoStruct
+                                                        .maybeFromMap((_model
+                                                                .apiResult5sx
+                                                                ?.jsonBody ??
+                                                            ''))!
+                                                    .message),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+
+                                        safeSetState(() {});
+                                      },
+                                text: 'Wystartuj import teraz',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      20.0, 0.0, 20.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        color:
+                                            FlutterFlowTheme.of(context).info,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  elevation: 0.0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  disabledColor:
+                                      FlutterFlowTheme.of(context).alternate,
+                                  disabledTextColor:
+                                      FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                ),
+                              ),
+                              if (_model.hasChanges)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 10.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 10.0, 0.0),
+                                        child: Icon(
+                                          Icons.info_outlined,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 20.0,
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          'Zapisz zmiany aby wystartować import',
+                                          maxLines: 4,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
                                       ),
                                     ],
-                                  );
-                                },
-                              );
-                            }
-                          } else {
-                            // schema update
-                            _model.schemaUpdateResult =
-                                await LuncherCoreAPIPUTSchemaSchemaIdGroup
-                                    .updateImportSchemaCall
-                                    .call(
-                              authorization: currentAuthenticationToken,
-                              schemaId: FFAppState().editedImportSchema.id,
-                              schemaJson:
-                                  FFAppState().editedImportSchema.toMap(),
-                            );
-
-                            if ((_model.schemaUpdateResult?.succeeded ??
-                                true)) {
-                              FFAppState().editedImportSchemaAction =
-                                  ActionType.UPDATE;
-                              context.safePop();
-                            } else {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title:
-                                        Text('Błąd w aktualizacji importu! '),
-                                    content: Text(
-                                        '${ErrorDtoStruct.maybeFromMap((_model.schemaUpdateResult?.jsonBody ?? ''))?.message}'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          }
-
-                          safeSetState(() {});
-                        },
-                        text: 'Zapisz',
-                        options: FFButtonOptions(
-                          width: 100.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primary,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context).info,
-                                    letterSpacing: 0.0,
                                   ),
-                          elevation: 0.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
+                                ),
+                            ],
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            FFAppState().updateEditedImportSchemaStruct(
+                              (e) => e
+                                ..name = _model.nameTextFieldTextController.text
+                                ..importCron = _model
+                                    .cronExpressionFieldTextController.text
+                                ..enabled = _model.importEnabledSwitchValue
+                                ..schemaType = _model.schemaTypeDropDownValue
+                                ..pageUrl =
+                                    _model.urlTextFieldTextController.text
+                                ..postSelectionCustomPrompt = _model
+                                    .postSelectionPromptTextFieldTextController
+                                    .text
+                                ..importCustomPrompt = _model
+                                    .importCustomPromptTextFieldTextController
+                                    .text,
+                            );
+                            if (widget.isNew) {
+                              // schema create
+                              _model.schemaCreateResult =
+                                  await LuncherCoreAPIPOSTSchemaGroup
+                                      .createImportSchemaCall
+                                      .call(
+                                authorization: currentAuthenticationToken,
+                                schemaJson:
+                                    FFAppState().editedImportSchema.toMap(),
+                              );
+
+                              if ((_model.schemaCreateResult?.succeeded ??
+                                  true)) {
+                                FFAppState().editedImportSchemaAction =
+                                    ActionType.CREATE;
+                                context.safePop();
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Błąd w tworzeniu importu!'),
+                                      content: Text(
+                                          '${ErrorDtoStruct.maybeFromMap((_model.schemaCreateResult?.jsonBody ?? ''))?.message}'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            } else {
+                              // schema update
+                              _model.schemaUpdateResult =
+                                  await LuncherCoreAPIPUTSchemaSchemaIdGroup
+                                      .updateImportSchemaCall
+                                      .call(
+                                authorization: currentAuthenticationToken,
+                                schemaId: FFAppState().editedImportSchema.id,
+                                schemaJson:
+                                    FFAppState().editedImportSchema.toMap(),
+                              );
+
+                              if ((_model.schemaUpdateResult?.succeeded ??
+                                  true)) {
+                                FFAppState().editedImportSchemaAction =
+                                    ActionType.UPDATE;
+                                context.safePop();
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title:
+                                          Text('Błąd w aktualizacji importu! '),
+                                      content: Text(
+                                          '${ErrorDtoStruct.maybeFromMap((_model.schemaUpdateResult?.jsonBody ?? ''))?.message}'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            }
+
+                            safeSetState(() {});
+                          },
+                          text: 'Zapisz',
+                          options: FFButtonOptions(
+                            width: 100.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context).info,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 0.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Container(

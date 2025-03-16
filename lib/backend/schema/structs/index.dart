@@ -6,6 +6,7 @@ export 'error_dto_struct.dart';
 export 'google_address_component_struct.dart';
 export 'google_display_name_struct.dart';
 export 'google_text_search_response_struct.dart';
+export 'import_job_dto_struct.dart';
 export 'import_schema_dto_struct.dart';
 export 'local_date_time_range_struct.dart';
 export 'location_struct.dart';

@@ -56,7 +56,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
           maxWidth: 700.0,
         ),
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
+          color: FlutterFlowTheme.of(context).primaryBackground,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
@@ -135,7 +135,7 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                           ),
                           filled: true,
                           fillColor:
-                              FlutterFlowTheme.of(context).primaryBackground,
+                              FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
@@ -228,8 +228,8 @@ class _CreatePlaceDialogWidgetState extends State<CreatePlaceDialogWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               size: 24.0,
                             ),
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
                             elevation: 2.0,
                             borderColor: FlutterFlowTheme.of(context).alternate,
                             borderWidth: 0.0,

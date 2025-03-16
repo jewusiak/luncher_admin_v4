@@ -201,6 +201,40 @@ double? divideDoubles(
   return base / divider;
 }
 
+List<PartStruct>? swapItemsOfPartsList(
+  List<PartStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
+}
+
+List<OptionStruct>? swapItemsOfOptionsList(
+  List<OptionStruct>? listIn,
+  int oldIdx,
+  int newIdx,
+) {
+  if (listIn == null) return null;
+  dynamic tmp = listIn[oldIdx];
+  if (newIdx == oldIdx) return listIn;
+  listIn.removeAt(oldIdx);
+  if (listIn.length <= newIdx) {
+    listIn.add(tmp);
+  } else {
+    listIn.insert(newIdx, tmp);
+  }
+  return listIn;
+}
+
 String? joinString(
   List<String>? list,
   String? separator,
@@ -228,4 +262,24 @@ List<String>? splitString(
     s.removeWhere((a) => a == '');
     return s;
   }
+}
+
+String? showDateAsPolishDaysOfWeek(
+  String? startDate,
+  String? endDate,
+) {
+  if (startDate == null || endDate == null) return null;
+  DateTime? s = DateTime.tryParse(startDate);
+  DateTime? e = DateTime.tryParse(endDate);
+  if (s == null || e == null) return "";
+  var days = ['Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.', 'Nd.'];
+  var endDay = "";
+  if (!(s.day == e.day && s.month == e.month && s.year == e.year))
+    endDay = days[e.weekday - 1] + " ";
+  return days[s.weekday - 1] +
+      " " +
+      DateFormat.Hm().format(s) +
+      " - " +
+      endDay +
+      DateFormat.Hm().format(e);
 }

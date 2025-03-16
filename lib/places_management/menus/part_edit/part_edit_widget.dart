@@ -47,7 +47,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
         text: FFAppState().editedOfferPart.supplement.amount.toString());
     _model.basePriceInputFocusNode ??= FocusNode();
 
-    _model.requiredSwitchValue = FFAppState().editedOfferPart.required;
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -190,7 +189,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                                 },
                               ),
                               autofocus: false,
-                              readOnly: _model.requiredSwitchValue!,
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: true,
@@ -290,7 +288,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                             margin: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 12.0, 0.0),
                             hidesUnderline: true,
-                            disabled: _model.requiredSwitchValue!,
                             isOverButton: false,
                             isSearchable: false,
                             isMultiSelect: false,
@@ -298,40 +295,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                         ].divide(SizedBox(width: 20.0)),
                       ),
                     ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Czy wzięcie tej części jest wymagane?',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0.0,
-                            ),
-                      ),
-                      Switch.adaptive(
-                        value: _model.requiredSwitchValue!,
-                        onChanged: (newValue) async {
-                          safeSetState(
-                              () => _model.requiredSwitchValue = newValue);
-                          if (newValue) {
-                            safeSetState(() {
-                              _model.basePriceInputTextController?.text = '0';
-                            });
-                          }
-                        },
-                        activeColor: FlutterFlowTheme.of(context).primary,
-                        activeTrackColor: FlutterFlowTheme.of(context).primary,
-                        inactiveTrackColor:
-                            FlutterFlowTheme.of(context).alternate,
-                        inactiveThumbColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
-                    ].divide(SizedBox(width: 15.0)),
                   ),
                 ),
                 Padding(
@@ -425,127 +388,157 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                       final options =
                           FFAppState().editedOfferPart.options.toList();
 
-                      return ListView.separated(
+                      return ReorderableListView.builder(
                         padding: EdgeInsets.zero,
+                        primary: false,
+                        proxyDecorator: (Widget child, int index,
+                                Animation<double> animation) =>
+                            Material(color: Colors.transparent, child: child),
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: options.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 1.0),
                         itemBuilder: (context, optionsIndex) {
                           final optionsItem = options[optionsIndex];
-                          return Visibility(
-                            visible: optionsItem != null,
-                            child: Builder(
-                              builder: (context) => InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  FFAppState().editedOption =
-                                      functions.cloneOptionObject(optionsItem)!;
-                                  FFAppState().editedOptionAction = null;
-                                  await showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0)
+                          return Container(
+                            key: ValueKey("ListView_iwhuznsq" +
+                                '_' +
+                                optionsIndex.toString()),
+                            child: Visibility(
+                              visible: optionsItem != null,
+                              child: Builder(
+                                builder: (context) => Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 5.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      FFAppState().editedOption = functions
+                                          .cloneOptionObject(optionsItem)!;
+                                      FFAppState().editedOptionAction = null;
+                                      await showDialog(
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                                    0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                        child: OptionEditWidget(
-                                          isNew: false,
-                                        ),
+                                            child: OptionEditWidget(
+                                              isNew: false,
+                                            ),
+                                          );
+                                        },
                                       );
+
+                                      if (FFAppState().editedOptionAction ==
+                                          ActionType.UPDATE) {
+                                        // Update selected range
+                                        FFAppState()
+                                            .updateEditedOfferPartStruct(
+                                          (e) => e
+                                            ..updateOptions(
+                                              (e) => e[optionsIndex] =
+                                                  FFAppState().editedOption,
+                                            ),
+                                        );
+                                        safeSetState(() {});
+                                      } else if (FFAppState()
+                                              .editedOptionAction ==
+                                          ActionType.DELETE) {
+                                        // Update selected range
+                                        FFAppState()
+                                            .updateEditedOfferPartStruct(
+                                          (e) => e
+                                            ..updateOptions(
+                                              (e) => e.removeAt(optionsIndex),
+                                            ),
+                                        );
+                                        safeSetState(() {});
+                                      } else if (FFAppState()
+                                              .editedOptionAction ==
+                                          ActionType.CREATE) {
+                                        // Update selected range
+                                        FFAppState()
+                                            .updateEditedOfferPartStruct(
+                                          (e) => e
+                                            ..updateOptions(
+                                              (e) => e.add(
+                                                  FFAppState().editedOption),
+                                            ),
+                                        );
+                                        safeSetState(() {});
+                                      }
+
+                                      FFAppState().editedOption =
+                                          OptionStruct();
+                                      FFAppState().editedOptionAction = null;
                                     },
-                                  );
-
-                                  if (FFAppState().editedOptionAction ==
-                                      ActionType.UPDATE) {
-                                    // Update selected range
-                                    FFAppState().updateEditedOfferPartStruct(
-                                      (e) => e
-                                        ..updateOptions(
-                                          (e) => e[optionsIndex] =
-                                              FFAppState().editedOption,
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: ListTile(
+                                        title: Text(
+                                          optionsItem.name,
+                                          style: FlutterFlowTheme.of(context)
+                                              .titleLarge
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                              ),
                                         ),
-                                    );
-                                    safeSetState(() {});
-                                  } else if (FFAppState().editedOptionAction ==
-                                      ActionType.DELETE) {
-                                    // Update selected range
-                                    FFAppState().updateEditedOfferPartStruct(
-                                      (e) => e
-                                        ..updateOptions(
-                                          (e) => e.removeAt(optionsIndex),
+                                        subtitle: Text(
+                                          'Dopłata: ${valueOrDefault<String>(
+                                            optionsItem.supplement.amount
+                                                .toString(),
+                                            '0.00',
+                                          )} ${optionsItem.supplement.currencyCode}',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
                                         ),
-                                    );
-                                    safeSetState(() {});
-                                  } else if (FFAppState().editedOptionAction ==
-                                      ActionType.CREATE) {
-                                    // Update selected range
-                                    FFAppState().updateEditedOfferPartStruct(
-                                      (e) => e
-                                        ..updateOptions(
-                                          (e) =>
-                                              e.add(FFAppState().editedOption),
+                                        tileColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        dense: true,
+                                        contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                12.0, 0.0, 12.0, 0.0),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                    );
-                                    safeSetState(() {});
-                                  }
-
-                                  FFAppState().editedOption = OptionStruct();
-                                  FFAppState().editedOptionAction = null;
-                                },
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: ListTile(
-                                    title: Text(
-                                      optionsItem.name,
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .override(
-                                            fontFamily: 'Outfit',
-                                            fontSize: 18.0,
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    subtitle: Text(
-                                      'Dopłata: ${valueOrDefault<String>(
-                                        optionsItem.supplement.amount
-                                            .toString(),
-                                        '0.00',
-                                      )} ${optionsItem.supplement.currencyCode}',
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 20.0,
-                                    ),
-                                    tileColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    dense: true,
-                                    contentPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 0.0, 12.0, 0.0),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           );
+                        },
+                        onReorder: (int reorderableOldIndex,
+                            int reorderableNewIndex) async {
+                          FFAppState().updateEditedOfferPartStruct(
+                            (e) => e
+                              ..options = functions
+                                  .swapItemsOfOptionsList(
+                                      FFAppState()
+                                          .editedOfferPart
+                                          .options
+                                          .toList(),
+                                      reorderableOldIndex,
+                                      reorderableNewIndex)!
+                                  .toList(),
+                          );
+
+                          safeSetState(() {});
                         },
                       );
                     },
@@ -633,7 +626,6 @@ class _PartEditWidgetState extends State<PartEditWidget> {
                           FFAppState().updateEditedOfferPartStruct(
                             (e) => e
                               ..name = _model.nameInputTextController.text
-                              ..required = _model.requiredSwitchValue
                               ..supplement = MonetaryAmountStruct(
                                 amount: double.tryParse(
                                     _model.basePriceInputTextController.text),

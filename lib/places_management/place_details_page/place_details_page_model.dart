@@ -107,6 +107,11 @@ class PlaceDetailsPageModel extends FlutterFlowModel<PlaceDetailsPageWidget> {
   TextEditingController? googlePlaceIdInputTextController;
   String? Function(BuildContext, String?)?
       googlePlaceIdInputTextControllerValidator;
+  // State field(s) for TimeZoneDropDown widget.
+  String? timeZoneDropDownValue;
+  FormFieldController<String>? timeZoneDropDownValueController;
+  // Stores action output result for [Backend Call - API (getTimezone)] action in Button widget.
+  ApiCallResponse? apiResult6g4;
   // State field(s) for GoogleMap widget.
   LatLng? googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
