@@ -15,7 +15,7 @@ env:
   
   ENV_VARS_JSON: '
     {
-      "backendurl": "https://api.pre1.luncher.pl",
+      "backendurl": "https://api.pre.luncher.pl",
       "importsbackendurl": "https://imports.api.pre.luncher.pl"
     }
     '
