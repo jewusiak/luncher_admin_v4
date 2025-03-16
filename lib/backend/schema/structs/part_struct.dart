@@ -8,12 +8,10 @@ class PartStruct extends BaseStruct {
   PartStruct({
     String? id,
     String? name,
-    bool? required,
     MonetaryAmountStruct? supplement,
     List<OptionStruct>? options,
   })  : _id = id,
         _name = name,
-        _required = required,
         _supplement = supplement,
         _options = options;
 
@@ -30,13 +28,6 @@ class PartStruct extends BaseStruct {
   set name(String? val) => _name = val;
 
   bool hasName() => _name != null;
-
-  // "required" field.
-  bool? _required;
-  bool get required => _required ?? false;
-  set required(bool? val) => _required = val;
-
-  bool hasRequired() => _required != null;
 
   // "supplement" field.
   MonetaryAmountStruct? _supplement;
@@ -63,7 +54,6 @@ class PartStruct extends BaseStruct {
   static PartStruct fromMap(Map<String, dynamic> data) => PartStruct(
         id: data['id'] as String?,
         name: data['name'] as String?,
-        required: data['required'] as bool?,
         supplement: data['supplement'] is MonetaryAmountStruct
             ? data['supplement']
             : MonetaryAmountStruct.maybeFromMap(data['supplement']),
@@ -79,7 +69,6 @@ class PartStruct extends BaseStruct {
   Map<String, dynamic> toMap() => {
         'id': _id,
         'name': _name,
-        'required': _required,
         'supplement': _supplement?.toMap(),
         'options': _options?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
@@ -93,10 +82,6 @@ class PartStruct extends BaseStruct {
         'name': serializeParam(
           _name,
           ParamType.String,
-        ),
-        'required': serializeParam(
-          _required,
-          ParamType.bool,
         ),
         'supplement': serializeParam(
           _supplement,
@@ -119,11 +104,6 @@ class PartStruct extends BaseStruct {
         name: deserializeParam(
           data['name'],
           ParamType.String,
-          false,
-        ),
-        required: deserializeParam(
-          data['required'],
-          ParamType.bool,
           false,
         ),
         supplement: deserializeStructParam(
@@ -149,25 +129,22 @@ class PartStruct extends BaseStruct {
     return other is PartStruct &&
         id == other.id &&
         name == other.name &&
-        required == other.required &&
         supplement == other.supplement &&
         listEquality.equals(options, other.options);
   }
 
   @override
   int get hashCode =>
-      const ListEquality().hash([id, name, required, supplement, options]);
+      const ListEquality().hash([id, name, supplement, options]);
 }
 
 PartStruct createPartStruct({
   String? id,
   String? name,
-  bool? required,
   MonetaryAmountStruct? supplement,
 }) =>
     PartStruct(
       id: id,
       name: name,
-      required: required,
       supplement: supplement ?? MonetaryAmountStruct(),
     );

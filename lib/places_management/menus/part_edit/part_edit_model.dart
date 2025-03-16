@@ -18,8 +18,6 @@ class PartEditModel extends FlutterFlowModel<PartEditWidget> {
   // State field(s) for CcyDropDown widget.
   String? ccyDropDownValue;
   FormFieldController<String>? ccyDropDownValueController;
-  // State field(s) for requiredSwitch widget.
-  bool? requiredSwitchValue;
 
   @override
   void initState(BuildContext context) {}

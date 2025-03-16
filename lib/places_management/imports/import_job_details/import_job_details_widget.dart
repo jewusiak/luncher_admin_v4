@@ -623,7 +623,7 @@ class _ImportJobDetailsWidgetState extends State<ImportJobDetailsWidget> {
                                                                                             letterSpacing: 0.0,
                                                                                           ),
                                                                                     ),
-                                                                                    if ((offerPartsItem.supplement != null) && !offerPartsItem.required && (offerPartsItem.supplement.amount > 0.0))
+                                                                                    if ((offerPartsItem.supplement != null) && (offerPartsItem.supplement.amount > 0.0))
                                                                                       Text(
                                                                                         '+${offerPartsItem.supplement.amount.toString()} ${offerPartsItem.supplement.currencyCode}',
                                                                                         textAlign: TextAlign.end,
