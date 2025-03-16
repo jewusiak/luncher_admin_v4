@@ -37,7 +37,7 @@ jobs:
       - name: Override properties in environment.json
         run: | 
           echo '${{env.ENV_VARS_JSON}}' > .deployment/ovrrd.tmp.json
-          bash .deployment/merge_jsons.sh assets/environment_values/environment.json .deployment/ovrrd.tmp.json assets/environment_values/environment.json
+          bash .deployment/merge_jsons.sh assets/environment_values/environment.json .deployment/ovrrd.tmp.json assets/environment_values/environment2.json
           mv assets/environment_values/environment2.json assets/environment_values/environment.json
       
       
